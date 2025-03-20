@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/20 11:26:26 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:37:35 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,37 @@ static char	**fill(char **dest, char const *s, int len_arr)
 	while (x < len_arr)
 	{
 		conta = 1;
-		while (s[i] == ' ')
+		while (s[i] == 32)
 			i++;
 		y = i;
-		while ((s[i] != '"' && s[y] != '\0' && s[y] != ' ') || (s[i] == '"' && s[y] != '"' && s[y] != '\0'))
+		if (s[y] == '"')
 		{
 			y++;
+			while (s[y] != '\0' && s[y++] != '"')
+				conta++;
 			conta++;
 		}
+		else
+			while (s[y] != '\0' && s[y++] != ' ')
+				conta++;
 		dest[x] = (char *) malloc(sizeof(char) * (conta + 1));
 		if (dest[x] == NULL)
 			return (NULL);
-		frite(dest[x++], i, conta - 1, s);
-		conta = i;
-		// i++;
-		while ((s[y] != '\0' && s[i] != ' ') || (s[y] != '\0' && s[conta] == '"' && s[i] != '"'))
+		frite(dest[x++], i, conta, s);
+		if (s[i] == '"')
+		{
 			i++;
+			while ((s[y] != '\0' && s[i++] != '"'))
+				;
+		}
+		else
+			while (s[y] != '\0' && s[i++] != ' ')
+				;
 	}
 	dest[x] = NULL;
 	return (dest);
 }
+
 
 char	**custom_split(char const *s)
 {
@@ -95,9 +106,9 @@ char	**custom_split(char const *s)
 	if (len_arr == -1)
 		return (NULL);
 	dest = (char **) malloc(sizeof(char *) * (len_arr + 1));
-	if (dest == NULL)
+	if (!dest)
 		return (NULL);
-	if (fill(dest, s, len_arr) == NULL)
+	if (!fill(dest, s, len_arr))
 	{
 		while (x ++ <= len_arr)
 			free(dest[x]);
@@ -107,3 +118,5 @@ char	**custom_split(char const *s)
 }
 
 //a "a  a  a" ka a  s
+
+//  aa " ""aa" a "a    a"

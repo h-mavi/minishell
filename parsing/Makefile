@@ -6,7 +6,7 @@
 #    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/03/19 17:39:33 by mfanelli         ###   ########.fr        #
+#    Updated: 2025/03/20 17:35:58 by mfanelli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,21 @@
 NAME = minishell_pars
 
 SOURCES = pars_main.c parsing.c pars_split.c pars_utils.c
+OBJ = $(SOURCES:.c=.o)
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g -Ilibft -Llibft -lreadline -lhistory
 
 all : $(NAME)
 
-$(NAME): $(SOURCES)
+$(NAME): $(OBJ)
 		make libft
-		$(CC) $(SOURCES) ../libft/libft.a $(FLAGS) -o $(NAME)
+		$(CC) $(OBJ) ../libft/libft.a $(FLAGS) -o $(NAME)
 
 clean:
 		@echo Cleaning...
 		make clean -C ../libft/
+		rm -f $(OBJ)
 
 fclean: clean
 		@echo fCleaning...
