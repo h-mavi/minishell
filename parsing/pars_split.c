@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/20 10:26:16 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:26:26 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	**fill(char **dest, char const *s, int len_arr)
 		while (s[i] == ' ')
 			i++;
 		y = i;
-		while ((s[y] != '\0' && s[y] != ' ') || (s[i] == '"' && s[y] != '"' && s[y] != '\0'))
+		while ((s[i] != '"' && s[y] != '\0' && s[y] != ' ') || (s[i] == '"' && s[y] != '"' && s[y] != '\0'))
 		{
 			y++;
 			conta++;
@@ -76,7 +76,7 @@ static char	**fill(char **dest, char const *s, int len_arr)
 			return (NULL);
 		frite(dest[x++], i, conta - 1, s);
 		conta = i;
-		i++;
+		// i++;
 		while ((s[y] != '\0' && s[i] != ' ') || (s[y] != '\0' && s[conta] == '"' && s[i] != '"'))
 			i++;
 	}
@@ -105,3 +105,5 @@ char	**custom_split(char const *s)
 	}
 	return (dest);
 }
+
+//a "a  a  a" ka a  s
