@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/20 17:37:35 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:51:06 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,13 @@ static char	**fill(char **dest, char const *s, int len_arr)
 		if (s[y] == '"')
 		{
 			y++;
-			while (s[y] != '\0' && s[y++] != '"')
+			while ((s[y] != '\0' && s[y] != '"') || \
+			(s[y] != '\0' && s[y] == '"' && s[y + 1] == '"') || \
+			(s[y] != '\0' && s[y] == '"' && s[y - 1] == '"'))
+			{
+				y++;
 				conta++;
+			}
 			conta++;
 		}
 		else
@@ -83,8 +88,10 @@ static char	**fill(char **dest, char const *s, int len_arr)
 		if (s[i] == '"')
 		{
 			i++;
-			while ((s[y] != '\0' && s[i++] != '"'))
-				;
+			while ((s[y] != '\0' && s[i] != '"')|| \
+			(s[y] != '\0' && s[i] == '"' && s[i + 1] == '"') || \
+			(s[y] != '\0' && s[i] == '"' && s[i - 1] == '"'))
+				i++;
 		}
 		else
 			while (s[y] != '\0' && s[i++] != ' ')
@@ -120,3 +127,4 @@ char	**custom_split(char const *s)
 //a "a  a  a" ka a  s
 
 //  aa " ""aa" a "a    a"
+
