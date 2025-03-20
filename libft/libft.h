@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:54:15 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/02/04 09:27:23 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/20 09:07:31 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(int));
 void	ft_lstclear(t_list **lst, void (*del)(int));
 void	ft_lstiter(t_list *lst, void (*f)(int));
 t_list	*ft_lstmap(t_list *lst, int (*f)(int), void (*del)(int));
+size_t	ft_matrixlen(char **mtr);
 // char	*ft_strjoin3(char *s1, char const *s2);
 // int		ft_strchr2(const char *s, int c);
 // char	*ft_strjoin2(char *s1, char *s2);

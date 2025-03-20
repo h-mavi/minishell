@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:18:52 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/19 13:39:07 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/20 09:08:18 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_token
 	const char		*str;
 	struct s_token	*prev;
 	struct s_token	*next;
-	char			**env;
 }	t_token;
 
 #endif

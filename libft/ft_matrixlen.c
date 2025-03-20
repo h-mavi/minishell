@@ -1,39 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   ft_matrixlen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/20 08:55:54 by mbiagi           ###   ########.fr       */
+/*   Created: 2025/03/20 09:03:41 by mbiagi            #+#    #+#             */
+/*   Updated: 2025/03/20 09:06:35 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "libft.h"
 
-void	ft_exit(struttura)
+size_t	ft_matrixlen(char **mtr)
 {
-	//liberare la stuttura e tutte cose
-	exit(0);
-}
+	size_t	i;
 
-void	ft_pwd(void)
-{
-	char	*str;
-
-	str = getcwd(NULL, 0);
-	printf("%s\n", str);
-	free(str);
-}
-
-void	ft_cd(const char	*dir)
-{
-	if(chdir(dir) == -1)
-		perror("no such directory");
-}
-
-void	ft_echo(t_token tree)
-{
-	printf("%s", tree.str);
+	i = 0;
+	while (mtr[i])
+		i++;
+	return (i);
 }
