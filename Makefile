@@ -3,29 +3,31 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
+#    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/03/18 15:37:06 by mbiagi           ###   ########.fr        #
+#    Updated: 2025/03/20 17:36:45 by mfanelli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SOURCES = minishell.c
+OBJ = $(SOURCES:.c=.o)
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g -Ilibft -Llibft -lreadline -lhistory
 
 all : $(NAME)
 
-$(NAME): $(SOURCES)
+$(NAME): $(OBJ)
 		make libft
-		$(CC) $(SOURCES) libft/libft.a $(FLAGS) -o $(NAME)
+		$(CC) $(OBJ) libft/libft.a $(FLAGS) -o $(NAME)
 
 clean:
 		@echo Cleaning...
 		make clean -C libft
+		rm -f $(OBJ)
 
 fclean: clean
 		@echo fCleaning...
