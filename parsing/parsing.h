@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/19 17:34:45 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/20 09:12:55 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_token
 	const char		*str;
 	struct s_token	*prev;
 	struct s_token	*next;
-	char			**env;
 }	t_token;
 
 //in parsing.c

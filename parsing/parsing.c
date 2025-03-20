@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/19 17:37:41 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/20 10:24:15 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,14 @@ void	token_inator(char *cmd, char **env)
 	
 	(void)env;
 	str = custom_split(cmd);
-	while (str[++i])
+	if (!str)
+	{
+		printf("wtf\n");
+		return ;
+	}
+	while (str[++i] != NULL)
 		printf("%s\n", str[i]);
-	free(str);
+	free_arr(str);
 	// if (check_if_cmd(cmd, env) == 1)
 	// 	printf("'%s' e' un comando, wow!!\n", cmd);
 	// else
