@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/20 17:51:06 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:53:10 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static int	len_arr_split(char const *arr)
 	{
 		if (arr[x] == '"')
 		{
+			if (x == 0 && arr[x] != ' ')
+				i++;
 			x++;
 			while (arr[x] != '"' && arr[x] != '\0')
 				x++;
@@ -37,17 +39,17 @@ static int	len_arr_split(char const *arr)
 	return (i);
 }
 
-static void	frite(char *dest, int i, int conta, char const *s)
+static void	frite(char *dest, int start, int len, char const *s)
 {
-	int	g;
+	int	i;
 
-	g = 0;
-	while (g + i < i + conta)
+	i = 0;
+	while (i + start < start + len)
 	{
-		dest[g] = s[i + (g)];
-		g++;
+		dest[i] = s[start + (i)];
+		i++;
 	}
-	dest[g] = '\0';
+	dest[i] = '\0';
 }
 
 static char	**fill(char **dest, char const *s, int len_arr)
@@ -71,7 +73,7 @@ static char	**fill(char **dest, char const *s, int len_arr)
 			y++;
 			while ((s[y] != '\0' && s[y] != '"') || \
 			(s[y] != '\0' && s[y] == '"' && s[y + 1] == '"') || \
-			(s[y] != '\0' && s[y] == '"' && s[y - 1] == '"'))
+			(s[y] != '\0' && s[y] == '"' && s[y - 1] == '"' && s[y - 2] != '"'))
 			{
 				y++;
 				conta++;
@@ -80,7 +82,15 @@ static char	**fill(char **dest, char const *s, int len_arr)
 		}
 		else
 			while (s[y] != '\0' && s[y++] != ' ')
+			{
+				if (s[y] == '"')
+				{
+					while (s[++y] != '"')
+						conta++;
+					conta++;
+				}
 				conta++;
+			}
 		dest[x] = (char *) malloc(sizeof(char) * (conta + 1));
 		if (dest[x] == NULL)
 			return (NULL);
@@ -90,12 +100,17 @@ static char	**fill(char **dest, char const *s, int len_arr)
 			i++;
 			while ((s[y] != '\0' && s[i] != '"')|| \
 			(s[y] != '\0' && s[i] == '"' && s[i + 1] == '"') || \
-			(s[y] != '\0' && s[i] == '"' && s[i - 1] == '"'))
+			(s[y] != '\0' && s[i] == '"' && s[i - 1] == '"' && s[i - 2] != '"'))
 				i++;
+			i++;
 		}
 		else
 			while (s[y] != '\0' && s[i++] != ' ')
-				;
+			{
+				if (s[i] == '"')
+					while (s[++i] != '"')
+						;
+			}
 	}
 	dest[x] = NULL;
 	return (dest);
@@ -124,7 +139,7 @@ char	**custom_split(char const *s)
 	return (dest);
 }
 
-//a "a  a  a" ka a  s
+//""j""echo caio
 
-//  aa " ""aa" a "a    a"
 
+//da fare una funzione riutilizzabile che mi dica se sono fuori o dentro gli apici/virgolette
