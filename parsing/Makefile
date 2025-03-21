@@ -6,7 +6,7 @@
 #    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/03/20 17:35:58 by mfanelli         ###   ########.fr        #
+#    Updated: 2025/03/21 09:01:27 by mfanelli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,9 @@ FLAGS = -Wall -Wextra -Werror -g -Ilibft -Llibft -lreadline -lhistory
 
 all : $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(SOURCES)
 		make libft
-		$(CC) $(OBJ) ../libft/libft.a $(FLAGS) -o $(NAME)
+		$(CC) $(SOURCES) ../libft/libft.a $(FLAGS) -o $(NAME)
 
 clean:
 		@echo Cleaning...
