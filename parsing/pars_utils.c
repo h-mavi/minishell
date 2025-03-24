@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/24 11:31:03 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:12:36 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,3 +49,28 @@ int werami(const char *s, int index, char a)
 	}
 	return (-1);
 }
+
+/* Controlla il numero di virgolette e apici e si assicura che non siano dispairi.
+In caso di successo returna 1, senno' 0.*/
+int	check_app(char *str)
+{
+	int	i;
+	int	virg;
+	int	app;
+
+	i = -1;
+	app = 0;
+	virg = 0;
+	while (str[++i])
+	{
+		if (str[i] == 34 && app % 2 == 0)
+			virg++;
+		if (str[i] == 39 && virg % 2 == 0)
+			app++;
+	}
+	if ((virg % 2 != 0 && app % 2 != 0) || (virg % 2 != 0) || (app % 2 != 0))
+		return (0);
+	return (1);
+}
+
+//capire come gestire misto ' e " con lo split custom

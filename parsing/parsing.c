@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/20 10:24:15 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:17:31 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	token_inator(char *cmd, char **env)
 	int		i = -1;
 	
 	(void)env;
+	if (check_app(cmd) == 0)
+		return (printf("Syntax error\n"), NULL);
 	str = custom_split(cmd);
 	if (!str)
 	{

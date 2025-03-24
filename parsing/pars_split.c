@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/24 11:08:29 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:11:43 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@ static int	len_arr_split(char const *arr)
 			if (arr[x] == '\0')
 				return (-1); //ERROR
 		}
+		else if (arr[x] == 39)
+		{
+			if (x == 0 && arr[x] != ' ')
+				i++;
+			x++;
+			while (arr[x] != 39 && arr[x] != '\0')
+				x++;
+			if (arr[x] == '\0')
+				return (-1); //ERROR
+		}
 		if ((arr[x] == ' ' && arr[x + 1] != ' ' && arr[x + 1] != '\0') || \
 		(x == 0 && arr[x] != ' '))
 			i++;
@@ -51,71 +61,6 @@ static void	frite(char *dest, int start, int len, char const *s)
 	}
 	dest[i] = '\0';
 }
-
-/* static char	**fill(char **dest, char const *s, int len_arr)
-{
-	int	i;
-	int	x;
-	int	y;
-	int	conta;
-
-	i = 0;
-	x = 0;
-	y = 0;
-	while (x < len_arr)
-	{
-		conta = 1;
-		while (s[i] == 32)
-			i++;
-		y = i;
-		if (s[y] == '"')
-		{
-			y++;
-			while ((s[y] != '\0' && s[y] != '"') || \
-			(s[y] != '\0' && s[y] == '"' && s[y + 1] == '"') || \
-			(s[y] != '\0' && s[y] == '"' && s[y - 1] == '"' && s[y - 2] != '"'))
-			{
-				y++;
-				conta++;
-			}
-			conta++;
-		}
-		else
-			while (s[y] != '\0' && s[y++] != ' ')
-			{
-				if (s[y] == '"')
-				{
-					while (s[++y] != '"')
-						conta++;
-					conta++;
-				}
-				conta++;
-			}
-		dest[x] = (char *) malloc(sizeof(char) * (conta + 1));
-		if (dest[x] == NULL)
-			return (NULL);
-		frite(dest[x++], i, conta, s);
-		if (s[i] == '"')
-		{
-			i++;
-			while ((s[y] != '\0' && s[i] != '"')|| \
-			(s[y] != '\0' && s[i] == '"' && s[i + 1] == '"') || \
-			(s[y] != '\0' && s[i] == '"' && s[i - 1] == '"' && s[i - 2] != '"'))
-				i++;
-			i++;
-		}
-		else
-			while (s[y] != '\0' && s[i++] != ' ')
-			{
-				if (s[i] == '"')
-					while (s[++i] != '"')
-						;
-			}
-	}
-	dest[x] = NULL;
-	return (dest);
-} */
-
 
 static char	**fill(char **dest, char const *s, int len_arr)
 {
@@ -142,12 +87,24 @@ static char	**fill(char **dest, char const *s, int len_arr)
 				conta++;
 			}
 		}
+		else if (s[y] == 39)
+		{
+			while ((s[y] != '\0' && werami(s, y, 39) != -1) || \
+			(s[y] != '\0' && werami(s, y, 39) == -1 && s[y] != ' '))
+			{
+				y++;
+				conta++;
+			}
+		}
 		else
 			while (s[y] != '\0' && s[y++] != ' ')
 			{
 				if (s[y] == '"')
 					while (werami(s, y++, '"') != -1)
 						conta++;
+				if (s[y] == 39)
+					while (werami(s, y++, 39) != -1)
+							conta++;
 				conta++;
 			}
 		dest[x] = (char *) malloc(sizeof(char) * (conta + 1));
@@ -158,6 +115,10 @@ static char	**fill(char **dest, char const *s, int len_arr)
 			while ((s[y] != '\0' && werami(s, i, '"') != -1) || \
 			(s[y] != '\0' && werami(s, i, '"') == -1 && s[i] != ' '))
 				i++;
+		else if (s[i] == 39)
+			while ((s[y] != '\0' && werami(s, i, 39) != -1) || \
+				(s[y] != '\0' && werami(s, i, 39) == -1 && s[i] != ' '))
+					i++;
 		else
 			while (s[y] != '\0' && s[i++] != ' ')
 			{
@@ -185,11 +146,9 @@ char	**custom_split(char const *s)
 		return (NULL);
 	if (!fill(dest, s, len_arr))
 	{
-		while (x ++ <= len_arr)
+		while (x++ <= len_arr)
 			free(dest[x]);
 		return (NULL);
 	}
 	return (dest);
 }
-
-//m"i  fa"i gahare
