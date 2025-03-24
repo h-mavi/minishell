@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/20 09:12:55 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/24 09:41:05 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	token_inator(char *cmd, char **env);
 
 //in parsing/pars_utils.c
 void	free_arr(char **arr);
+int 	werami(const char *s, int index, char a);
 
 //in parsing/pars_split.c
 char	**custom_split(char const *s);
