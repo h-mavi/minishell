@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/21 15:26:11 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/24 09:53:58 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,76 @@ void	redir_check(t_token tree)
 	}
 }
 
+//funzione che trova il path corretto del cmd, se non lo trova retituisce NULL
+char	*parse_cmd(char *argv, char **env)
+{
+	int		i;
+	char	*command;
+	char	**path;
+	char	*temp;
+
+	i = -1;
+	path = NULL;
+	while (env[++i])
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+			path = ft_split(env[i] + 5, ':');
+	if (!path)
+		return (argv);
+	i = -1;
+	while (path[++i])
+	{
+		temp = ft_strjoin(path[i], "/");
+		command = ft_strjoin(temp, argv);
+		free(temp);
+		if (access(command, F_OK) == 0)
+			return (free(argv), freemtr(path), command);
+		free(command);
+	}
+	return (free(argv), freemtr(path), NULL);
+}
+
+//crea una matrice con cmd e flag
+char	**full_cmd(t_token tree)
+{
+	t_token	head;
+	char	**mtr;
+	int		option;
+	int		i;
+
+	i = 0;
+	head = tree;
+	option = 0;
+	while(tree.next)
+	{
+		if (tree.type == FLAG)
+			option++;
+		tree = *(tree.next);
+	}
+	mtr = ft_calloc(option, sizeof(char *));
+	head = tree;
+	while(tree.next)
+	{
+		if (tree.type == FLAG)
+		{
+			mtr[i++] = ft_calloc(ft_strlen(tree.str), sizeof(char));
+			ft_strlcpy(mtr[i], tree.str, ft_strlen(tree.str));
+		}
+		tree = *(tree.next);
+	}
+}//non e' detto che funzioni al 100%
+
 //funzione che esegue i comandi
 void	exec_cmd(t_token *tree, char **env)
 {
 	char	*path;
 	char	**arg;
 
-	path = parse_cmd(ft_substr(argv[2 + fd.i + fd.here_d], till(\
-	argv[2 + fd.i]), find_space(argv[2 + fd.i + fd.here_d])), env);
-	arg = ft_split(argv[2 + fd.i + fd.here_d], ' ');
+	path = parse_cmd(tree->str, env);
+	arg = full_cmd(*tree);//fare una funzione che ti calcoli il numero di opzioni e che te li mett in una matrice
 	if (!path)
-		path = argv[2 + fd.i];
-	execve(path, arg, env);//fare una funzione che ti calcoli il numero di opzioni e che te li mett in una matrice
+		path = arg[0];
+	execve(path, arg, env);
+	perror("command not found");
 	return (freemtr(arg), exit(1));
 }
 
