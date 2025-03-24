@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.h                                          :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 13:35:54 by mbiagi           ###   ########.fr       */
+/*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
+/*   Updated: 2025/03/24 13:42:53 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 # include "./libft/libft.h"
-# include "./builtin/builtin.h"
 
 # include <stdio.h>
 # include <signal.h>
@@ -55,9 +54,11 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-void	dup_file(int file, int std);
-int		pipe_check(t_token *tree);
-void	file_control(t_token *tree, int file, int std);
-void	heredoc(t_token *tree);
+void	**ft_export(char **env, t_token tree);
+void	ft_env(const char **env);
+void	ft_exit(t_token *tree);
+void	ft_pwd(void);
+void	ft_cd(const char	*dir);
+void	ft_echo(t_token *tree);
 
 #endif

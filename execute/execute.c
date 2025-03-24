@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 09:53:58 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/24 13:43:10 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,20 +125,38 @@ char	**full_cmd(t_token tree)
 	}
 }//non e' detto che funzioni al 100%
 
+//controllo se il comando e' una builtin e nel caso eseguo
+void	is_builtin(t_token *tree, char **env)
+{
+	if (ft_strncmp(tree->str, "env", 3) == 0)
+		ft_env(env);
+	if (ft_strncmp(tree->str, "export", 7) == 0)
+		ft_export(env, *tree);
+	if (ft_strncmp(tree->str, "exit", 4) == 0)
+		ft_exit(tree);
+	if (ft_strncmp(tree->str, "echo", 4) == 0)
+		ft_echo(tree);
+	if (ft_strncmp(tree->str, "cd", 2) == 0)
+		ft_cd(tree->str);
+	if (ft_strncmp(tree->str, "pwd", 3) == 0)
+		ft_pwd();
+}
+
 //funzione che esegue i comandi
 void	exec_cmd(t_token *tree, char **env)
 {
 	char	*path;
 	char	**arg;
 
+	is_builtin(tree, env);
 	path = parse_cmd(tree->str, env);
-	arg = full_cmd(*tree);//fare una funzione che ti calcoli il numero di opzioni e che te li mett in una matrice
+	arg = full_cmd(*tree);
 	if (!path)
 		path = arg[0];
 	execve(path, arg, env);
 	perror("command not found");
 	return (freemtr(arg), exit(1));
-}
+}//devo controllare che i comandi non siano builtin
 
 //funzione principale che richiama le altre
 void	execute(t_token *tree, char **env)
@@ -146,7 +164,7 @@ void	execute(t_token *tree, char **env)
 	int	pid;
 
 	if (pipe_check(tree) == 1)
-		return (for_fork(tree));//da fare in modo che gestisca le pipe
+		return (for_fork(tree));//PIPE CONTROL IS YET TO BE DONE
 	redir_check(*tree);
 	pid = fork();
 	if (pid == 0)

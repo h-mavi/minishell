@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/20 09:14:43 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/24 13:29:31 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ void	ft_env(const char **env)
 		printf("%s\n", env[i]);
 		i++;
 	}
+	exit(0);
 }
 
-char	**ft_export(char **env, t_token tree)
+void	**ft_export(char **env, t_token tree)
 {
 	int		i;
 	char	**new_env;
@@ -42,5 +43,5 @@ char	**ft_export(char **env, t_token tree)
 	new_env[i] = ft_calloc(ft_strlen(tree.str), sizeof(char));
 	new_env[i] = tree.str;
 	new_env = temp;
-	return (new_env);
+	exit(0);
 }
