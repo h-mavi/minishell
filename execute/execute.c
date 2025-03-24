@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 13:43:10 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:40:01 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	is_builtin(t_token *tree, char **env)
 	if (ft_strncmp(tree->str, "env", 3) == 0)
 		ft_env(env);
 	if (ft_strncmp(tree->str, "export", 7) == 0)
-		ft_export(env, *tree);
+		ft_export(env, *(tree));
 	if (ft_strncmp(tree->str, "exit", 4) == 0)
 		ft_exit(tree);
 	if (ft_strncmp(tree->str, "echo", 4) == 0)
