@@ -6,11 +6,11 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 15:40:01 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 11:54:30 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 #include "execute.h"
 
 //funzione che crea l' heredoc e lo duplica nello stdin
@@ -21,14 +21,14 @@ void	heredoc(t_token *tree)
 
 	file = open("here_doc", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (file == -1)
-		return (file);
-	write(1, "> ", 15);
+		return (perror("failed to open the file"));
+	write(1, "> ", 2);
 	str = get_next_line(0);
 	while (control_str(str, tree->str) == 0)
 	{
 		ft_putstr_fd(str, file);
 		free(str);
-		write(1, "> ", 15);
+		write(1, "> ", 2);
 		str = get_next_line(0);
 	}
 	free(str);
@@ -89,16 +89,17 @@ char	*parse_cmd(char *argv, char **env)
 		command = ft_strjoin(temp, argv);
 		free(temp);
 		if (access(command, F_OK) == 0)
-			return (free(argv), freemtr(path), command);
+			return (command);
 		free(command);
 	}
-	return (free(argv), freemtr(path), NULL);
+	return (free(argv), NULL);
 }
+// freemtr(path)
 
 //crea una matrice con cmd e flag
-char	**full_cmd(t_token tree)
+char	**full_cmd(t_token *tree)
 {
-	t_token	head;
+	t_token	*head;
 	char	**mtr;
 	int		option;
 	int		i;
@@ -106,27 +107,26 @@ char	**full_cmd(t_token tree)
 	i = 0;
 	head = tree;
 	option = 0;
-	while(tree.next)
+	while(tree->next)
 	{
-		if (tree.type == FLAG)
+		if (tree->type == FLAG || tree->type == COMMAND)
 			option++;
-		tree = *(tree.next);
+		tree = tree->next;
 	}
 	mtr = ft_calloc(option, sizeof(char *));
 	head = tree;
-	while(tree.next)
+	while(tree->next)
 	{
-		if (tree.type == FLAG)
-		{
-			mtr[i++] = ft_calloc(ft_strlen(tree.str), sizeof(char));
-			ft_strlcpy(mtr[i], tree.str, ft_strlen(tree.str));
-		}
-		tree = *(tree.next);
+		if (tree->type == FLAG)
+			mtr[i++] = (char *)tree->str;
+		tree = tree->next;
 	}
-}//non e' detto che funzioni al 100%
+	return (mtr);
+}
+//non e' detto che funzioni al 100%
 
 //controllo se il comando e' una builtin e nel caso eseguo
-void	is_builtin(t_token *tree, char **env)
+/* void	is_builtin(t_token *tree, char **env)
 {
 	if (ft_strncmp(tree->str, "env", 3) == 0)
 		ft_env(env);
@@ -140,7 +140,7 @@ void	is_builtin(t_token *tree, char **env)
 		ft_cd(tree->str);
 	if (ft_strncmp(tree->str, "pwd", 3) == 0)
 		ft_pwd();
-}
+} */
 
 //funzione che esegue i comandi
 void	exec_cmd(t_token *tree, char **env)
@@ -148,23 +148,24 @@ void	exec_cmd(t_token *tree, char **env)
 	char	*path;
 	char	**arg;
 
-	is_builtin(tree, env);
-	path = parse_cmd(tree->str, env);
-	arg = full_cmd(*tree);
+	// is_builtin(tree, env);
+	path = parse_cmd((char *)tree->str, env);
+	arg = full_cmd(tree);
 	if (!path)
 		path = arg[0];
 	execve(path, arg, env);
 	perror("command not found");
-	return (freemtr(arg), exit(1));
-}//devo controllare che i comandi non siano builtin
+	return (exit(1));
+}
+// freemtr(arg),
 
 //funzione principale che richiama le altre
 void	execute(t_token *tree, char **env)
 {
 	int	pid;
 
-	if (pipe_check(tree) == 1)
-		return (for_fork(tree));//PIPE CONTROL IS YET TO BE DONE
+	// if (pipe_check(tree) == 1)
+	// 	return (for_fork(tree));//PIPE CONTROL IS YET TO BE DONE
 	redir_check(*tree);
 	pid = fork();
 	if (pid == 0)
@@ -172,4 +173,34 @@ void	execute(t_token *tree, char **env)
 		tree = find_comand(tree);
 		exec_cmd(tree, env);
 	}
+}
+
+int main(int arc, char **arg, char **env)
+{
+	t_token	*tree;
+	int		i;
+
+	i = 0;
+	if (arc < 3)
+	{
+		printf("MA SEI UN COGLIONE?!?!?!");
+		exit(1);
+	}
+	tree = ft_calloc(arc + 1, sizeof(t_token));
+	while (arg[++i])
+	{
+		if (i == 1)
+			tree[i].type = HEREDOC;
+		else if (i == 2)
+			tree[i].type = REDIR_3;
+		else if (i == 3)
+			tree[i].type = COMMAND;
+		else
+			tree[i].type = FLAG;
+		tree[i].str = arg[i];
+		tree[i].next = &tree[i + 1];
+		tree[i].prev = &tree[i - 1];
+	}
+	execute(&tree[1], env);
+	return (0);
 }

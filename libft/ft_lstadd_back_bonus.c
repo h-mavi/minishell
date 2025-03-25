@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:55:47 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/01/29 11:28:11 by mbiagi           ###   ########.fr       */
+/*   Updated: 2024/12/05 14:34:30 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 
 	if (!new)
 		return ;
-	if (!(*lst))
-	{
+	if (!lst)
 		(*lst) = new;
-		return ;
-	}
 	tmp = *lst;
 	while (tmp->next)
 		tmp = tmp->next;

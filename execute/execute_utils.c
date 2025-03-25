@@ -6,11 +6,11 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 13:19:10 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 09:57:42 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 #include "execute.h"
 
 //funzione di ausilio per trovarmi subito il comando
@@ -43,9 +43,10 @@ int	pipe_check(t_token *tree)
 //protegge gli open
 void	file_control(t_token *tree, int file, int std)
 {
+	(void)tree;
 	if (file == -1)
 	{
-		free_list(tree);//da creare ancora
+		// free_list(tree);//da creare ancora
 		perror("filed to open the file");
 		exit(1);
 	}
@@ -53,7 +54,7 @@ void	file_control(t_token *tree, int file, int std)
 }
 
 //controlla il limiter dell' heredoc
-int	control_str(char *str, char *limiter)
+int	control_str(char *str, const char *limiter)
 {
 	if (str == NULL)
 		return (1);

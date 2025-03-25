@@ -6,11 +6,12 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 13:43:03 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 09:15:48 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
+#include "builtin.h"
 
 //RITORNARE UN VALORE DIVERSO IN CASO DI ERRORE
 void	ft_exit(t_token *tree)

@@ -6,13 +6,14 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 13:42:53 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 09:43:36 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
-# include "./libft/libft.h"
+# include "../libft/libft.h"
+# include "../get_next_line/get_next_line.h"
 
 # include <stdio.h>
 # include <signal.h>
@@ -46,13 +47,13 @@
 # define REDIR_3 6
 # define HEREDOC 7
 
-typedef struct s_token
-{
-	int				type;
-	const char		*str;
-	struct s_token	*prev;
-	struct s_token	*next;
-}	t_token;
+// typedef struct s_token
+// {
+// 	int				type;
+// 	const char		*str;
+// 	struct s_token	*prev;
+// 	struct s_token	*next;
+// }	t_token;
 
 void	**ft_export(char **env, t_token tree);
 void	ft_env(const char **env);

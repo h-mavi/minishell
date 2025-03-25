@@ -6,11 +6,12 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 13:29:31 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 09:15:31 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
+#include "builtin.h"
 
 void	ft_env(const char **env)
 {

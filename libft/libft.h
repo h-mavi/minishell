@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:54:15 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/20 09:07:31 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 09:24:06 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,7 @@
 
 typedef struct s_list
 {
-	int				position;
-	int				price;
-	bool			above;
-	bool			cheapest;
-	int				n;
-	struct s_list	*target;
+	void			*content;
 	struct s_list	*next;
 }	t_list;
 
@@ -75,7 +70,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-t_list	*ft_lstnew(int content);
+t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);

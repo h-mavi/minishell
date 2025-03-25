@@ -6,14 +6,15 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 13:35:54 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 09:57:02 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
-# include "./libft/libft.h"
-# include "./builtin/builtin.h"
+# include "../libft/libft.h"
+# include "../get_next_line/get_next_line.h"
+# include "../builtin/builtin.h"
 
 # include <stdio.h>
 # include <signal.h>
@@ -47,17 +48,19 @@
 # define REDIR_3 6
 # define HEREDOC 7
 
-typedef struct s_token
-{
-	int				type;
-	const char		*str;
-	struct s_token	*prev;
-	struct s_token	*next;
-}	t_token;
+// typedef struct s_token
+// {
+// 	int				type;
+// 	const char		*str;
+// 	struct s_token	*prev;
+// 	struct s_token	*next;
+// }	t_token;
 
 void	dup_file(int file, int std);
 int		pipe_check(t_token *tree);
 void	file_control(t_token *tree, int file, int std);
 void	heredoc(t_token *tree);
+t_token	*find_comand(t_token *tree);
+int		control_str(char *str, const char *limiter);
 
 #endif
