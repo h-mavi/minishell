@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 09:43:36 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 15:11:50 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,11 @@
 # define REDIR_3 6
 # define HEREDOC 7
 
-// typedef struct s_token
-// {
-// 	int				type;
-// 	const char		*str;
-// 	struct s_token	*prev;
-// 	struct s_token	*next;
-// }	t_token;
-
-void	**ft_export(char **env, t_token tree);
-void	ft_env(const char **env);
-void	ft_exit(t_token *tree);
-void	ft_pwd(void);
-void	ft_cd(const char	*dir);
-void	ft_echo(t_token *tree);
+int	ft_export(char **env, t_token tree);
+int	ft_env(char **env);
+int	ft_exit(t_token *tree);
+int	ft_pwd();
+int	ft_cd(const char	*dir);
+int	ft_echo(t_token *tree);
 
 #endif

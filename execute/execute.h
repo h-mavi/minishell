@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 09:57:02 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 14:28:36 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,13 @@
 # define REDIR_3 6
 # define HEREDOC 7
 
-// typedef struct s_token
-// {
-// 	int				type;
-// 	const char		*str;
-// 	struct s_token	*prev;
-// 	struct s_token	*next;
-// }	t_token;
-
 void	dup_file(int file, int std);
 int		pipe_check(t_token *tree);
 void	file_control(t_token *tree, int file, int std);
 void	heredoc(t_token *tree);
 t_token	*find_comand(t_token *tree);
 int		control_str(char *str, const char *limiter);
+void	freemtr(char **mtr);
+void	reset_fd(int *std);
 
 #endif

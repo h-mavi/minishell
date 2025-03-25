@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 09:57:42 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 13:56:21 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,26 @@ int	control_str(char *str, const char *limiter)
 	str[ft_strlen(limiter)] == '\n')
 		return (1);
 	return (0);
+}
+
+//funzione ausiliaria che libera la matrice
+void	freemtr(char **mtr)
+{
+	int	i;
+
+	i = 0;
+	while (mtr[i])
+	{
+		free(mtr[i]);
+		i++;
+	}
+}
+
+//funzione ausiliaria che ripristina le stdfds
+void	reset_fd(int *std)
+{
+	dup2(std[0], 0);
+	dup2(std[1], 1);
+	close(std[0]);
+	close(std[1]);
 }

@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 11:54:30 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 15:59:46 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	heredoc(t_token *tree)
 }
 
 //redirige i file
+//controllo su heredoc e pensa a come controllare se gli elementi sonon comandi
 void	redir_check(t_token tree)
 {
 	int	file;
@@ -62,7 +63,7 @@ void	redir_check(t_token tree)
 			file_control(&tree, file, 1);
 		}
 		else if (tree.type == HEREDOC)
-			heredoc(&tree);//controllo su heredoc e pensa a come controllare se gli elementi sonon comandi
+			heredoc(&tree);
 		tree = *(tree.next);
 	}
 }
@@ -89,12 +90,11 @@ char	*parse_cmd(char *argv, char **env)
 		command = ft_strjoin(temp, argv);
 		free(temp);
 		if (access(command, F_OK) == 0)
-			return (command);
+			return (freemtr(path), command);
 		free(command);
 	}
-	return (free(argv), NULL);
+	return (free(argv), freemtr(path), NULL);
 }
-// freemtr(path)
 
 //crea una matrice con cmd e flag
 char	**full_cmd(t_token *tree)
@@ -106,7 +106,7 @@ char	**full_cmd(t_token *tree)
 
 	i = 0;
 	head = tree;
-	option = 0;
+	option = 1;
 	while(tree->next)
 	{
 		if (tree->type == FLAG || tree->type == COMMAND)
@@ -114,33 +114,34 @@ char	**full_cmd(t_token *tree)
 		tree = tree->next;
 	}
 	mtr = ft_calloc(option, sizeof(char *));
-	head = tree;
+	tree = head;
 	while(tree->next)
 	{
-		if (tree->type == FLAG)
+		if (tree->type == FLAG || tree->type == COMMAND)
 			mtr[i++] = (char *)tree->str;
 		tree = tree->next;
 	}
 	return (mtr);
 }
-//non e' detto che funzioni al 100%
 
 //controllo se il comando e' una builtin e nel caso eseguo
-/* void	is_builtin(t_token *tree, char **env)
+int	is_builtin(t_token *tree, char **env)
 {
+//devono essere tutte int e non devo usare exit
 	if (ft_strncmp(tree->str, "env", 3) == 0)
-		ft_env(env);
+		return (ft_env(env));
 	if (ft_strncmp(tree->str, "export", 7) == 0)
-		ft_export(env, *(tree));
+		return (ft_export(env, *(tree)));
 	if (ft_strncmp(tree->str, "exit", 4) == 0)
-		ft_exit(tree);
+		return (ft_exit(tree));
 	if (ft_strncmp(tree->str, "echo", 4) == 0)
-		ft_echo(tree);
+		return (ft_echo(tree));
 	if (ft_strncmp(tree->str, "cd", 2) == 0)
-		ft_cd(tree->str);
+		return (ft_cd(tree->next->str));
 	if (ft_strncmp(tree->str, "pwd", 3) == 0)
-		ft_pwd();
-} */
+		return (ft_pwd());
+	return (0);
+}
 
 //funzione che esegue i comandi
 void	exec_cmd(t_token *tree, char **env)
@@ -148,31 +149,33 @@ void	exec_cmd(t_token *tree, char **env)
 	char	*path;
 	char	**arg;
 
-	// is_builtin(tree, env);
 	path = parse_cmd((char *)tree->str, env);
 	arg = full_cmd(tree);
 	if (!path)
 		path = arg[0];
 	execve(path, arg, env);
 	perror("command not found");
-	return (exit(1));
+	return (freemtr(arg), exit(1));
 }
-// freemtr(arg),
 
 //funzione principale che richiama le altre
 void	execute(t_token *tree, char **env)
 {
 	int	pid;
+	int	std[2];
 
+	std[0] = dup(0);
+	std[1] = dup(1);
 	// if (pipe_check(tree) == 1)
 	// 	return (for_fork(tree));//PIPE CONTROL IS YET TO BE DONE
 	redir_check(*tree);
+	tree = find_comand(tree);
+	if (is_builtin(tree, env) == 1)
+		return ;
 	pid = fork();
 	if (pid == 0)
-	{
-		tree = find_comand(tree);
 		exec_cmd(tree, env);
-	}
+	reset_fd(std);
 }
 
 int main(int arc, char **arg, char **env)
@@ -204,3 +207,4 @@ int main(int arc, char **arg, char **env)
 	execute(&tree[1], env);
 	return (0);
 }
+//cc execute/execute.c execute/execute_utils.c builtin/builtin.c builtin/builtin_env.c libft/libft.a get_next_line/libget_next_line.a -g

@@ -6,14 +6,14 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 09:15:31 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/25 15:14:21 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 #include "builtin.h"
 
-void	ft_env(const char **env)
+int	ft_env(char **env)
 {
 	int	i;
 
@@ -23,10 +23,10 @@ void	ft_env(const char **env)
 		printf("%s\n", env[i]);
 		i++;
 	}
-	exit(0);
+	return (1);
 }
 
-void	**ft_export(char **env, t_token tree)
+int	ft_export(char **env, t_token tree)
 {
 	int		i;
 	char	**new_env;
@@ -42,7 +42,7 @@ void	**ft_export(char **env, t_token tree)
 		i++;
 	}
 	new_env[i] = ft_calloc(ft_strlen(tree.str), sizeof(char));
-	new_env[i] = tree.str;
+	new_env[i] = (char *)tree.str;
 	new_env = temp;
-	exit(0);
+	return (1);
 }
