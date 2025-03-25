@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/24 12:12:36 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:02:51 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,60 @@ int werami(const char *s, int index, char a)
 	return (-1);
 }
 
-/* Controlla il numero di virgolette e apici e si assicura che non siano dispairi.
-In caso di successo returna 1, senno' 0.*/
-int	check_app(char *str)
+char *divide(char *s)
 {
 	int	i;
-	int	virg;
-	int	app;
+	int x;
+	int	len;
+	char *end;
 
 	i = -1;
-	app = 0;
-	virg = 0;
-	while (str[++i])
+	len = 0;
+	while (s[++i])
 	{
-		if (str[i] == 34 && app % 2 == 0)
-			virg++;
-		if (str[i] == 39 && virg % 2 == 0)
-			app++;
+		if (s[i] == '<' && s[i - 1] != '<' && i != 0)
+			len++;
+		len++;
 	}
-	if ((virg % 2 != 0 && app % 2 != 0) || (virg % 2 != 0) || (app % 2 != 0))
-		return (0);
-	return (1);
+	end = (char *)ft_calloc(len , sizeof(char));
+	i = -1;
+	x = 0;
+	while (s[++i])
+	{
+		end[x++] = s[i];
+		if (s[i] == '<' && s[i - 1] != '<' && i != 0)
+			end[x++] = ' ';
+	}
+	free(s);
+	return (end);
 }
 
-//capire come gestire misto ' e " con lo split custom
+char *here_glued(char *s)
+{
+	int	i;
+	int	x;
+
+	i = -1;
+	if (((s[0] == '|') || (s[0] == '>') || (s[0] == ';')) && s[1] == '<' && s[2] == '<') //gestisce |<<a, ><<a, ;<<a (che sono syntax error solo se sono all'inizio dell'input)
+			return (NULL); //syntax error
+	while (s[++i])
+	{
+		if (s[i] == '<' && s[i + 1] == '<' && s[i + 2] == '<' && s[i + 3] == '<') //gestisce <<<<a
+			return (NULL); //syntax error
+		if (s[i] != '<')
+			continue ;
+		if (s[i + 1] == '<')
+		{
+			x = i;
+			while ((s[x] != ' ' && (s[x] != '<' && s[x - 1] == '<') && s[x] != '\0') || (x == i))
+			{
+				x++;
+				if (((s[x] == '|') || (s[x] == '>') || (s[x] == ';') || (s[x] == '#') || (ft_isdigit(s[x]) != 0)) && s[i] == '<' && s[x + 1] == '<')
+					return (NULL);
+			}
+			if (s[x] == '<')
+				s = divide(s);
+		}
+	}
+	return (s);
+}

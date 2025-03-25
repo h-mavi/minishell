@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/24 14:11:43 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:49:15 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ static void	frite(char *dest, int start, int len, char const *s)
 	int	i;
 
 	i = 0;
+	if (s[start + len - 1])
+		len--;
 	while (i + start < start + len)
 	{
-		dest[i] = s[start + (i)];
+		dest[i] = s[start + i];
 		i++;
 	}
 	dest[i] = '\0';
@@ -140,6 +142,10 @@ char	**custom_split(char const *s)
 	x = 0;
 	len_arr = len_arr_split(s);
 	if (len_arr == -1)
+		return (NULL);
+	//controllo sugli heredoc ataccati
+	s = here_glued((char *)s);
+	if (!s)
 		return (NULL);
 	dest = (char **) malloc(sizeof(char *) * (len_arr + 1));
 	if (!dest)

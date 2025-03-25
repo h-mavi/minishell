@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 14:17:31 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:20:13 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,27 @@ int	check_if_cmd(char *orig, char **env)
 void	token_inator(char *cmd, char **env)
 {
 	char	**str;
-	int		i = -1;
-	
-	(void)env;
-	if (check_app(cmd) == 0)
-		return (printf("Syntax error\n"), NULL);
+	// t_token *head;
+	int		i;
+
+	i = -1;
 	str = custom_split(cmd);
 	if (!str)
 	{
-		printf("wtf\n");
+		printf("Syntax error, even number of \" or  \' \n");
 		return ;
 	}
 	while (str[++i] != NULL)
-		printf("%s\n", str[i]);
-	free_arr(str);
-	// if (check_if_cmd(cmd, env) == 1)
-	// 	printf("'%s' e' un comando, wow!!\n", cmd);
-	// else
-	// 	printf("'%s' non e' un comando :(\n", cmd);
+	{
+		if (check_if_cmd(str[i], env) == 1)
+		{
+			printf("'%s' e' un comando :D\n", str[i]);
+			// set_cmd_data(head);
+			// while (check_if_pipe(str[i]) != 1)
+			// //puppa
+			// ;
+		}
+		else
+			printf("'%s' non e' un comando :(\n", str[i]);
+	}
 }
