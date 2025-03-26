@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 15:11:50 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/26 11:36:40 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUILTIN_H
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
+# include "../execute/execute.h"
 
 # include <stdio.h>
 # include <signal.h>
@@ -47,11 +48,12 @@
 # define REDIR_3 6
 # define HEREDOC 7
 
-int	ft_export(char **env, t_token tree);
+int	ft_export(char ***env, t_token *tree);
 int	ft_env(char **env);
 int	ft_exit(t_token *tree);
 int	ft_pwd();
-int	ft_cd(const char	*dir);
+int	ft_cd(const char *dir);
 int	ft_echo(t_token *tree);
+int	ft_unset(t_token *tree, char ***env);
 
 #endif
