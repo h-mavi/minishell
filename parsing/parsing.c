@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 11:20:13 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/26 10:33:22 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void	token_inator(char *cmd, char **env)
 		}
 		else
 			printf("'%s' non e' un comando :(\n", str[i]);
-	}
+		}
+	free_arr(str);
 }

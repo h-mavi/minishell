@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/25 11:49:15 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:36:29 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,10 @@ static char	**fill(char **dest, char const *s, int len_arr)
 		while (s[i] == 32)
 			i++;
 		y = i;
-		if (s[y] == '"')
+		if (s[y] == 34 || s[y] == 39)
 		{
-			while ((s[y] != '\0' && werami(s, y, '"') != -1) || \
-			(s[y] != '\0' && werami(s, y, '"') == -1 && s[y] != ' '))
-			{
-				y++;
-				conta++;
-			}
-		}
-		else if (s[y] == 39)
-		{
-			while ((s[y] != '\0' && werami(s, y, 39) != -1) || \
-			(s[y] != '\0' && werami(s, y, 39) == -1 && s[y] != ' '))
+			while (s[y] != '\0' && ((werami(s, y) != -1) || \
+			(werami(s, y) == -1 && s[y] != ' ')))
 			{
 				y++;
 				conta++;
@@ -101,33 +92,27 @@ static char	**fill(char **dest, char const *s, int len_arr)
 		else
 			while (s[y] != '\0' && s[y++] != ' ')
 			{
-				if (s[y] == '"')
-					while (werami(s, y++, '"') != -1)
-						conta++;
-				if (s[y] == 39)
-					while (werami(s, y++, 39) != -1)
-							conta++;
 				conta++;
+				if (s[y] == 34 || s[y] == 39)
+					while (werami(s, y) != -1)
+					{
+						y++;
+						conta++;
+					}
 			}
 		dest[x] = (char *) malloc(sizeof(char) * (conta + 1));
 		if (dest[x] == NULL)
 			return (NULL);
 		frite(dest[x++], i, conta, s);
-		if (s[i] == '"')
-			while ((s[y] != '\0' && werami(s, i, '"') != -1) || \
-			(s[y] != '\0' && werami(s, i, '"') == -1 && s[i] != ' '))
+		if (s[i] == 34 || s[i] == 39)
+			while (s[y] != '\0' && ((werami(s, i) != -1) || \
+			(werami(s, i) == -1 && s[i] != ' ')))
 				i++;
-		else if (s[i] == 39)
-			while ((s[y] != '\0' && werami(s, i, 39) != -1) || \
-				(s[y] != '\0' && werami(s, i, 39) == -1 && s[i] != ' '))
-					i++;
 		else
 			while (s[y] != '\0' && s[i++] != ' ')
-			{
-				if (s[i] == '"')
-					while (werami(s, i, '"') != -1)
+				if (s[i] == 34 || s[i] == 39)
+					while (werami(s, i) != -1)
 						i++;
-			}
 	}
 	dest[x] = NULL;
 	return (dest);
@@ -140,12 +125,11 @@ char	**custom_split(char const *s)
 	char	**dest;
 
 	x = 0;
-	len_arr = len_arr_split(s);
-	if (len_arr == -1)
-		return (NULL);
-	//controllo sugli heredoc ataccati
 	s = here_glued((char *)s);
 	if (!s)
+		return (NULL);
+	len_arr = len_arr_split(s);
+	if (len_arr == -1)
 		return (NULL);
 	dest = (char **) malloc(sizeof(char *) * (len_arr + 1));
 	if (!dest)
