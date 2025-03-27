@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 15:59:46 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/26 12:01:39 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*parse_cmd(char *argv, char **env)
 			return (freemtr(path), command);
 		free(command);
 	}
-	return (free(argv), freemtr(path), NULL);
+	return (freemtr(path), NULL);
 }
 
 //crea una matrice con cmd e flag
@@ -131,7 +131,7 @@ int	is_builtin(t_token *tree, char **env)
 	if (ft_strncmp(tree->str, "env", 3) == 0)
 		return (ft_env(env));
 	if (ft_strncmp(tree->str, "export", 7) == 0)
-		return (ft_export(env, *(tree)));
+		return (ft_export(&env, tree));
 	if (ft_strncmp(tree->str, "exit", 4) == 0)
 		return (ft_exit(tree));
 	if (ft_strncmp(tree->str, "echo", 4) == 0)
@@ -140,6 +140,8 @@ int	is_builtin(t_token *tree, char **env)
 		return (ft_cd(tree->next->str));
 	if (ft_strncmp(tree->str, "pwd", 3) == 0)
 		return (ft_pwd());
+	if (ft_strncmp(tree->str, "unset", 5) == 0)
+		return (ft_unset(tree, &env));
 	return (0);
 }
 
@@ -171,7 +173,7 @@ void	execute(t_token *tree, char **env)
 	redir_check(*tree);
 	tree = find_comand(tree);
 	if (is_builtin(tree, env) == 1)
-		return ;
+		return (reset_fd(std));
 	pid = fork();
 	if (pid == 0)
 		exec_cmd(tree, env);
@@ -193,9 +195,9 @@ int main(int arc, char **arg, char **env)
 	while (arg[++i])
 	{
 		if (i == 1)
-			tree[i].type = HEREDOC;
+			tree[i].type = REDIR_1;
 		else if (i == 2)
-			tree[i].type = REDIR_3;
+			tree[i].type = REDIR_2;
 		else if (i == 3)
 			tree[i].type = COMMAND;
 		else
@@ -205,6 +207,7 @@ int main(int arc, char **arg, char **env)
 		tree[i].prev = &tree[i - 1];
 	}
 	execute(&tree[1], env);
+	// ft_env(env);
 	return (0);
 }
 //cc execute/execute.c execute/execute_utils.c builtin/builtin.c builtin/builtin_env.c libft/libft.a get_next_line/libget_next_line.a -g
