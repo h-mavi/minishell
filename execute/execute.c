@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/28 10:13:35 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/28 16:26:33 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	is_builtin(t_token *tree, char ***env)
 	if (ft_strncmp(tree->str, "exit", 4) == 0)
 		return (ft_exit(tree));
 	if (ft_strncmp(tree->str, "echo", 4) == 0)
-		return (ft_echo(tree));
+		return (ft_echo(tree->next));
 	if (ft_strncmp(tree->str, "cd", 2) == 0)
 		return (ft_cd(tree->next->str));
 	if (ft_strncmp(tree->str, "pwd", 3) == 0)
@@ -207,8 +207,9 @@ int main(int arc, char **arg, char **env)
 		tree[i].prev = &tree[i - 1];
 	}
 	execute(&tree[1], &env);
-	ft_env(env);
-	free(env);
+	// ft_pwd();
+	// ft_env(env);
+	// free(env);
 	return (0);
 }
 //cc execute/execute.c execute/execute_utils.c builtin/builtin.c builtin/builtin_env.c libft/libft.a get_next_line/libget_next_line.a -g

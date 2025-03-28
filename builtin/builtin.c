@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 15:52:08 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/28 16:36:14 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,43 @@ int	ft_cd(const char	*dir)
 	return (1);
 }
 
+int	is_n(const char *str, char c)
+{
+	int		i;
+	char	*cmp;
+
+	i = 0;
+	cmp = ft_calloc(ft_strlen(str), sizeof(char));
+	while (str[i])
+	{
+		cmp[i] = c;
+		i++;
+	}
+	if (ft_strncmp(str, cmp, ft_strlen(cmp)) == 0)
+		return (free(cmp), 0);
+	return (free(cmp), 1);
+}
+
 int	ft_echo(t_token *tree)
 {
-	printf("%s", tree->next->str);
+	bool	n;
+
+	n = 1;
+	if (tree->str[0] == '-' && tree->str[1] == 'n' && \
+	is_n(&tree->str[1], 'n') == 0)
+	{
+		n = 0;
+		tree = tree->next;
+	}
+	printf("%s", tree->str);
+	tree = tree->next;
+	while (tree->next)
+	{
+		if (tree->type == FLAG)
+			printf(" %s", tree->str);
+		tree = tree->next;
+	}
+	if (n == 1)
+		printf("\n");
 	return (1);
 }
