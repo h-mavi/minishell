@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:18:52 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/24 14:22:44 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:23:58 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@
 // >>
 # define REDIR_3 6
 # define HEREDOC 7
+
+typedef struct s_struct
+{
+	int		exit_code;
+	bool	mod_env;
+}	t_struct;
+
 
 typedef struct s_token
 {

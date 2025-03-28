@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/26 14:33:09 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/28 10:13:35 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ int main(int arc, char **arg, char **env)
 	i = 0;
 	if (arc < 3)
 	{
-		printf("MA SEI UN COGLIONE?!?!?!");
+		printf("MA SEI UN COGLIONE!?!?!?");
 		exit(1);
 	}
 	tree = ft_calloc(arc + 1, sizeof(t_token));
@@ -208,6 +208,7 @@ int main(int arc, char **arg, char **env)
 	}
 	execute(&tree[1], &env);
 	ft_env(env);
+	free(env);
 	return (0);
 }
 //cc execute/execute.c execute/execute_utils.c builtin/builtin.c builtin/builtin_env.c libft/libft.a get_next_line/libget_next_line.a -g
