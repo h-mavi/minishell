@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/26 12:05:21 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/26 14:43:38 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	**export_param(t_token *tree, char **env)
 	}
 	new_env[i] = ft_calloc(ft_strlen(tree->next->str), sizeof(char));
 	new_env[i] = (char *)tree->next->str;
+	new_env[i + 1] = NULL;
 	new_env = temp;
 	return (new_env);
 }

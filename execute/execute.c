@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/26 12:01:39 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/03/26 14:33:09 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,13 @@ char	**full_cmd(t_token *tree)
 }
 
 //controllo se il comando e' una builtin e nel caso eseguo
-int	is_builtin(t_token *tree, char **env)
+int	is_builtin(t_token *tree, char ***env)
 {
 //devono essere tutte int e non devo usare exit
 	if (ft_strncmp(tree->str, "env", 3) == 0)
-		return (ft_env(env));
+		return (ft_env(*env));
 	if (ft_strncmp(tree->str, "export", 7) == 0)
-		return (ft_export(&env, tree));
+		return (ft_export(env, tree));
 	if (ft_strncmp(tree->str, "exit", 4) == 0)
 		return (ft_exit(tree));
 	if (ft_strncmp(tree->str, "echo", 4) == 0)
@@ -141,7 +141,7 @@ int	is_builtin(t_token *tree, char **env)
 	if (ft_strncmp(tree->str, "pwd", 3) == 0)
 		return (ft_pwd());
 	if (ft_strncmp(tree->str, "unset", 5) == 0)
-		return (ft_unset(tree, &env));
+		return (ft_unset(tree, env));
 	return (0);
 }
 
@@ -161,7 +161,7 @@ void	exec_cmd(t_token *tree, char **env)
 }
 
 //funzione principale che richiama le altre
-void	execute(t_token *tree, char **env)
+void	execute(t_token *tree, char ***env)
 {
 	int	pid;
 	int	std[2];
@@ -176,7 +176,7 @@ void	execute(t_token *tree, char **env)
 		return (reset_fd(std));
 	pid = fork();
 	if (pid == 0)
-		exec_cmd(tree, env);
+		exec_cmd(tree, *env);
 	reset_fd(std);
 }
 
@@ -206,8 +206,8 @@ int main(int arc, char **arg, char **env)
 		tree[i].next = &tree[i + 1];
 		tree[i].prev = &tree[i - 1];
 	}
-	execute(&tree[1], env);
-	// ft_env(env);
+	execute(&tree[1], &env);
+	ft_env(env);
 	return (0);
 }
 //cc execute/execute.c execute/execute_utils.c builtin/builtin.c builtin/builtin_env.c libft/libft.a get_next_line/libget_next_line.a -g
