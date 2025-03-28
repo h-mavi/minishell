@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/26 10:33:22 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:54:20 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_if_cmd(char *orig, char **env)
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 			path = ft_split(env[i] + 5, ':');
 	if (!path)
-		return (2); //ERROR
+		return (-1); //ERROR
 	i = -1;
 	while (path[++i])
 	{
@@ -34,7 +34,7 @@ int	check_if_cmd(char *orig, char **env)
 		cmd = ft_strjoin(tmp, orig);
 		free(tmp);
 		if (access(cmd, F_OK) == 0)
-			return (free(cmd), free_arr(path), 1);
+			return (free(cmd), free_arr(path), COMMAND);
 		free(cmd);
 	}
 	free_arr(path);
@@ -44,29 +44,108 @@ int	check_if_cmd(char *orig, char **env)
 //Crea i token
 void	token_inator(char *cmd, char **env)
 {
-	char	**str;
-	// t_token *head;
 	int		i;
+	int		check;
+	t_token *head;
+	char	**str;
 
 	i = -1;
+	check = 0;
+	head = NULL;
 	str = custom_split(cmd);
 	if (!str)
 	{
-		printf("Syntax error, even number of \" or  \' \n");
+		printf("Syntax error type one\n");
 		return ;
 	}
 	while (str[++i] != NULL)
 	{
-		if (check_if_cmd(str[i], env) == 1)
+		str[i] = refine(str[i]);
+		if (check_if_cmd(str[i], env) == COMMAND && check == 0)
 		{
 			printf("'%s' e' un comando :D\n", str[i]);
-			// set_cmd_data(head);
-			// while (check_if_pipe(str[i]) != 1)
-			// //puppa
-			// ;
+			// set_cmd_data(head, str[i]);
+			// check = 1;
 		}
 		else
 			printf("'%s' non e' un comando :(\n", str[i]);
-		}
+		// else if (check_if_redir(str[i], env) == 1)
+		// 	set_redir_data(head, str[i]);
+		// else if (check_if_pipe(str[i], env) == PIPE && check == 1)
+		// {
+		// 	set_pipe_data(head, str[i]);
+		// 	check = 0;
+		// }
+		// else if (check == 1)
+		// 	set_option_data(head, str[i]);
+		// else
+		// 	return ;
+	}
+	// print_lists(head);
 	free_arr(str);
+}
+
+/* Controlla se ci sono variabili da espandere e, nel caso sia necessario, toglie apici e virgolette. */
+char *refine(char *s)
+{
+	int	i;
+
+	i = -1;
+	s = rm_app(s);
+	while (s[++i])
+	{
+		if (s[i + 1] > '$' &&  s[i + 2] > 64 && s[i + 2] < 91 && ((s[i] == '"') || (werami(s, i) == -1)))
+			espand(s);
+	}
+	return (s);
+}
+
+/* Funzione chiamata da rm_spaces che serve per riscrivere la stringa senza gli spazi in mezzo ai
+redir e il loro limiter. */
+char *rewrite(char *orig, int i, int x)
+{
+	int	y;
+	char *dest;
+
+	y = -1;
+	dest = (char *)ft_calloc(sizeof(char), (ft_strlen(orig) - x) + 1);
+	while (orig[++y])
+	{
+		dest[y] = orig[y];
+		if (i == y)
+		{
+			while (orig[++y + x])
+				dest[y] = orig[y + x];
+			y++;
+			dest[y] = '\0';
+			break ;
+		}
+	}
+	free(orig);
+	return (dest);
+}
+
+/* Serve a togliere gli apici e le virgolette inutili */
+char	*rm_app(char *s)
+{
+	int		i;
+	int		x;
+	int 	len;
+	char	*new;
+
+	i = -1;
+	len = 0;
+	while (s[++i])
+		if (werami(s, i) != 0 || (werami(s, i) == 0 && werami(s, i - 1) == 1 \
+		&& werami(s, i + 1) == 1))
+			len++;
+	i = -1;
+	x = 0;
+	new = (char *)ft_calloc(sizeof(char), len + 1);
+	while (s[++i])
+		if (werami(s, i) != 0 || (werami(s, i) == 0 && werami(s, i - 1) == 1 \
+		&& werami(s, i + 1) == 1))
+			new[x++] = s[i];
+	new[x] = '\0';
+	return (free(s), new);
 }

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/27 16:36:29 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:53:41 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,9 @@ char	**custom_split(char const *s)
 	char	**dest;
 
 	x = 0;
+	s = rm_spaces((char *)s);
+	if (!s)
+		return (NULL);
 	s = here_glued((char *)s);
 	if (!s)
 		return (NULL);
@@ -135,10 +138,29 @@ char	**custom_split(char const *s)
 	if (!dest)
 		return (NULL);
 	if (!fill(dest, s, len_arr))
-	{
-		while (x++ <= len_arr)
-			free(dest[x]);
-		return (NULL);
-	}
+		return (free_arr(dest), NULL);
 	return (dest);
+}
+
+/* Funzione che filtra la stringa per vedere se ci sono spazi extra tra le
+redir e i loro limiter. */
+char *rm_spaces(char *s)
+{
+	int	i;
+	int	x;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (find_char(s, i) > 3 && s[i + 1] == ' ')
+		{
+			x = 1;
+			while (s[i + x] == ' ')
+				x++;
+			if (find_char(s, (i + x)) != 0)
+				return (NULL); //syntax error
+			s = rewrite(s, i, x - 1);
+		}
+	}
+	return (s);
 }

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/27 16:48:51 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:46:35 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int werami(const char *s, int index)
 	return (-1);
 }
 
+/* La funzione chiamata da here_glued che divide redirection, heredoc e pipe attaccati */
 char *divide(char *s, int y)
 {
 	int	i;
@@ -67,8 +68,10 @@ char *divide(char *s, int y)
 	len = 0;
 	while (s[++i])
 	{
-		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || ((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && find_char(s, i + 1) != 0) || \
-		(find_char(s, i) == 3 && s[i + 1] != ' ')) && i <= y)
+		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
+		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
+		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
+		s[i + 1] != ' ')) && i <= y)
 			len++;
 		len++;
 	}
@@ -80,8 +83,10 @@ char *divide(char *s, int y)
 	while (s[++i])
 	{
 		end[x++] = s[i];
-		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || ((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && find_char(s, i + 1) != 0) || \
-		(find_char(s, i) == 3 && s[i + 1] != ' ')) && i <= y)
+		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
+		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
+		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
+		s[i + 1] != ' ')) && i <= y)
 			end[x++] = ' ';
 	}
 	end[x] = '\0';
@@ -89,7 +94,10 @@ char *divide(char *s, int y)
 	return (end);
 }
 
-
+/* Controlla se ci sono casi di redirection, heredoc o pipe attaccati. Nel caso ci siano li
+divide con uno spazio tramite la funzione divide, in modo che poi il custom_split
+possa dividerli in nodi seprarati. Inoltre controlla il caso di | o ; a inizio input,
+che e' un syntax error*/
 char *here_glued(char *s)
 {
 	int	i;
@@ -100,8 +108,8 @@ char *here_glued(char *s)
 			return (free(s), NULL); //syntax error
 	while (s[++i])
 	{
-		// if (((s[i] == '<' && s[i + 1] == '<' && s[i + 2] == '<' && s[i + 3] == '<') || (s[i] == '>' && s[i + 1] == '<' && s[i + 2] == '<')) && werami(s, i) != 1) //gestisce <<<<a, ><<a
-		// 	return (free(s), NULL); //syntax error
+		if (((s[i] == '<' && s[i + 1] == '<' && s[i + 2] == '<' && s[i + 3] == '<') || (s[i] == '>' && s[i + 1] == '<' && s[i + 2] == '<')) && werami(s, i) != 1) //gestisce <<<<a, ><<a
+			return (free(s), NULL); //syntax error
 		if (find_char(s, i) == 0)
 			continue ;
 		x = i;
@@ -112,9 +120,12 @@ char *here_glued(char *s)
 		}
 		while (s[x] != '\0')
 			{
-				// if (werami(s, x) != 1 && ((s[x] == '>' && s[x + 1] == '<' && s[x + 2] == '<') || (s[x] == '<' && s[x + 2] == '<' && ((s[x + 1] == '|') || (s[x + 1] == ';') || (s[x + 1] == '#') || (ft_isdigit(s[x + 1]) != 0))) || (s[x] == '<' && s[x + 1] == '<' && ((s[x + 2] == '|') || (s[x + 2] == ';') || (s[x + 2] == '#') || (ft_isdigit(s[x + 2]) != 0)))))
-				// 	return (free(s), NULL);
-				if ((((x != 0 && s[x] != ' ' && s[x] != '>' && werami(s, x) == -1) || (s[x] == 39 || s[x] == 34)) && find_char(s, x + 1) != 0) || (find_char(s, x - 1) == 3 && s[x] != ' '))
+				if (werami(s, x) != 1 && ((s[x] == '>' && s[x + 1] == '<' && s[x + 2] == '<') || (s[x] == '<' && s[x + 2] == '<' && ((s[x + 1] == '|') || (s[x + 1] == ';') || (s[x + 1] == '#') || (ft_isdigit(s[x + 1]) != 0))) || (s[x] == '<' && s[x + 1] == '<' && ((s[x + 2] == '|') || (s[x + 2] == ';') || (s[x + 2] == '#') || (ft_isdigit(s[x + 2]) != 0)))))
+					return (free(s), NULL);
+				if ((((x != 0 && s[x] != ' ' && s[x] != '>' && \
+				werami(s, x) == -1) || (s[x] == 39 || s[x] == 34)) && \
+				find_char(s, x + 1) != 0) || (find_char(s, x - 1) == 3 && \
+				s[x] != ' '))
 				{
 					s = divide(s, x);
 					break ;
@@ -124,7 +135,6 @@ char *here_glued(char *s)
 	}
 	return (s);
 }
-
 
 /* Riconosce se il carattere s[i] e' un carattere speciale:
 se returna 3 s[i] == |;
@@ -146,25 +156,3 @@ int find_char(char *s, int i)
 			return (7);
 	return (0);
 }
-
-//errori da fare : cat <|echo"ciao", cat >>|echo"ciao", cat <<|echo"ciao"
-
-
-/* Controlla i seguenti casi di syntax error:
-|||, ><<a, >>>a, >>>>a, <<<<a, <|<a, <;<a, <#<a, <5<a, <<|a, <<;a, <<#a, <<5a (NO), >|>a, >;>a, >#>a, >5>a, 
->>|a, >>;a, >>#a, >;a, >#a, <;a <#a, <|a*/
-// int	check_syntax_error(char *s, int i)
-// {
-// 	if ((s[i] == '>' && s[i + 1] == '<' && s[i + 2] == '<') || (s[i] == '<' && s[i + 1] == '>' && s[i + 2] == '>') || \
-// 	(s[i] == '<' && s[i + 2] == '<' && ((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') || (ft_isdigit(s[i + 1]) != 0))) || \ //casi <|<a, <;<a, <#<a, <5<a
-// 	(s[i] == '<' && s[i + 1] == '<' && ((s[i + 2] == '|') || (s[i + 2] == ';') || (s[i + 2] == '#') || (ft_isdigit(s[i + 2]) != 0))) || \ //casi <<|a, <<;a, <<#a, <<5a
-// 	(s[i] == '<' && s[i + 1] == '<' && s[i + 2] == '<' && s[i + 3] == '<') || (s[i] == '>' && s[i + 1] == '>' && s[i + 2] == '>' && s[i + 3] == '>') || \ //casi <<<<a, >>>>a
-// 	(s[i] == '>' && s[i + 1] == '>' && s[i + 2] == '>') ||  (s[i] == '|' && s[i + 1] == '|' && s[i + 2] == '|') || \ //caso >>>a, |||
-// 	(s[i] == '>' && s[i + 2] == '>' && ((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') || (ft_isdigit(s[i + 1]) != 0))) || \ //casi >|>a, >;>a, >#>a, >5>a
-// 	(s[i] == '>' && s[i + 1] == '>' && ((s[i + 2] == '|') || (s[i + 2] == ';') || (s[i + 2] == '#'))) || \ //casi >>|a, >>;a, >>#a
-// 	(s[i] == '>' && ((s[i + 1] == ';') || (s[i + 1] == '#'))) || (s[i] == '<' && ((s[i + 1] == ';') || (s[i + 1] == '#') || (s[i + 1] == '|'))) || \ //casi >;a, >#a, <;a <#a, <|a
-// 	)
-// }
-
-//casi |||, ><<a, <>>a, ><a, <<<<a, >>>a, <|<a, <;<a, <#<a, <1<a, <<|a, <<;a, <<#a, >|>a, >;>a, >#>a, >1>a, >>|a, >>;a, >>#a, >;a, >#a, <;a, <#a, <|a 
-//il check della sintassi la faro' dopo lo split/durante, devo sistemare i casi come "<          <   a"

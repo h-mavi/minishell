@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/27 08:06:18 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:48:30 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # include <readline/history.h>
 
 # define COMMAND 1
-# define FLAG 2
+# define FLAG 2 //option
 # define PIPE 3
 //<
 # define REDIR_1 4
@@ -55,16 +55,31 @@ typedef struct s_token
 }	t_token;
 
 //in parsing.c
-int 	check_if_cmd(char *cmd, char **env);
-void	token_inator(char *cmd, char **env);
+int 		check_if_cmd(char *cmd, char **env);
+void		token_inator(char *cmd, char **env);
+char		*refine(char *s);
+char		*rewrite(char *orig, int i, int x);
+char		*rm_app(char *s);
 
 //in parsing/pars_utils.c
-void	free_arr(char **arr);
-int 	werami(const char *s, int index);
-char	*here_glued(char *s);
-int 	find_char(char *s, int i);
+void		free_arr(char **arr);
+int 		werami(const char *s, int index);
+char		*divide(char *s, int y);
+char		*here_glued(char *s);
+int 		find_char(char *s, int i);
 
 //in parsing/pars_split.c
-char	**custom_split(char const *s);
+static int	len_arr_split(char const *arr);
+static void	frite(char *dest, int start, int len, char const *s);
+static char	**fill(char **dest, char const *s, int len_arr);
+char		**custom_split(char const *s);
+char	 	*rm_spaces(char *s);
+
+//in parsing/parsing_set_data.c
+void		set_cmd_data(t_token *head, char *str);
+void		set_option_data(t_token *head, char *str);
+void		set_pipe_data(t_token *head, char *str);
+void		set_redir_data(t_token *head, char *str);
+void		print_lists(t_token *head);
 
 #endif
