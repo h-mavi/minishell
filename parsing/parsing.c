@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/28 14:54:20 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:57:04 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,12 @@ char *refine(char *s)
 
 	i = -1;
 	s = rm_app(s);
+	if (check_error(s) == 0)
+		return (free(s), NULL);
 	while (s[++i])
 	{
 		if (s[i + 1] > '$' &&  s[i + 2] > 64 && s[i + 2] < 91 && ((s[i] == '"') || (werami(s, i) == -1)))
-			espand(s);
+			espand(s);//funzione da fare
 	}
 	return (s);
 }
@@ -125,7 +127,7 @@ char *rewrite(char *orig, int i, int x)
 	return (dest);
 }
 
-/* Serve a togliere gli apici e le virgolette inutili */
+/* Serve a togliere gli apici, le virgolette e i back-slash inutili */
 char	*rm_app(char *s)
 {
 	int		i;
@@ -136,16 +138,31 @@ char	*rm_app(char *s)
 	i = -1;
 	len = 0;
 	while (s[++i])
-		if (werami(s, i) != 0 || (werami(s, i) == 0 && werami(s, i - 1) == 1 \
-		&& werami(s, i + 1) == 1))
+		if ((werami(s, i) != 0 && s[i] != 92) || ((werami(s, i) == 0 || \
+		s[i] == 92) && werami(s, i - 1) == 1 && werami(s, i + 1) == 1))
 			len++;
 	i = -1;
 	x = 0;
 	new = (char *)ft_calloc(sizeof(char), len + 1);
 	while (s[++i])
-		if (werami(s, i) != 0 || (werami(s, i) == 0 && werami(s, i - 1) == 1 \
-		&& werami(s, i + 1) == 1))
+		if ((werami(s, i) != 0 && s[i] != 92) || ((werami(s, i) == 0 || \
+		s[i] == 92) && werami(s, i - 1) == 1 && werami(s, i + 1) == 1))
 			new[x++] = s[i];
 	new[x] = '\0';
 	return (free(s), new);
 }
+
+
+
+int	check_error(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		
+	}
+}
+
+//casi |||, <>>a, ><a, >>>a, <| <a, <; <a, <# <a, <1 <a, >|>a, >;>a, >#>a, >1>a, >>|a, >>;a, >>#a, >;a, >#a, <;a, <#a, <|a 

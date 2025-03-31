@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/28 14:48:30 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:57:36 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ char		*here_glued(char *s);
 int 		find_char(char *s, int i);
 
 //in parsing/pars_split.c
-static int	len_arr_split(char const *arr);
-static void	frite(char *dest, int start, int len, char const *s);
-static char	**fill(char **dest, char const *s, int len_arr);
 char		**custom_split(char const *s);
 char	 	*rm_spaces(char *s);
+// static int	len_arr_split(char const *arr);
+// static void	frite(char *dest, int start, int len, char const *s);
+// static char	**fill(char **dest, char const *s, int len_arr);
 
 //in parsing/parsing_set_data.c
 void		set_cmd_data(t_token *head, char *str);

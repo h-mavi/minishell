@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/28 14:53:41 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:03:13 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,12 @@ char *rm_spaces(char *s)
 			x = 1;
 			while (s[i + x] == ' ')
 				x++;
-			if (find_char(s, (i + x)) != 0)
+			if (find_char(s, (i + x)) != 0 || s[i + x] == '\0')
 				return (NULL); //syntax error
 			s = rewrite(s, i, x - 1);
 		}
+		if (find_char(s, i) > 3 && s[i + 1] == '\0')
+			return (NULL);
 	}
 	return (s);
 }

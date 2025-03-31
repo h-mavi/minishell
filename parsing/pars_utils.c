@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/28 14:46:35 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:23:59 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ char *divide(char *s, int y)
 	{
 		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
 		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
-		s[i + 1] != ' ')) && i <= y)
+		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 &&  werami(s, i) == -1 && ((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
+		// find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && s[i + 1] != ' ') || (find_char(s, i) == 3 && s[i - 1] != ' ')) && i <= y)
 			len++;
 		len++;
 	}
@@ -85,8 +85,7 @@ char *divide(char *s, int y)
 		end[x++] = s[i];
 		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
 		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
-		s[i + 1] != ' ')) && i <= y)
+		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 &&  werami(s, i) == -1 && ((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
 			end[x++] = ' ';
 	}
 	end[x] = '\0';
@@ -119,19 +118,20 @@ char *here_glued(char *s)
 				x++;
 		}
 		while (s[x] != '\0')
+		{
+			if (werami(s, x) != 1 && ((s[x] == '>' && s[x + 1] == '<' && s[x + 2] == '<') || (s[x] == '<' && s[x + 2] == '<' && ((s[x + 1] == '|') || (s[x + 1] == ';') || (s[x + 1] == '#') || (ft_isdigit(s[x + 1]) != 0))) || (s[x] == '<' && s[x + 1] == '<' && ((s[x + 2] == '|') || (s[x + 2] == ';') || (s[x + 2] == '#') || (ft_isdigit(s[x + 2]) != 0)))))
+				return (free(s), NULL);
+			if ((((x != 0 && s[x] != ' ' && s[x] != '>' && \
+			werami(s, x) == -1) || (s[x] == 39 || s[x] == 34)) && \
+			find_char(s, x + 1) != 0) || (find_char(s, x - 1) == 3 && \
+			s[x] != ' ') || (find_char(s, x) == 3))
 			{
-				if (werami(s, x) != 1 && ((s[x] == '>' && s[x + 1] == '<' && s[x + 2] == '<') || (s[x] == '<' && s[x + 2] == '<' && ((s[x + 1] == '|') || (s[x + 1] == ';') || (s[x + 1] == '#') || (ft_isdigit(s[x + 1]) != 0))) || (s[x] == '<' && s[x + 1] == '<' && ((s[x + 2] == '|') || (s[x + 2] == ';') || (s[x + 2] == '#') || (ft_isdigit(s[x + 2]) != 0)))))
-					return (free(s), NULL);
-				if ((((x != 0 && s[x] != ' ' && s[x] != '>' && \
-				werami(s, x) == -1) || (s[x] == 39 || s[x] == 34)) && \
-				find_char(s, x + 1) != 0) || (find_char(s, x - 1) == 3 && \
-				s[x] != ' '))
-				{
-					s = divide(s, x);
-					break ;
-				}
-				x++;
+				s = divide(s, x);
+				i = x;
+				break ;
 			}
+			x++;
+		}
 	}
 	return (s);
 }
