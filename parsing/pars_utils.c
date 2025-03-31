@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/31 13:23:59 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:40:40 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ char *divide(char *s, int y)
 	{
 		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
 		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 &&  werami(s, i) == -1 && ((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
-		// find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && s[i + 1] != ' ') || (find_char(s, i) == 3 && s[i - 1] != ' ')) && i <= y)
+		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
+		werami(s, i) == -1 && s[i + 1] != '|' && s[i - 1] != '|' && \
+		((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
 			len++;
 		len++;
 	}
@@ -85,7 +86,9 @@ char *divide(char *s, int y)
 		end[x++] = s[i];
 		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
 		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 &&  werami(s, i) == -1 && ((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
+		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
+		werami(s, i) == -1 && s[i + 1] != '|' && s[i - 1] != '|' && \
+		((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
 			end[x++] = ' ';
 	}
 	end[x] = '\0';
@@ -107,10 +110,11 @@ char *here_glued(char *s)
 			return (free(s), NULL); //syntax error
 	while (s[++i])
 	{
-		if (((s[i] == '<' && s[i + 1] == '<' && s[i + 2] == '<' && s[i + 3] == '<') || (s[i] == '>' && s[i + 1] == '<' && s[i + 2] == '<')) && werami(s, i) != 1) //gestisce <<<<a, ><<a
-			return (free(s), NULL); //syntax error
 		if (find_char(s, i) == 0)
 			continue ;
+		if (werami(s, i) == -1 && ft_isdigit(s[i + 1]) != 0 && \
+		((s[i] == '<' && s[i + 2] == '<') || (s[i] == '>' && s[i + 2] == '>')))
+			return (free(s), NULL);
 		x = i;
 		if (s[i - 1] == 39 || s[i - 1] == 34)
 		{
@@ -119,8 +123,6 @@ char *here_glued(char *s)
 		}
 		while (s[x] != '\0')
 		{
-			if (werami(s, x) != 1 && ((s[x] == '>' && s[x + 1] == '<' && s[x + 2] == '<') || (s[x] == '<' && s[x + 2] == '<' && ((s[x + 1] == '|') || (s[x + 1] == ';') || (s[x + 1] == '#') || (ft_isdigit(s[x + 1]) != 0))) || (s[x] == '<' && s[x + 1] == '<' && ((s[x + 2] == '|') || (s[x + 2] == ';') || (s[x + 2] == '#') || (ft_isdigit(s[x + 2]) != 0)))))
-				return (free(s), NULL);
 			if ((((x != 0 && s[x] != ' ' && s[x] != '>' && \
 			werami(s, x) == -1) || (s[x] == 39 || s[x] == 34)) && \
 			find_char(s, x + 1) != 0) || (find_char(s, x - 1) == 3 && \
@@ -156,3 +158,7 @@ int find_char(char *s, int i)
 			return (7);
 	return (0);
 }
+
+//errori da gestire= pipe come ultimo input e' errore, || deve dare errore anche come |          |
+//il primo caso di apre una quote, noi semplice erroe, l'altro non fa un cazzo.
+//li gestisco una volta che faccio i nodi etc

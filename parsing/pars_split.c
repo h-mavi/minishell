@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/31 13:03:13 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:27:47 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char	**custom_split(char const *s)
 	if (!s)
 		return (NULL);
 	s = here_glued((char *)s);
-	if (!s)
+	if (!s || check_error((char *)s) == 0)
 		return (NULL);
 	len_arr = len_arr_split(s);
 	if (len_arr == -1)

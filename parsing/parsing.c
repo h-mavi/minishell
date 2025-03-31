@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/31 13:57:04 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:33:04 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@ int	check_if_cmd(char *orig, char **env)
 	i = -1;
 	path = NULL;
 	while (env[++i])
+	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		{
 			path = ft_split(env[i] + 5, ':');
+			break ;
+		}
+	}
 	if (!path)
 		return (-1); //ERROR
 	i = -1;
@@ -37,8 +42,7 @@ int	check_if_cmd(char *orig, char **env)
 			return (free(cmd), free_arr(path), COMMAND);
 		free(cmd);
 	}
-	free_arr(path);
-	return (0);
+	return (free_arr(path), 0);
 }
 
 //Crea i token
@@ -61,6 +65,11 @@ void	token_inator(char *cmd, char **env)
 	while (str[++i] != NULL)
 	{
 		str[i] = refine(str[i]);
+		if (!str[i])
+		{
+			printf("Syntax error type one\n");
+			return ;
+		}
 		if (check_if_cmd(str[i], env) == COMMAND && check == 0)
 		{
 			printf("'%s' e' un comando :D\n", str[i]);
@@ -92,12 +101,10 @@ char *refine(char *s)
 
 	i = -1;
 	s = rm_app(s);
-	if (check_error(s) == 0)
-		return (free(s), NULL);
 	while (s[++i])
 	{
-		if (s[i + 1] > '$' &&  s[i + 2] > 64 && s[i + 2] < 91 && ((s[i] == '"') || (werami(s, i) == -1)))
-			espand(s);//funzione da fare
+		// if (s[i + 1] > '$' &&  s[i + 2] > 64 && s[i + 2] < 91 && ((s[i] == '"') || (werami(s, i) == -1)))
+		// 	espand(s);//funzione da fare
 	}
 	return (s);
 }
@@ -152,8 +159,11 @@ char	*rm_app(char *s)
 	return (free(s), new);
 }
 
-
-
+/* Controlla i seguenti errori: 
+|||, <>>a, ><a, >>>a, <<<<a,
+<|<a, <;<a, <#<a, >|>a, >;>a, >#>a,
+>>|a, >>;a, >>#a, <<|a, <<;a, <<#a,
+>;a, >#a, <|a, <;a, <#a, */
 int	check_error(char *s)
 {
 	int	i;
@@ -161,8 +171,17 @@ int	check_error(char *s)
 	i = -1;
 	while (s[++i])
 	{
-		
+		if (s[i] == '|' && s[i + 1] == '|' && werami(s, i) == -1)
+			return (0);
+		if (s[i] == '<' && werami(s, i) == -1 && \
+			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') \
+			|| (s[i + 1] == '<' && s[i + 2] == '<' && s[i + 3] == '<') || \
+			(s[i + 1] == '>' && s[i + 2] == '>')))
+			return (0);
+		if (s[i] == '>' && werami(s, i) == -1 && \
+			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') \
+			|| (s[i + 1] == '<') || (s[i + 1] == '>' && s[i + 2] == '>')))
+			return (0);
 	}
+	return (1);
 }
-
-//casi |||, <>>a, ><a, >>>a, <| <a, <; <a, <# <a, <1 <a, >|>a, >;>a, >#>a, >1>a, >>|a, >>;a, >>#a, >;a, >#a, <;a, <#a, <|a 

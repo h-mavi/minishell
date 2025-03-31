@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/31 13:57:36 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:37:37 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void		token_inator(char *cmd, char **env);
 char		*refine(char *s);
 char		*rewrite(char *orig, int i, int x);
 char		*rm_app(char *s);
+int			check_error(char *s);
 
 //in parsing/pars_utils.c
 void		free_arr(char **arr);
