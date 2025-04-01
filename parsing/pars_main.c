@@ -6,13 +6,13 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 11:20:15 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:28:41 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-// gestisce i segnali con SIGINT (^c)
+/* gestisce i segnali con SIGINT (^c) */
 void	routine(int sig)
 {
 	if (sig == SIGINT)
@@ -24,7 +24,7 @@ void	routine(int sig)
 	}
 }
 
-//Crea i token
+/* Crea i token */
 void	token_inator(char *cmd, char **env)
 {
 	int		i;
@@ -51,25 +51,20 @@ void	token_inator(char *cmd, char **env)
 		}
 		if (check_if_cmd(str[i], env) == COMMAND && check == 0)
 		{
-			printf("'%s' e' un comando :D\n", str[i]);
-			// set_cmd_data(head, str[i]);
-			// check = 1;
+			set_cmd_data(&head, str[i]);
+			check = 1;
 		}
-		else
-			printf("'%s' non e' un comando :(\n", str[i]);
-		// else if (check_if_redir(str[i], env) == 1)
-		// 	set_redir_data(head, str[i]);
-		// else if (check_if_pipe(str[i], env) == PIPE && check == 1)
-		// {
-		// 	set_pipe_data(head, str[i]);
-		// 	check = 0;
-		// }
-		// else if (check == 1)
-		// 	set_option_data(head, str[i]);
-		// else
-		// 	return ;
+		else if (find_char(str[i], 0) != 3 && find_char(str[i], 0) != 0)
+			set_redir_data(&head, str[i]);
+		else if (find_char(str[i], 0) == PIPE && check == 1)
+		{
+			set_pipe_data(&head, str[i]);
+			check = 0;
+		}
+		else if (check == 1)
+			set_option_data(&head, str[i]);
 	}
-	// print_lists(head);
+	print_lists(head);
 	free_arr(str);
 }
 

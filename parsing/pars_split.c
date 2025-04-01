@@ -6,13 +6,13 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 09:03:26 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:46:41 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-//return il numero di elementi presenti nell'input
+/* returna il numero di elementi presenti nell'input */
 static int	len_arr_split(char const *arr)
 {
 	int	i;

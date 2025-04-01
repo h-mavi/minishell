@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 14:23:50 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:22:15 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int 		check_if_cmd(char *cmd, char **env);
 
 
 //in parsing/parsing_set_data.c
-void		set_cmd_data(t_token *head, char *str);
-void		set_option_data(t_token *head, char *str);
-void		set_pipe_data(t_token *head, char *str);
-void		set_redir_data(t_token *head, char *str);
+void		set_cmd_data(t_token **head, char *str);
+void		set_option_data(t_token **head, char *str);
+void		set_pipe_data(t_token **head, char *str);
+void		set_redir_data(t_token **head, char *str);
 void		print_lists(t_token *head);
 
 #endif

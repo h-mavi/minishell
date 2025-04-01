@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/01 14:35:21 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:46:03 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*rm_app(char *s)
 	return (free(s), new);
 }
 
+/* Serve a togliere i $ nel caso i cui non vadano stampati, es. $"USER" */
 char *rm_dollar(char *s)
 {
 	int		i;
@@ -88,7 +89,7 @@ char *refine(char *s, char **env)
 	return (s);
 }
 
-//Controlla se la stringa datagli corrisponde ad un comando
+/* Controlla se la stringa datagli corrisponde ad un comando */
 int	check_if_cmd(char *orig, char **env)
 {
 	int		i;
