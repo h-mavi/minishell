@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/28 16:26:33 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/01 16:23:39 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	heredoc(t_token *tree)
 }
 
 //redirige i file
-//controllo su heredoc e pensa a come controllare se gli elementi sonon comandi
 void	redir_check(t_token tree)
 {
 	int	file;
@@ -118,7 +117,7 @@ char	**full_cmd(t_token *tree)
 	while(tree->next)
 	{
 		if (tree->type == FLAG || tree->type == COMMAND)
-			mtr[i++] = (char *)tree->str;
+			mtr[i++] = ft_strdup(tree->str);
 		tree = tree->next;
 	}
 	return (mtr);
@@ -128,20 +127,23 @@ char	**full_cmd(t_token *tree)
 int	is_builtin(t_token *tree, char ***env)
 {
 //devono essere tutte int e non devo usare exit
-	if (ft_strncmp(tree->str, "env", 3) == 0)
+//ft_strncmp non va bene devo rifarla
+	if (ft_compare(tree->str, "env") == 0)
 		return (ft_env(*env));
-	if (ft_strncmp(tree->str, "export", 7) == 0)
-		return (ft_export(env, tree));
-	if (ft_strncmp(tree->str, "exit", 4) == 0)
+	if (ft_compare(tree->str, "export") == 0)
+		return (ft_export(env, tree->next));
+	if (ft_compare(tree->str, "exit") == 0)
 		return (ft_exit(tree));
-	if (ft_strncmp(tree->str, "echo", 4) == 0)
+	if (ft_compare(tree->str, "echo") == 0)
 		return (ft_echo(tree->next));
-	if (ft_strncmp(tree->str, "cd", 2) == 0)
+	if (ft_compare(tree->str, "cd") == 0)
 		return (ft_cd(tree->next->str));
-	if (ft_strncmp(tree->str, "pwd", 3) == 0)
+	if (ft_compare(tree->str, "pwd") == 0)
 		return (ft_pwd());
-	if (ft_strncmp(tree->str, "unset", 5) == 0)
-		return (ft_unset(tree, env));
+	if (ft_compare(tree->str, "unset") == 0)
+		return (ft_unset(tree->next, env));
+	else
+		perror("negretti affamati ahahahahahah");
 	return (0);
 }
 
@@ -157,7 +159,7 @@ void	exec_cmd(t_token *tree, char **env)
 		path = arg[0];
 	execve(path, arg, env);
 	perror("command not found");
-	return (freemtr(arg), exit(1));
+	return (freemtr(arg), freemtr(env), exit(1));
 }
 
 //funzione principale che richiama le altre
@@ -183,6 +185,7 @@ void	execute(t_token *tree, char ***env)
 int main(int arc, char **arg, char **env)
 {
 	t_token	*tree;
+	char	**new_env;
 	int		i;
 
 	i = 0;
@@ -191,6 +194,13 @@ int main(int arc, char **arg, char **env)
 		printf("MA SEI UN COGLIONE!?!?!?");
 		exit(1);
 	}
+	new_env = ft_calloc(ft_matrixlen(env) + 1, sizeof(char *));
+	while (env[i])
+	{
+		new_env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	i = 0;
 	tree = ft_calloc(arc + 1, sizeof(t_token));
 	while (arg[++i])
 	{
@@ -206,10 +216,10 @@ int main(int arc, char **arg, char **env)
 		tree[i].next = &tree[i + 1];
 		tree[i].prev = &tree[i - 1];
 	}
-	execute(&tree[1], &env);
+	execute(&tree[1], &new_env);
 	// ft_pwd();
-	// ft_env(env);
-	// free(env);
+	// ft_env(new_env);
+	freemtr(new_env);
 	return (0);
 }
-//cc execute/execute.c execute/execute_utils.c builtin/builtin.c builtin/builtin_env.c libft/libft.a get_next_line/libget_next_line.a -g
+//cc execute/execute.c execute/execute_utils.c builtin/builtin_env_controls.c builtin/builtin.c builtin/builtin_env.c libft/libft.a get_next_line/libget_next_line.a -g

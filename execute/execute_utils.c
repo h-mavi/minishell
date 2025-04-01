@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 13:56:21 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/01 16:16:16 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	file_control(t_token *tree, int file, int std)
 	{
 		// free_list(tree);//da creare ancora
 		perror("filed to open the file");
-		exit(1);
+		exit(1);//da cambiare per non far chiudere minishell
 	}
 	dup_file(file, std);
 }
@@ -75,6 +75,8 @@ void	freemtr(char **mtr)
 		free(mtr[i]);
 		i++;
 	}
+	free(mtr[i]);
+	free(mtr);
 }
 
 //funzione ausiliaria che ripristina le stdfds
@@ -84,4 +86,22 @@ void	reset_fd(int *std)
 	dup2(std[1], 1);
 	close(std[0]);
 	close(std[1]);
+}
+
+//funzione ausiliaria ch emi serve per comparare il nome dei comandi alle builtin
+int	ft_compare(const char *s1, const char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (1);
+		i++;
+	}
+	if (s1[i] != s2[i])
+		return (1);
+	else
+		return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/25 14:28:36 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/01 15:25:17 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ t_token	*find_comand(t_token *tree);
 int		control_str(char *str, const char *limiter);
 void	freemtr(char **mtr);
 void	reset_fd(int *std);
+int		ft_compare(const char *s1, const char *s2);
 
 #endif

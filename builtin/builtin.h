@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/26 11:36:40 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/01 10:16:13 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ int	ft_pwd();
 int	ft_cd(const char *dir);
 int	ft_echo(t_token *tree);
 int	ft_unset(t_token *tree, char ***env);
+int	control_variable(const char *var);
+int	new_variable(const char *var, char **env);
 
 #endif
