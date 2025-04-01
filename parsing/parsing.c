@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/01 09:05:50 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:35:21 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,54 @@ char	*rm_app(char *s)
 	return (free(s), new);
 }
 
-/* Controlla se ci sono variabili da espandere e, nel caso sia necessario, toglie apici e virgolette. */
-char *refine(char *s)
+char *rm_dollar(char *s)
 {
-	int	i;
+	int		i;
+	int		x;
+	char	*tmp;
 
 	i = -1;
-	s = rm_app(s);
+	x = 0;
+	while (s[++i])
+		if (s[i] != '$')
+			x++;
+	tmp = (char *)ft_calloc(x + 1, sizeof(char));
+	if (!tmp)
+		return (NULL);
+	i = -1;
+	x = 0;
+	while (s[++i])
+		if (s[i] != '$')
+			tmp[x++] = s[i];
+	tmp[x] = '\0';
+	return (free(s), tmp);
+}
+
+/* Controlla se ci sono variabili da espandere e, nel caso sia necessario, toglie apici e virgolette. */
+char *refine(char *s, char **env)
+{
+	int	i;
+	int	x;
+
+	i = -1;
+	x = 0;
 	while (s[++i])
 	{
-		// if (s[i + 1] > '$' &&  s[i + 2] > 64 && s[i + 2] < 91 && ((s[i] == '"') || (werami(s, i) == -1)))
-		// 	espand(s);//funzione da fare
+		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
+			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
+			s = espand(s, env);
+		else if(s[i] == '"' && s[i + 1] == '$' && \
+			((ft_isalpha(s[i + 2]) != 0) || (s[i + 2] == '_')))
+		{
+			s = rm_app(s);
+			s = espand(s, env);
+			x++;
+		}
+		else if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
+			s = rm_dollar(s);
 	}
+	if (x == 0)
+		s = rm_app(s);
 	return (s);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 09:11:42 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:23:50 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char		*rewrite(char *orig, int i, int x);
 char	 	*rm_spaces(char *s);
 char		*divide(char *s, int y);
 char		*here_glued(char *s);
+char		*espand(char *s, char **env);
 
 //in parsing/pars_utils.c
 void		free_arr(char **arr);
@@ -79,7 +80,8 @@ int			check_error(char *s);
 
 //in parsing/parsing.c
 char		*rm_app(char *s);
-char		*refine(char *s);
+char		*refine(char *s, char **env);
+char 		*rm_dollar(char *s);
 int 		check_if_cmd(char *cmd, char **env);
 
 

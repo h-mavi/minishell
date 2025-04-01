@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 09:08:52 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:02:26 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char *rm_spaces(char *s)
 	}
 	return (s);
 }
-
 
 /* La funzione chiamata da here_glued che divide redirection, heredoc e pipe attaccati */
 char *divide(char *s, int y)
@@ -143,4 +142,25 @@ char *here_glued(char *s)
 		}
 	}
 	return (s);
+}
+
+char	*espand(char *s, char **env)
+{
+	int		i;
+	char	*path;
+
+	i = -1;
+	path = NULL;
+	while (env[++i])
+	{
+		if (ft_strncmp(env[i], s + 1, ft_strlen(s) - 1) == 0)
+		{
+			path = ft_strdup(env[i] + ft_strlen(s));
+			break ;
+		}
+	}
+	free(s);
+	if (!path)
+		return (NULL);
+	return (path);
 }

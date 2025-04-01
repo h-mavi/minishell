@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:18:52 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/28 15:31:25 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/01 14:39:09 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@
 typedef struct s_struct
 {
 	int		exit_code;
-	bool	is_edit;
 }	t_struct;
 
 

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 09:15:20 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/01 11:20:15 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	token_inator(char *cmd, char **env)
 	}
 	while (str[++i] != NULL)
 	{
-		str[i] = refine(str[i]);
+		str[i] = refine(str[i], env);
 		if (!str[i])
 		{
 			printf("Syntax error type one\n");
