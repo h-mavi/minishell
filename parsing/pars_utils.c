@@ -6,13 +6,13 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/31 17:40:40 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:46:18 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-//Serve a liberare la memoria di una matrice
+/* Serve a liberare la memoria di una matrice */
 void	free_arr(char **arr)
 {
 	int	i;
@@ -56,88 +56,6 @@ int werami(const char *s, int index)
 	return (-1);
 }
 
-/* La funzione chiamata da here_glued che divide redirection, heredoc e pipe attaccati */
-char *divide(char *s, int y)
-{
-	int	i;
-	int x;
-	int	len;
-	char *end;
-
-	i = -1;
-	len = 0;
-	while (s[++i])
-	{
-		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
-		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
-		werami(s, i) == -1 && s[i + 1] != '|' && s[i - 1] != '|' && \
-		((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
-			len++;
-		len++;
-	}
-	end = (char *)ft_calloc((len + 1) , sizeof(char));
-	if (!end)
-		return (NULL);
-	i = -1;
-	x = 0;
-	while (s[++i])
-	{
-		end[x++] = s[i];
-		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
-		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
-		werami(s, i) == -1 && s[i + 1] != '|' && s[i - 1] != '|' && \
-		((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
-			end[x++] = ' ';
-	}
-	end[x] = '\0';
-	free(s);
-	return (end);
-}
-
-/* Controlla se ci sono casi di redirection, heredoc o pipe attaccati. Nel caso ci siano li
-divide con uno spazio tramite la funzione divide, in modo che poi il custom_split
-possa dividerli in nodi seprarati. Inoltre controlla il caso di | o ; a inizio input,
-che e' un syntax error*/
-char *here_glued(char *s)
-{
-	int	i;
-	int	x;
-
-	i = -1;
-	if (s[0] == '|' || s[0] == ';') //gestisce | e ; all'inizio dell'input, che sono syntax error diretti
-			return (free(s), NULL); //syntax error
-	while (s[++i])
-	{
-		if (find_char(s, i) == 0)
-			continue ;
-		if (werami(s, i) == -1 && ft_isdigit(s[i + 1]) != 0 && \
-		((s[i] == '<' && s[i + 2] == '<') || (s[i] == '>' && s[i + 2] == '>')))
-			return (free(s), NULL);
-		x = i;
-		if (s[i - 1] == 39 || s[i - 1] == 34)
-		{
-			while (werami(s, x) != 0 && s[x] != '\0')
-				x++;
-		}
-		while (s[x] != '\0')
-		{
-			if ((((x != 0 && s[x] != ' ' && s[x] != '>' && \
-			werami(s, x) == -1) || (s[x] == 39 || s[x] == 34)) && \
-			find_char(s, x + 1) != 0) || (find_char(s, x - 1) == 3 && \
-			s[x] != ' ') || (find_char(s, x) == 3))
-			{
-				s = divide(s, x);
-				i = x;
-				break ;
-			}
-			x++;
-		}
-	}
-	return (s);
-}
-
 /* Riconosce se il carattere s[i] e' un carattere speciale:
 se returna 3 s[i] == |;
 se returna 4 s[i] == <;
@@ -158,6 +76,36 @@ int find_char(char *s, int i)
 			return (7);
 	return (0);
 }
+
+/* Controlla i seguenti errori: 
+|||, <>>a, ><a, >>>a, <<<<a,
+<|<a, <;<a, <#<a, >|>a, >;>a, >#>a,
+>>|a, >>;a, >>#a, <<|a, <<;a, <<#a,
+>;a, >#a, <|a, <;a, <#a, */
+int	check_error(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == '|' && s[i + 1] == '|' && werami(s, i) == -1)
+			return (0);
+		if (s[i] == '<' && werami(s, i) == -1 && \
+			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') \
+			|| (s[i + 1] == '<' && s[i + 2] == '<' && s[i + 3] == '<') || \
+			(s[i + 1] == '>' && s[i + 2] == '>')))
+			return (0);
+		if (s[i] == '>' && werami(s, i) == -1 && \
+			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') \
+			|| (s[i + 1] == '<') || (s[i + 1] == '>' && s[i + 2] == '>')))
+			return (0);
+	}
+	return (1);
+}
+
+
+
 
 //errori da gestire= pipe come ultimo input e' errore, || deve dare errore anche come |          |
 //il primo caso di apre una quote, noi semplice erroe, l'altro non fa un cazzo.

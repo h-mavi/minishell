@@ -6,7 +6,7 @@
 #    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/03/28 08:58:41 by mfanelli         ###   ########.fr        #
+#    Updated: 2025/04/01 09:14:04 by mfanelli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@
 
 NAME = minishell_pars
 
-SOURCES = pars_main.c parsing.c pars_split.c pars_utils.c parsing_set_data.c
+SOURCES = pars_main.c parsing.c pars_split.c pars_utils.c parsing_set_data.c \
+pars_refine.c
 OBJ = $(SOURCES:.c=.o)
 
 CC = cc

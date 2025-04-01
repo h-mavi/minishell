@@ -6,13 +6,13 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/31 17:27:47 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:46:41 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-//return il numero di elementi presenti nell'input
+/* returna il numero di elementi presenti nell'input */
 static int	len_arr_split(char const *arr)
 {
 	int	i;
@@ -142,27 +142,3 @@ char	**custom_split(char const *s)
 	return (dest);
 }
 
-/* Funzione che filtra la stringa per vedere se ci sono spazi extra tra le
-redir e i loro limiter. */
-char *rm_spaces(char *s)
-{
-	int	i;
-	int	x;
-
-	i = -1;
-	while (s[++i])
-	{
-		if (find_char(s, i) > 3 && s[i + 1] == ' ')
-		{
-			x = 1;
-			while (s[i + x] == ' ')
-				x++;
-			if (find_char(s, (i + x)) != 0 || s[i + x] == '\0')
-				return (NULL); //syntax error
-			s = rewrite(s, i, x - 1);
-		}
-		if (find_char(s, i) > 3 && s[i + 1] == '\0')
-			return (NULL);
-	}
-	return (s);
-}

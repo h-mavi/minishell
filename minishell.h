@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:18:52 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/01 10:17:39 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/01 17:07:30 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@
 typedef struct s_struct
 {
 	int		exit_code;
-	bool	is_edit;
 }	t_struct;
 
 

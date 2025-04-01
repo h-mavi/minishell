@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
+#    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/27 12:08:30 by mbiagi            #+#    #+#              #
-#    Updated: 2025/03/20 09:07:05 by mbiagi           ###   ########.fr        #
+#    Updated: 2025/04/01 10:39:45 by mfanelli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 AR = ar rcs
 
