@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 12:58:09 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:00:54 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	token_inator(char *cmd, char **env)
 	while (str[++i] != NULL)
 	{
 		str[i] = refine(str[i], env);
-		if (!str[i])
+		if (!str[i] || check_if_cmd(str[0], env) != COMMAND)
 		{
 			printf("Syntax error type one\n");
 			return ;
@@ -64,8 +64,14 @@ void	token_inator(char *cmd, char **env)
 		else if (check == 1)
 			set_data(&head, str[i], FLAG);
 	}
+	if (find_char(str[i - 1], 0) == PIPE)
+	{
+		printf("Syntax error type one\n");
+		return ;
+	}
+	set_prev(&head);
 	print_lists(head);
-	free_arr(str);
+	free_arr(str);//la matrice di stringhe deve essere liberata insieme alla lista perche' la sua memoria e' la stessa delle stringa nei nodi.
 }
 
 int	parsing(char *pwd, char **env)

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 13:02:07 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:24:59 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,53 @@ void	set_data(t_token **head, char *str, int flag)
 		return ;
     (*node).type = flag;
     (*node).str = str;
-	// cmd->prev = head; come faccio a dare la prev di ognuno?
 	lstadd_back(head, node);
 }
 
 void	print_lists(t_token *head)
 {
-	printf("---------------------\n");
 	while (head != NULL)
 	{
-		printf("Type -> %d\nInput -> %s\nNext -> %s\n---------------------\n", \
-		head->type, head->str, (head->next)->str);
-		head = head->next;
-		if (head->next == NULL)
+		if (head->next == NULL && head->prev == NULL)
 		{
-			printf("Type -> %d\nInput -> %s\nNext -> NULL\n---------------------\n", \
-				head->type, head->str);
+			printf("\nPrev -> NULL\nType -> %d\nInput -> %s\nNext -> NULL\n\n", \
+			head->type, head->str);
 			break ;
 		}
+		else if (head->prev == NULL)
+		{
+			printf("\nPrev -> NULL\nType -> %d\nInput -> %s\nNext -> %s\n\n", \
+			head->type, head->str, (head->next)->str);
+			head = head->next;
+		}
+		else if (head->next == NULL)
+		{
+			printf("Prev -> %s\nType -> %d\nInput -> %s\nNext -> NULL\n\n", \
+			(head->prev)->str, head->type, head->str);
+			break ;
+		}
+		else
+		{
+			printf("Prev -> %s\nType -> %d\nInput -> %s\nNext -> %s\n\n", \
+			(head->prev)->str, head->type, head->str, (head->next)->str);
+			head = head->next;
+		}
 	}
+}
+
+void	set_prev(t_token **head)
+{
+	t_token	*prima;
+	t_token	*corr;
+	
+	prima = *head;
+	corr = prima->next;
+	prima->prev = NULL;
+	while (corr != NULL)
+	{
+		corr->prev = prima;
+		prima = corr;
+		corr = corr->next;
+	}
+	return ;
 }
