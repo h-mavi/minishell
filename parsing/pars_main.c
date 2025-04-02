@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 17:00:54 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:49:49 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ void	token_inator(char *cmd, char **env)
 	}
 	set_prev(&head);
 	print_lists(head);
-	free_arr(str);//la matrice di stringhe deve essere liberata insieme alla lista perche' la sua memoria e' la stessa delle stringa nei nodi.
+	free_arr(str);
 }
+/* NOTA -> la matrice di stringhe deve essere liberata insieme alla lista perche' la sua memoria e' la stessa delle stringa nei nodi.*/
 
 int	parsing(char *pwd, char **env)
 {

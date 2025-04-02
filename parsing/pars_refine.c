@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 12:53:06 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:52:40 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char *here_glued(char *s)
 	return (s);
 }
 
+/* Funzione richiamata in refine che espande le variabili di sistema */
 char	*espand(char *s, char **env)
 {
 	int		i;

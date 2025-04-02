@@ -6,12 +6,13 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 17:24:59 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:54:46 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+/* Funzione che aggiunge il nodo new infondo alla lista di tipo t_token lst */
 void	lstadd_back(t_token **lst, t_token *new)
 {
 	t_token	*ex;
@@ -31,6 +32,7 @@ void	lstadd_back(t_token **lst, t_token *new)
 	return ;
 }
 
+/* Setta i dati della lista di tipo t_token */
 void	set_data(t_token **head, char *str, int flag)
 {
 	t_token *node;
@@ -43,6 +45,7 @@ void	set_data(t_token **head, char *str, int flag)
 	lstadd_back(head, node);
 }
 
+/* Printa la lista compilata. Utile solo per il debugging */
 void	print_lists(t_token *head)
 {
 	while (head != NULL)
@@ -74,6 +77,7 @@ void	print_lists(t_token *head)
 	}
 }
 
+/* Setta gli indirizzi dei nodi precedenti per ogni nodo della lista */
 void	set_prev(t_token **head)
 {
 	t_token	*prima;
