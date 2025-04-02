@@ -6,25 +6,11 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 15:34:53 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 13:02:07 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-// void	lstadd_back(t_token **lst, t_token *new)
-// {
-// 	t_token	*tmp;
-
-// 	if (!new)
-// 		return ;
-// 	if (!lst)
-// 		(*lst) = new;
-// 	tmp = *lst;
-// 	while (tmp->next)
-// 		tmp = tmp->next;
-// 	tmp->next = new;
-// }
 
 void	lstadd_back(t_token **lst, t_token *new)
 {
@@ -45,56 +31,17 @@ void	lstadd_back(t_token **lst, t_token *new)
 	return ;
 }
 
-void	set_cmd_data(t_token **head, char *str)
+void	set_data(t_token **head, char *str, int flag)
 {
-	t_token *cmd;
+	t_token *node;
 
-	cmd = (t_token *)ft_calloc(1 ,sizeof(t_token));
-	if (!cmd)
+	node = (t_token *)ft_calloc(1 ,sizeof(t_token));
+	if (!node)
 		return ;
-    (*cmd).type = COMMAND;
-    (*cmd).str = str;
+    (*node).type = flag;
+    (*node).str = str;
 	// cmd->prev = head; come faccio a dare la prev di ognuno?
-	lstadd_back(head, cmd);
-}
-
-void	set_option_data(t_token **head, char *str)
-{
-	t_token *opt;
-
-    opt = (t_token *)ft_calloc(1, sizeof(t_token));
-	if (!opt)
-		return ;
-    (*opt).type = FLAG;
-    (*opt).str = str;
-	// opt->prev = head; come faccio a dare la prev di ognuno?
-	lstadd_back(head, opt);
-}
-
-void	set_pipe_data(t_token **head, char *str)
-{
-	t_token *pipe;
-
-	pipe = (t_token *)ft_calloc(1, sizeof(t_token));
-	if (!pipe)
-		return ;
-	(*pipe).type = PIPE;
-	(*pipe).str = str;
-	// pipe->prev = head; come faccio a dare la prev di ognuno?
-	lstadd_back(head, pipe);
-}
-
-void	set_redir_data(t_token **head, char *str)
-{
-	t_token *redir;
-
-	redir = (t_token *)ft_calloc(1, sizeof(t_token));
-	if (!redir)
-		return ;
-	(*redir).type = find_char(str, 0);
-	(*redir).str = str;
-	// redir->prev = head; come faccio a dare la prev di ognuno?
-	lstadd_back(head, redir);
+	lstadd_back(head, node);
 }
 
 void	print_lists(t_token *head)

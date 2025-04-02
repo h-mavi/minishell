@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 15:28:41 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:58:09 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ void	token_inator(char *cmd, char **env)
 		}
 		if (check_if_cmd(str[i], env) == COMMAND && check == 0)
 		{
-			set_cmd_data(&head, str[i]);
+			set_data(&head, str[i], COMMAND);
 			check = 1;
 		}
 		else if (find_char(str[i], 0) != 3 && find_char(str[i], 0) != 0)
-			set_redir_data(&head, str[i]);
+			set_data(&head, str[i], find_char(str[i], 0));
 		else if (find_char(str[i], 0) == PIPE && check == 1)
 		{
-			set_pipe_data(&head, str[i]);
+			set_data(&head, str[i], PIPE);
 			check = 0;
 		}
 		else if (check == 1)
-			set_option_data(&head, str[i]);
+			set_data(&head, str[i], FLAG);
 	}
 	print_lists(head);
 	free_arr(str);

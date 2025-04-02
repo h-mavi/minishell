@@ -6,14 +6,14 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 14:46:41 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:50:11 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /* returna il numero di elementi presenti nell'input */
-static int	len_arr_split(char const *arr)
+int	len_arr_split(char const *arr)
 {
 	int	i;
 	int	x;
@@ -49,7 +49,7 @@ static int	len_arr_split(char const *arr)
 	return (i);
 }
 
-static void	frite(char *dest, int start, int len, char const *s)
+void	frite(char *dest, int start, int len, char const *s)
 {
 	int	i;
 
@@ -64,7 +64,7 @@ static void	frite(char *dest, int start, int len, char const *s)
 	dest[i] = '\0';
 }
 
-static char	**fill(char **dest, char const *s, int len_arr)
+char	**fill(char **dest, char const *s, int len_arr)
 {
 	int	i;
 	int	x;

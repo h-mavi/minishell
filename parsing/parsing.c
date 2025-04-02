@@ -6,60 +6,11 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/01 14:46:03 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:52:17 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-/* Serve a togliere gli apici, le virgolette e i back-slash inutili */
-char	*rm_app(char *s)
-{
-	int		i;
-	int		x;
-	int 	len;
-	char	*new;
-
-	i = -1;
-	len = 0;
-	while (s[++i])
-		if ((werami(s, i) != 0 && s[i] != 92) || ((werami(s, i) == 0 || \
-		s[i] == 92) && werami(s, i - 1) == 1 && werami(s, i + 1) == 1))
-			len++;
-	i = -1;
-	x = 0;
-	new = (char *)ft_calloc(sizeof(char), len + 1);
-	while (s[++i])
-		if ((werami(s, i) != 0 && s[i] != 92) || ((werami(s, i) == 0 || \
-		s[i] == 92) && werami(s, i - 1) == 1 && werami(s, i + 1) == 1))
-			new[x++] = s[i];
-	new[x] = '\0';
-	return (free(s), new);
-}
-
-/* Serve a togliere i $ nel caso i cui non vadano stampati, es. $"USER" */
-char *rm_dollar(char *s)
-{
-	int		i;
-	int		x;
-	char	*tmp;
-
-	i = -1;
-	x = 0;
-	while (s[++i])
-		if (s[i] != '$')
-			x++;
-	tmp = (char *)ft_calloc(x + 1, sizeof(char));
-	if (!tmp)
-		return (NULL);
-	i = -1;
-	x = 0;
-	while (s[++i])
-		if (s[i] != '$')
-			tmp[x++] = s[i];
-	tmp[x] = '\0';
-	return (free(s), tmp);
-}
 
 /* Controlla se ci sono variabili da espandere e, nel caso sia necessario, toglie apici e virgolette. */
 char *refine(char *s, char **env)

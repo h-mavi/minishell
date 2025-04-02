@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 14:02:26 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:53:06 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,71 +35,6 @@ char *rewrite(char *orig, int i, int x)
 	}
 	free(orig);
 	return (dest);
-}
-
-/* Funzione che filtra la stringa per vedere se ci sono spazi extra tra le
-redir e i loro limiter. */
-char *rm_spaces(char *s)
-{
-	int	i;
-	int	x;
-
-	i = -1;
-	while (s[++i])
-	{
-		if (find_char(s, i) > 3 && s[i + 1] == ' ')
-		{
-			x = 1;
-			while (s[i + x] == ' ')
-				x++;
-			if (find_char(s, (i + x)) != 0 || s[i + x] == '\0')
-				return (NULL); //syntax error
-			s = rewrite(s, i, x - 1);
-		}
-		if (find_char(s, i) > 3 && s[i + 1] == '\0')
-			return (NULL);
-	}
-	return (s);
-}
-
-/* La funzione chiamata da here_glued che divide redirection, heredoc e pipe attaccati */
-char *divide(char *s, int y)
-{
-	int	i;
-	int x;
-	int	len;
-	char *end;
-
-	i = -1;
-	len = 0;
-	while (s[++i])
-	{
-		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
-		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
-		werami(s, i) == -1 && s[i + 1] != '|' && s[i - 1] != '|' && \
-		((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
-			len++;
-		len++;
-	}
-	end = (char *)ft_calloc((len + 1) , sizeof(char));
-	if (!end)
-		return (NULL);
-	i = -1;
-	x = 0;
-	while (s[++i])
-	{
-		end[x++] = s[i];
-		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
-		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
-		werami(s, i) == -1 && s[i + 1] != '|' && s[i - 1] != '|' && \
-		((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
-			end[x++] = ' ';
-	}
-	end[x] = '\0';
-	free(s);
-	return (end);
 }
 
 /* Controlla se ci sono casi di redirection, heredoc o pipe attaccati. Nel caso ci siano li

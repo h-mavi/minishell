@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 15:22:15 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 13:01:53 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,22 @@ void		routine(int sig);
 void		token_inator(char *cmd, char **env);
 int			parsing(char *pwd, char **env);
 
-//in parsing/pars_split.c
-char		**custom_split(char const *s);
-// static int	len_arr_split(char const *arr);
-// static void	frite(char *dest, int start, int len, char const *s);
-// static char	**fill(char **dest, char const *s, int len_arr);
-
 //in parsing/pars_refine.c
 char		*rewrite(char *orig, int i, int x);
-char	 	*rm_spaces(char *s);
-char		*divide(char *s, int y);
 char		*here_glued(char *s);
 char		*espand(char *s, char **env);
+
+//in parsing/pars_rm.c
+char	 	*rm_spaces(char *s);
+char		*rm_app(char *s);
+char 		*rm_dollar(char *s);
+char		*divide(char *s, int y);
+
+//in parsing/pars_split.c
+int			len_arr_split(char const *arr);
+void		frite(char *dest, int start, int len, char const *s);
+char		**fill(char **dest, char const *s, int len_arr);
+char		**custom_split(char const *s);
 
 //in parsing/pars_utils.c
 void		free_arr(char **arr);
@@ -79,17 +83,11 @@ int 		find_char(char *s, int i);
 int			check_error(char *s);
 
 //in parsing/parsing.c
-char		*rm_app(char *s);
 char		*refine(char *s, char **env);
-char 		*rm_dollar(char *s);
 int 		check_if_cmd(char *cmd, char **env);
 
-
 //in parsing/parsing_set_data.c
-void		set_cmd_data(t_token **head, char *str);
-void		set_option_data(t_token **head, char *str);
-void		set_pipe_data(t_token **head, char *str);
-void		set_redir_data(t_token **head, char *str);
+void		set_data(t_token **head, char *str, int flag);
 void		print_lists(t_token *head);
 
 #endif

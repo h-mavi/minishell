@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/01 14:46:18 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:40:45 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int werami(const char *s, int index)
 	x = -1;
 	app = 0;
 	virg = 0;
-	if (s == NULL || !s[index])
+	if (s == NULL || s[index] == '\0')
 		return (-2);
 	while (s[++x] != '\0')
 	{
