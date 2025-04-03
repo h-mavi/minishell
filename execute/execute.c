@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/02 14:34:09 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/03 11:49:37 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,6 @@ int	is_builtin(t_token *tree, char ***env)
 		return (ft_pwd());
 	if (ft_compare(tree->str, "unset") == 0)
 		return (ft_unset(tree->next, env));
-	else
-		perror("negretti affamati ahahahahahah");
 	return (0);
 }
 
@@ -200,7 +198,7 @@ int main(int arc, char **arg, char **env)
 		i++;
 	}
 	i = 0;
-	tree = ft_calloc(arc + 1, sizeof(t_token));
+	tree = ft_calloc(arc, sizeof(t_token));
 	while (arg[++i])
 	{
 		if (i == 1)
@@ -212,12 +210,15 @@ int main(int arc, char **arg, char **env)
 		else
 			tree[i].type = FLAG;
 		tree[i].str = arg[i];
-		tree[i].next = &tree[i + 1];
+		if (i < arc - 1)
+			tree[i].next = &tree[i + 1];
+		else
+		tree[i].next = NULL;
 		tree[i].prev = &tree[i - 1];
 	}
 	execute(&tree[1], &new_env);
 	// ft_pwd();
-	ft_env(new_env);
+	// ft_env(new_env);
 	freemtr(new_env);
 	return (0);
 }
