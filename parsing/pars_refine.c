@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/03 15:43:52 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:01:21 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char *rewrite(char *orig, int i, int x)
 		{
 			while (orig[++y + x])
 				dest[y] = orig[y + x];
-			y++;
+			// y++;
 			dest[y] = '\0';
 			break ;
 		}
@@ -79,15 +79,17 @@ char *here_glued(char *s)
 char	*espand(char *s, char **env)
 {
 	int		i;
+	char 	*tmp;
 	char	*path;
 
 	i = -1;
 	path = NULL;
+	tmp = ft_strchr(s, '$') + 1;
 	while (env[++i])
 	{
-		if (ft_strncmp(env[i], s + 1, ft_strlen(s) - 1) == 0)
+		if (ft_strncmp(env[i], tmp, ft_strlen(tmp)) == 0)
 		{
-			path = ft_strdup(env[i] + ft_strlen(s));
+			path = ft_strdup(env[i] + ft_strlen(tmp) + 1);
 			break ;
 		}
 	}
