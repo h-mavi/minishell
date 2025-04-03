@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/02 12:52:17 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:44:19 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,34 +41,82 @@ char *refine(char *s, char **env)
 }
 
 /* Controlla se la stringa datagli corrisponde ad un comando */
-int	check_if_cmd(char *orig, char **env)
-{
-	int		i;
-	char	*cmd;
-	char	*tmp;
-	char	**path;
+// int	check_if_cmd(char *orig, char **env)
+// {
+// 	int		i;
+// 	char	*cmd;
+// 	char	*tmp;
+// 	char	**path;
 
-	i = -1;
-	path = NULL;
-	while (env[++i])
+// 	i = -1;
+// 	path = NULL;
+// 	while (env[++i])
+// 	{
+// 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+// 		{
+// 			path = ft_split(env[i] + 5, ':');
+// 			break ;
+// 		}
+// 	}
+// 	if (!path)
+// 		return (-1); //ERROR
+// 	i = -1;
+// 	while (path[++i])
+// 	{
+// 		tmp = ft_strjoin(path[i], "/");
+// 		cmd = ft_strjoin(tmp, orig);
+// 		free(tmp);
+// 		if (access(cmd, F_OK) == 0)
+// 			return (free(cmd), free_arr(path), COMMAND);
+// 		free(cmd);
+// 	}
+// 	return (free_arr(path), 0);
+// }
+
+int	check_error_lst(t_token *head)
+{
+	t_token *dopo;
+
+	dopo = head->next;
+	if (head->type == PIPE || head->str[0] == ';')
+		return (error_exit(head, NULL, 0, "Syntax Error, unexpected token at the start of input\n"), 0); //no here_doc
+	while (dopo != NULL)
 	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-		{
-			path = ft_split(env[i] + 5, ':');
-			break ;
-		}
+		if (dopo->type == PIPE && head->type == PIPE)
+			return (error_exit(head, NULL, 1, "Syntax Error, unexpected token '|'\n"), 0); //|   |, si here_doc
+		head = dopo;
+		dopo = head->next;
 	}
-	if (!path)
-		return (-1); //ERROR
-	i = -1;
-	while (path[++i])
+	if (head->type == PIPE)
+		return (error_exit(head, NULL, 0, "Syntax Error, unexpected token '|' at the end of input\n"), 0); //no here doc
+	return (1);
+}
+
+void	free_lst(t_token *head)
+{
+	t_token	*tmp;
+
+	while (head->next != NULL)
 	{
-		tmp = ft_strjoin(path[i], "/");
-		cmd = ft_strjoin(tmp, orig);
+		
+		free((char *)(*head).str);
+		tmp = head;
+		head = head->next;
 		free(tmp);
-		if (access(cmd, F_OK) == 0)
-			return (free(cmd), free_arr(path), COMMAND);
-		free(cmd);
 	}
-	return (free_arr(path), 0);
+	free((char *)(*head).str);
+	free(head);
+}
+
+char *error_exit(t_token *head, char **arr, int syn, char *str)
+{
+	(void)syn;
+	if (arr != NULL)
+		free_arr(arr);
+	if (head != NULL)
+		free_lst(head);
+	// if (syn == 1)
+		// ft_open_heredc();
+	printf("%s", str);
+	return (NULL);
 }

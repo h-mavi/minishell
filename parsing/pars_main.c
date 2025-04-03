@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 17:49:49 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:40:33 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,61 +25,49 @@ void	routine(int sig)
 }
 
 /* Crea i token */
-void	token_inator(char *cmd, char **env)
+t_token	*token_inator(char *cmd, char **env, t_token *head)
 {
 	int		i;
 	int		check;
-	t_token *head;
 	char	**str;
 
 	i = -1;
 	check = 0;
-	head = NULL;
 	str = custom_split(cmd);
 	if (!str)
-	{
-		printf("Syntax error type one\n");
-		return ;
-	}
+		return (NULL);
 	while (str[++i] != NULL)
 	{
 		str[i] = refine(str[i], env);
-		if (!str[i] || check_if_cmd(str[0], env) != COMMAND)
-		{
-			printf("Syntax error type one\n");
-			return ;
-		}
-		if (check_if_cmd(str[i], env) == COMMAND && check == 0)
+		if (check == 0 && find_char(str[i], 0) != 3)
 		{
 			set_data(&head, str[i], COMMAND);
 			check = 1;
 		}
 		else if (find_char(str[i], 0) != 3 && find_char(str[i], 0) != 0)
 			set_data(&head, str[i], find_char(str[i], 0));
-		else if (find_char(str[i], 0) == PIPE && check == 1)
+		else if (find_char(str[i], 0) == PIPE)
 		{
 			set_data(&head, str[i], PIPE);
 			check = 0;
 		}
-		else if (check == 1)
+		else
 			set_data(&head, str[i], FLAG);
 	}
-	if (find_char(str[i - 1], 0) == PIPE)
-	{
-		printf("Syntax error type one\n");
-		return ;
-	}
+	if (check_error_lst(head) == 0)
+		return (free_arr(str), NULL);
 	set_prev(&head);
-	print_lists(head);
-	free_arr(str);
+	return (free_arr(str), head);
 }
-/* NOTA -> la matrice di stringhe deve essere liberata insieme alla lista perche' la sua memoria e' la stessa delle stringa nei nodi.*/
+/* NOTA -> Quando liberiamo la lista dobbiamo anche liberare singolarmente le stringhe perche' sono allocate a se'.*/
 
-int	parsing(char *pwd, char **env)
+int parsing(char *pwd, char **env)
 {
 	char    *cmd;
+	t_token *head;
 
     cmd = readline(pwd);
+	head = NULL;
     add_history(cmd);
     if (!cmd)
 	{
@@ -87,7 +75,10 @@ int	parsing(char *pwd, char **env)
         free(cmd);
 		return (0);
 	}
-	token_inator(cmd, env);
+	head = token_inator(cmd, env, head);
+	print_lists(head);
+	if (head != NULL)
+		free_lst(head);
 	return (1);
 }
 

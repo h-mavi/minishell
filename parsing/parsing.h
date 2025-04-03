@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 16:21:07 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:54:19 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_token
 
 //in parsing/pars_main.c
 void		routine(int sig);
-void		token_inator(char *cmd, char **env);
+t_token		*token_inator(char *cmd, char **env, t_token *head);
 int			parsing(char *pwd, char **env);
 
 //in parsing/pars_refine.c
@@ -71,20 +71,23 @@ char 		*rm_dollar(char *s);
 char		*divide(char *s, int y);
 
 //in parsing/pars_split.c
-int			len_arr_split(char const *arr);
-void		frite(char *dest, int start, int len, char const *s);
-char		**fill(char **dest, char const *s, int len_arr);
-char		**custom_split(char const *s);
+int			len_arr_split(char *arr);
+void		frite(char *dest, int start, int len, char *s);
+char		**fill(char **dest, char *s, int len_arr);
+char		**custom_split(char *s);
 
 //in parsing/pars_utils.c
 void		free_arr(char **arr);
-int 		werami(const char *s, int index);
+int 		werami(char *s, int index);
 int 		find_char(char *s, int i);
 int			check_error(char *s);
 
 //in parsing/parsing.c
 char		*refine(char *s, char **env);
-int 		check_if_cmd(char *cmd, char **env);
+// int 		check_if_cmd(char *cmd, char **env); non piu' usata
+int			check_error_lst(t_token *head);
+void		free_lst(t_token *head);
+char		*error_exit(t_token *head, char **arr, int syn, char *str);
 
 //in parsing/parsing_set_data.c
 void		set_data(t_token **head, char *str, int flag);

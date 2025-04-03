@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 17:52:40 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:43:52 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,22 @@ char *rewrite(char *orig, int i, int x)
 
 /* Controlla se ci sono casi di redirection, heredoc o pipe attaccati. Nel caso ci siano li
 divide con uno spazio tramite la funzione divide, in modo che poi il custom_split
-possa dividerli in nodi seprarati. Inoltre controlla il caso di | o ; a inizio input,
-che e' un syntax error*/
+possa dividerli in nodi seprarati.*/
 char *here_glued(char *s)
 {
 	int	i;
 	int	x;
 
 	i = -1;
-	if (s[0] == '|' || s[0] == ';') //gestisce | e ; all'inizio dell'input, che sono syntax error diretti
-			return (free(s), NULL); //syntax error
 	while (s[++i])
 	{
 		if (find_char(s, i) == 0)
 			continue ;
 		if (werami(s, i) == -1 && ft_isdigit(s[i + 1]) != 0 && \
 		((s[i] == '<' && s[i + 2] == '<') || (s[i] == '>' && s[i + 2] == '>')))
-			return (free(s), NULL);
+			return (free(s), error_exit(NULL, NULL, 1, "Syntax Error, unexpected number token\n")); //casi tipo >1>a o <1<a, si here_doc
 		x = i;
-		if (s[i - 1] == 39 || s[i - 1] == 34)
+		if (i != 0 && (s[i - 1] == 39 || s[i - 1] == 34))
 		{
 			while (werami(s, x) != 0 && s[x] != '\0')
 				x++;
@@ -66,8 +63,7 @@ char *here_glued(char *s)
 		{
 			if ((((x != 0 && s[x] != ' ' && s[x] != '>' && \
 			werami(s, x) == -1) || (s[x] == 39 || s[x] == 34)) && \
-			find_char(s, x + 1) != 0) || (find_char(s, x - 1) == 3 && \
-			s[x] != ' ') || (find_char(s, x) == 3))
+			find_char(s, x + 1) != 0) || (find_char(s, x) == 3))
 			{
 				s = divide(s, x);
 				i = x;

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 12:53:12 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:43:58 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ char *rm_spaces(char *s)
 			while (s[i + x] == ' ')
 				x++;
 			if (find_char(s, (i + x)) != 0 || s[i + x] == '\0')
-				return (NULL); //syntax error
+				return (free(s), error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n")); //caso tipo <<     >a o <<   \0, si heredoc
 			s = rewrite(s, i, x - 1);
 		}
 		if (find_char(s, i) > 3 && s[i + 1] == '\0')
-			return (NULL);
+			return (free(s), error_exit(NULL, NULL, 1, "Syntax Error, unexpected token 'new line'\n")); //caso tipo <<\0, si heredoc
 	}
 	return (s);
 }
@@ -100,7 +100,7 @@ char *divide(char *s, int y)
 	{
 		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
 		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
+		find_char(s, i + 1) != 0) || (i != 0 && find_char(s, i) == 3 && \
 		werami(s, i) == -1 && s[i + 1] != '|' && s[i - 1] != '|' && \
 		((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
 			len++;
@@ -116,7 +116,7 @@ char *divide(char *s, int y)
 		end[x++] = s[i];
 		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
 		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
+		find_char(s, i + 1) != 0) || (i != 0 && find_char(s, i) == 3 && \
 		werami(s, i) == -1 && s[i + 1] != '|' && s[i - 1] != '|' && \
 		((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
 			end[x++] = ' ';

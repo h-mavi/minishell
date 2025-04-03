@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 12:40:45 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:44:12 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_arr(char **arr)
 gi apici/ virgolette. Se returna 0 s[index] e' uguale ad un'apice/virgoletta,
 se returna 1 s[index] e' negli apici, se returna -1 e' fuori.
 Se 's' o 's[index]' sono uguali a NULL returnano -2.*/
-int werami(const char *s, int index)
+int werami(char *s, int index)
 {
 	int	x;
 	int	app;
@@ -90,23 +90,18 @@ int	check_error(char *s)
 	while (s[++i])
 	{
 		if (s[i] == '|' && s[i + 1] == '|' && werami(s, i) == -1)
-			return (0);
+			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token '|'\n"), 0); //casi come ||| o ||, si here_doc
 		if (s[i] == '<' && werami(s, i) == -1 && \
 			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') \
 			|| (s[i + 1] == '<' && s[i + 2] == '<' && s[i + 3] == '<') || \
 			(s[i + 1] == '>' && s[i + 2] == '>')))
-			return (0);
+			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n"), 0); //si here_doc
 		if (s[i] == '>' && werami(s, i) == -1 && \
 			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') \
 			|| (s[i + 1] == '<') || (s[i + 1] == '>' && s[i + 2] == '>')))
-			return (0);
+			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n"),0); //si here_doc
 	}
 	return (1);
 }
 
-
-
-
-//errori da gestire= pipe come ultimo input e' errore, || deve dare errore anche come |          |
-//il primo caso di apre una quote, noi semplice erroe, l'altro non fa un cazzo.
-//li gestisco una volta che faccio i nodi etc
+//COSE DA FARE -> aprire gli here_doc in caso di syntax error + controllo doppio pipex

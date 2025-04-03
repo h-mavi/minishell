@@ -6,14 +6,14 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 12:50:11 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:44:03 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /* returna il numero di elementi presenti nell'input */
-int	len_arr_split(char const *arr)
+int	len_arr_split(char *arr)
 {
 	int	i;
 	int	x;
@@ -49,7 +49,7 @@ int	len_arr_split(char const *arr)
 	return (i);
 }
 
-void	frite(char *dest, int start, int len, char const *s)
+void	frite(char *dest, int start, int len, char *s)
 {
 	int	i;
 
@@ -64,7 +64,7 @@ void	frite(char *dest, int start, int len, char const *s)
 	dest[i] = '\0';
 }
 
-char	**fill(char **dest, char const *s, int len_arr)
+char	**fill(char **dest, char *s, int len_arr)
 {
 	int	i;
 	int	x;
@@ -118,27 +118,27 @@ char	**fill(char **dest, char const *s, int len_arr)
 	return (dest);
 }
 
-char	**custom_split(char const *s)
+char	**custom_split(char *s)
 {
 	int		x;
 	int		len_arr;
 	char	**dest;
 
 	x = 0;
-	s = rm_spaces((char *)s);
+	s = rm_spaces(s);
 	if (!s)
 		return (NULL);
-	s = here_glued((char *)s);
-	if (!s || check_error((char *)s) == 0)
+	s = here_glued(s);
+	if (!s || check_error(s) == 0)
 		return (NULL);
 	len_arr = len_arr_split(s);
 	if (len_arr == -1)
-		return (NULL);
+		return (error_exit(NULL, NULL, 0, "Syntax Error, odd number of ' or \"\n"), NULL); //numero dispari di virgolette e apici, no here_doc
 	dest = (char **) malloc(sizeof(char *) * (len_arr + 1));
 	if (!dest)
-		return (NULL);
+		return (error_exit(NULL, NULL, 0, "Failed Allocation\n"), NULL); // allocazione fallita, no here_doc
 	if (!fill(dest, s, len_arr))
-		return (free_arr(dest), NULL);
-	return (dest);
+		return (free(s), error_exit(NULL, dest, 0, "Failed Allocation\n"), NULL); //allocazione fallita, no here_doc
+	return (free(s), dest);
 }
 

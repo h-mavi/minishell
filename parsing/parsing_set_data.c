@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/02 17:54:46 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:37:34 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	set_data(t_token **head, char *str, int flag)
 	if (!node)
 		return ;
     (*node).type = flag;
-    (*node).str = str;
+    (*node).str = ft_strdup(str);
 	lstadd_back(head, node);
 }
 
