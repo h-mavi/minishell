@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/02 14:36:25 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/03 14:18:18 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,30 @@ int	ft_pwd()
 	return (1);
 }
 
-int	ft_cd(const char	*dir, char **env)
+int	num_argument(t_token *tree)
+{
+	int	i;
+
+	i = 0;
+	while (tree)
+	{
+		if (tree->type == FLAG)
+			return(1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_cd(t_token *tree , char **env)
 {
 	int		i;
 	char	*temp;
 
 	i = 0;
+	if (num_argument(tree->next) != 0)
+		return (perror("too many argument"), 1);
 	temp = getcwd(NULL, 0);
-	if (chdir(dir) == -1)
+	if (chdir(tree->str) == -1)
 		perror("no such directory");
 	while (env[i])
 	{

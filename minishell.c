@@ -6,12 +6,22 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:14:58 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/03/19 10:47:37 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/03 15:03:51 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//funzione che serve a gestire gli exit code
+void	exit_code(int n)
+{
+	static int	exit_code;
+
+	if (n == 1000)
+		printf("%d", exit_code);
+	else
+		exit_code = n;
+}
 
 // gestisce i segnali con SIGINT (^c) e SIGQUIT (^\)
 void	routine(int sig)

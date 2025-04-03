@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/03 11:49:37 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/03 14:36:05 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	is_builtin(t_token *tree, char ***env)
 {
 //devono essere tutte int e non devo usare exit
 	if (ft_compare(tree->str, "env") == 0)
-		return (ft_env(*env));
+		return (ft_env(tree, *env));
 	if (ft_compare(tree->str, "export") == 0)
 		return (ft_export(env, tree->next));
 	if (ft_compare(tree->str, "exit") == 0)
@@ -136,7 +136,7 @@ int	is_builtin(t_token *tree, char ***env)
 	if (ft_compare(tree->str, "echo") == 0)
 		return (ft_echo(tree->next));
 	if (ft_compare(tree->str, "cd") == 0)
-		return (ft_cd(tree->next->str, *env));
+		return (ft_cd(tree->next, *env));
 	if (ft_compare(tree->str, "pwd") == 0)
 		return (ft_pwd());
 	if (ft_compare(tree->str, "unset") == 0)
@@ -218,7 +218,7 @@ int main(int arc, char **arg, char **env)
 	}
 	execute(&tree[1], &new_env);
 	// ft_pwd();
-	// ft_env(new_env);
+	ft_env(tree, new_env);
 	freemtr(new_env);
 	return (0);
 }

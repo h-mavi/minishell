@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/02 14:34:26 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/03 14:34:19 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@
 # define HEREDOC 7
 
 int	ft_export(char ***env, t_token *tree);
-int	ft_env(char **env);
+int	ft_env(t_token *tree, char **env);
 int	ft_exit(t_token *tree);
 int	ft_pwd();
-int	ft_cd(const char *dir, char **env);
+int	ft_cd(t_token *tree, char **env);
 int	ft_echo(t_token *tree);
 int	ft_unset(t_token *tree, char ***env);
 int	control_variable(const char *var);
 int	new_variable(const char *var, char **env);
+int	num_argument(t_token *tree);
 
 #endif
