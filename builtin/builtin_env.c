@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/03 09:41:44 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/03 11:51:27 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,32 @@ int	ft_env(char **env)
 		i++;
 	}
 	return (1);
+}
+
+void	print_export(char **env)
+{
+	int		i;
+	int		j;
+	char	c; 
+
+	i = 0;
+	c = '"';
+	while (env[i])
+	{
+		j = 0;
+		write(1, "declaire -x ", 12);
+		while (env[i][j])
+		{
+			write(1, &env[i][j], 1);
+			if (env[i][j] == '=')
+				write(1, &c, 1);
+			if (env[i][j + 1] == '\0')
+				write(1, &c, 1);
+			j++;
+		}
+		write (1, "\n", 1);
+		i++;
+	}
 }
 
 //funzione che controlla la presenza di "+=" e nel caso leva il '+'
@@ -70,7 +96,7 @@ size_t	until(const char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '=' && str[i] != '+')
+	while (str[i] != '=' && str[i] != '+' && str[i] != '\0')
 		i++;
 	return (i);
 }
@@ -84,12 +110,14 @@ char	**change_param(t_token *tree, char **env)
 	new_env = ft_calloc((ft_matrixlen(env) + 1), sizeof(char *));
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], tree->str, until(tree->str)) == 0)
+		if (ft_compare2(env[i], tree->str) == 0)
 		{
 			if (tree->str[until(tree->str)] == '+')
 				new_env[i] = ft_strjoin(env[i], (tree->str + until(tree->str) + 2));
-			else
+			else if (tree->str[until(tree->str)] == '=')
 				new_env[i] = ft_strdup(tree->str);
+			else
+			new_env[i] = ft_strdup(env[i]);
 		}
 		else
 			new_env[i] = ft_strdup(env[i]);
@@ -117,6 +145,8 @@ char	**export_param(t_token *tree, char **env)
 
 int	ft_export(char ***env, t_token *tree)
 {
+	if (tree == NULL)
+		return (print_export(*env), 1);
 	if (control_variable(tree->str) == 1)
 	{
 		if (new_variable(tree->str, *env) == 1)
