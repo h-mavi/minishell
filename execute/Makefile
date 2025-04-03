@@ -6,7 +6,7 @@
 #    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 09:06:57 by mbiagi            #+#    #+#              #
-#    Updated: 2025/04/03 09:12:59 by mbiagi           ###   ########.fr        #
+#    Updated: 2025/04/03 09:53:11 by mbiagi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ FLAGS = -Wall -Wextra -Werror -g -Ilibft -Llibft
 all : $(NAME)
 
 $(NAME): $(OBJ) $(SOURCES)
-		make libft
+		make -C ../libft/
+		make -C ../get_next_line/
 		$(CC) $(SOURCES) ../libft/libft.a ../get_next_line/libget_next_line.a \
 		$(FLAGS) -o $(NAME)
 

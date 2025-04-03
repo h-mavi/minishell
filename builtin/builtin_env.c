@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/01 15:18:34 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/03 09:41:44 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,88 @@
 int	ft_env(char **env)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	while (env[i])
 	{
-		printf("%s\n", env[i]);
+		j = 0;
+		while (env[i][j])
+		{
+			if (env[i][j] == '=')
+			{
+				printf("%s\n", env[i]);
+				break;
+			}
+			j++;
+		}
+		
 		i++;
 	}
 	return (1);
 }
 
-//una statica in una struttura
+//funzione che controlla la presenza di "+=" e nel caso leva il '+'
+//usata nel caso la variabile che cerchiamo di aggiungere non eista
+char	*string_control(const char *str)
+{
+	int		i;
+	int		j;
+	char	*nstr;
+
+	i = 0;
+	j = 0;
+	while (str[i] != '=')
+		i++;
+	if (str[i - 1] != '+')
+		return (ft_strdup(str));
+	i = 0;
+	nstr = ft_calloc(ft_strlen(str), sizeof(char));
+	while (str[i])
+	{
+		if (str[i] != '+')
+		{
+			nstr[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	return (nstr);
+}
+
+size_t	until(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '=' && str[i] != '+')
+		i++;
+	return (i);
+}
+
+char	**change_param(t_token *tree, char **env)
+{
+	char	**new_env;
+	int		i;
+
+	i = 0;
+	new_env = ft_calloc((ft_matrixlen(env) + 1), sizeof(char *));
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], tree->str, until(tree->str)) == 0)
+		{
+			if (tree->str[until(tree->str)] == '+')
+				new_env[i] = ft_strjoin(env[i], (tree->str + until(tree->str) + 2));
+			else
+				new_env[i] = ft_strdup(tree->str);
+		}
+		else
+			new_env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	return (freemtr(env), new_env);
+}
+
 char	**export_param(t_token *tree, char **env)
 {
 	int		i;
@@ -36,12 +107,12 @@ char	**export_param(t_token *tree, char **env)
 	new_env = ft_calloc((ft_matrixlen(env) + 2), sizeof(char *));
 	while (env[i])
 	{
-		new_env[i] = env[i];
+		new_env[i] = ft_strdup(env[i]);
 		i++;
 	}
-	new_env[i] = (char *)tree->str;
+	new_env[i] = string_control(tree->str);
 	new_env[i + 1] = NULL;
-	return (new_env);
+	return (freemtr(env), new_env);
 }
 
 int	ft_export(char ***env, t_token *tree)
@@ -50,13 +121,12 @@ int	ft_export(char ***env, t_token *tree)
 	{
 		if (new_variable(tree->str, *env) == 1)
 			*env = export_param(tree, *env);
-		// else if (new_variable(tree->str, env) == 0)
-		// 	*env = change_param(tree, *env);
+		else if (new_variable(tree->str, *env) == 0)
+			*env = change_param(tree, *env);
 	}
 	return (1);
 }
 
-//una statica in una struttura
 char	**unset_param(t_token *tree, char **env)
 {
 	char	**new_env;
