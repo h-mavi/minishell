@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/03 14:36:05 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/03 15:16:49 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,8 +217,8 @@ int main(int arc, char **arg, char **env)
 		tree[i].prev = &tree[i - 1];
 	}
 	execute(&tree[1], &new_env);
-	// ft_pwd();
-	ft_env(tree, new_env);
+	ft_pwd();
+	// ft_env(tree, new_env);
 	freemtr(new_env);
 	return (0);
 }
