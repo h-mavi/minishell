@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/03 15:43:58 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:16:09 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,10 @@ char *divide(char *s, int y)
 	len = 0;
 	while (s[++i])
 	{
-		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
-		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (i != 0 && find_char(s, i) == 3 && \
-		werami(s, i) == -1 && s[i + 1] != '|' && s[i - 1] != '|' && \
-		((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
+		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1 && ft_isdigit(s[i]) == 0) || \
+		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && find_char(s, i + 1) != 0) || \
+		(find_char(s, i) == 3 && werami(s, i) == -1 && s[i + 1] != '|' && s[i + 1] != ' ') || \
+		(find_char(s, i) == 0 && find_char(s, i + 1) == 3)) && i <= y)
 			len++;
 		len++;
 	}
@@ -114,11 +113,10 @@ char *divide(char *s, int y)
 	while (s[++i])
 	{
 		end[x++] = s[i];
-		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1) || \
-		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && \
-		find_char(s, i + 1) != 0) || (i != 0 && find_char(s, i) == 3 && \
-		werami(s, i) == -1 && s[i + 1] != '|' && s[i - 1] != '|' && \
-		((s[i + 1] != ' ') || (s[i - 1] != ' ')))) && i <= y)
+		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1 && ft_isdigit(s[i]) == 0) || \
+		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && find_char(s, i + 1) != 0) || \
+		(i != 0 && find_char(s, i) == 3 && werami(s, i) == -1 && s[i + 1] != '|' && s[i + 1] != ' ') || \
+		(find_char(s, i) == 0 && find_char(s, i + 1) == 3)) && i <= y)
 			end[x++] = ' ';
 	}
 	end[x] = '\0';

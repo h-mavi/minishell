@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/04 09:52:00 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:21:19 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,16 @@ divide con uno spazio tramite la funzione divide, in modo che poi il custom_spli
 possa dividerli in nodi seprarati.*/
 char *here_glued(char *s)
 {
-	int	i;
 	int	x;
 
-	i = -1;
-	while (s[++i])
-	{
-		if (find_char(s, i) == 0)
-			continue ;
-		if (werami(s, i) == -1 && ft_isdigit(s[i + 1]) != 0 && \
-		((s[i] == '<' && s[i + 2] == '<') || (s[i] == '>' && s[i + 2] == '>')))
-			return (free(s), error_exit(NULL, NULL, 1, "Syntax Error, unexpected number token\n")); //casi tipo >1>a o <1<a, si here_doc
-		x = i;
-		if (i != 0 && (s[i - 1] == 39 || s[i - 1] == 34))
-		{
-			while (werami(s, x) != 0 && s[x] != '\0')
-				x++;
-		}
-		while (s[x] != '\0')
-		{
-			if ((((x != 0 && s[x] != ' ' && s[x] != '>' && \
+	x = -1;
+	while (s[++x])
+		if ((((x != 0 && s[x] != ' ' && find_char(s, x) == 0 && \
 			werami(s, x) == -1) || (s[x] == 39 || s[x] == 34)) && \
-			find_char(s, x + 1) != 0) || (find_char(s, x) == 3))
-			{
+			find_char(s, x + 1) != 0 && find_char(s, x + 1) != 3) || (x != 0 && find_char(s, x) == 3 && \
+			werami(s, x) == -1 && find_char(s, x - 1) != 3 && find_char(s, x + 1) != 3 && ((s[x - 1] != ' ') || \
+			(s[x + 1] != ' ' && s[x + 1] != '\0')) && x != 0))
 				s = divide(s, x);
-				i = x;
-				break ;
-			}
-			x++;
-		}
-	}
 	return (s);
 }
 
@@ -85,18 +65,23 @@ char	*espand(char *s, char **env)
 
 	i = -1;
 	path = NULL;
-	tmp = ft_strchr(s, '$') + 1;
+	if (find_dollar(s, 0) != -1)
+		tmp = ft_strchr(s, '$') + 1;
+	else
+		tmp = s;
 	while (env[++i])
-	{
 		if (ft_strncmp(env[i], tmp, ft_strlen(tmp)) == 0)
-		{
 			path = ft_strdup(env[i] + ft_strlen(tmp) + 1);
-			break ;
-		}
+	if (!path)
+	{
+		path = (char *)ft_calloc(1, sizeof(char));
+		path[0] = '\0';
+		return (free(s), path);
 	}
 	i = 0;
-	while (s[i] != '$')
-		i++;
+	if (find_dollar(s, 0) != -1)
+		while (s[i] != '$')
+			i++;
 	tmp = (char *)ft_calloc(i + 1, sizeof(char));
 	ft_strlcpy(tmp, s, i + 1);
 	end = ft_strjoin(tmp, path);

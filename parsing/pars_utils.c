@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/04 10:42:23 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:22:59 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int werami(char *s, int index)
 		return (0);
 	if ((x == index && app == 1) || (x == index && virg == 1))
 		return (1);
+	if (x == '\0' && ((app == 1) || (virg == 1)))
+		return (-2);
 	}
 	return (-1);
 }
@@ -79,7 +81,8 @@ int find_char(char *s, int i)
 
 /* Controlla i seguenti errori: 
 |||, <>>a, ><a, >>>a, <<<<a,
-<|<a, <;<a, <#<a, >|>a, >;>a, >#>a,
+<|<a, <;<a, <#<a, <1<a, 
+>|>a, >;>a, >#>a, >1>a,
 >>|a, >>;a, >>#a, <<|a, <<;a, <<#a,
 >;a, >#a, <|a, <;a, <#a, */
 int	check_error(char *s)
@@ -93,12 +96,14 @@ int	check_error(char *s)
 			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token '|'\n"), 0); //casi come ||| o ||, si here_doc
 		if (s[i] == '<' && werami(s, i) == -1 && \
 			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') \
-			|| (s[i + 1] == '<' && s[i + 2] == '<' && s[i + 3] == '<') || \
-			(s[i + 1] == '>') || (s[i + 1] == '>' && s[i + 2] == '>')))
+			|| (s[i + 1] == '<' && s[i + 2] == '<') || \
+			(s[i + 1] == '>') || (s[i + 1] == '>' && s[i + 2] == '>') || \
+			(ft_isdigit(s[i + 1]) != 0 && find_char(s, i + 2) != 3 && find_char(s, i + 2) != 0)))
 			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n"), 0); //si here_doc
 		if (s[i] == '>' && werami(s, i) == -1 && \
 			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') || \
-			(s[i + 1] == '<') || (s[i + 1] == '>' && s[i + 2] == '>')))
+			(s[i + 1] == '<') || (s[i + 1] == '>' && s[i + 2] == '>') || \
+			(ft_isdigit(s[i + 1]) != 0 && find_char(s, i + 2) != 3 && find_char(s, i + 2) != 0)))
 			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n"),0); //si here_doc
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/03 11:37:34 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/04 11:02:08 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	lstadd_back(t_token **lst, t_token *new)
 }
 
 /* Setta i dati della lista di tipo t_token */
-void	set_data(t_token **head, char *str, int flag)
+void	set_data(t_token **head, char *str, int flag, int ID)
 {
 	t_token *node;
 
@@ -42,6 +42,7 @@ void	set_data(t_token **head, char *str, int flag)
 		return ;
     (*node).type = flag;
     (*node).str = ft_strdup(str);
+	(*node).ID = ID + 1;
 	lstadd_back(head, node);
 }
 
@@ -52,26 +53,26 @@ void	print_lists(t_token *head)
 	{
 		if (head->next == NULL && head->prev == NULL)
 		{
-			printf("\nPrev -> NULL\nType -> %d\nInput -> %s\nNext -> NULL\n\n", \
-			head->type, head->str);
+			printf("\nID -> %d\nPrev -> NULL\nType -> %d\nInput -> %s\nNext -> NULL\n\n", \
+			head->ID, head->type, head->str);
 			break ;
 		}
 		else if (head->prev == NULL)
 		{
-			printf("\nPrev -> NULL\nType -> %d\nInput -> %s\nNext -> %s\n\n", \
-			head->type, head->str, (head->next)->str);
+			printf("\nID -> %d\nPrev -> NULL\nType -> %d\nInput -> %s\nNext -> %s\n\n", \
+			head->ID, head->type, head->str, (head->next)->str);
 			head = head->next;
 		}
 		else if (head->next == NULL)
 		{
-			printf("Prev -> %s\nType -> %d\nInput -> %s\nNext -> NULL\n\n", \
-			(head->prev)->str, head->type, head->str);
+			printf("ID -> %d\nPrev -> %s\nType -> %d\nInput -> %s\nNext -> NULL\n\n", \
+			head->ID, (head->prev)->str, head->type, head->str);
 			break ;
 		}
 		else
 		{
-			printf("Prev -> %s\nType -> %d\nInput -> %s\nNext -> %s\n\n", \
-			(head->prev)->str, head->type, head->str, (head->next)->str);
+			printf("ID -> %d\nPrev -> %s\nType -> %d\nInput -> %s\nNext -> %s\n\n", \
+			head->ID, (head->prev)->str, head->type, head->str, (head->next)->str);
 			head = head->next;
 		}
 	}

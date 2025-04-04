@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/03 14:54:19 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:47:39 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_token
 {
 	int				type;
 	const char		*str;
+	int				ID;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
@@ -83,6 +84,7 @@ int 		find_char(char *s, int i);
 int			check_error(char *s);
 
 //in parsing/parsing.c
+int			find_dollar(char *s, int i);
 char		*refine(char *s, char **env);
 // int 		check_if_cmd(char *cmd, char **env); non piu' usata
 int			check_error_lst(t_token *head);
@@ -90,7 +92,7 @@ void		free_lst(t_token *head);
 char		*error_exit(t_token *head, char **arr, int syn, char *str);
 
 //in parsing/parsing_set_data.c
-void		set_data(t_token **head, char *str, int flag);
+void		set_data(t_token **head, char *str, int flag, int ID);
 void		print_lists(t_token *head);
 void		set_prev(t_token **head);
 
