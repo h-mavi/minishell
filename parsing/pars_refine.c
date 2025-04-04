@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/03 17:01:21 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/04 09:52:00 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char	*espand(char *s, char **env)
 	int		i;
 	char 	*tmp;
 	char	*path;
+	char	*end;
 
 	i = -1;
 	path = NULL;
@@ -93,8 +94,13 @@ char	*espand(char *s, char **env)
 			break ;
 		}
 	}
-	free(s);
-	if (!path)
-		return (NULL);
-	return (path);
+	i = 0;
+	while (s[i] != '$')
+		i++;
+	tmp = (char *)ft_calloc(i + 1, sizeof(char));
+	ft_strlcpy(tmp, s, i + 1);
+	end = ft_strjoin(tmp, path);
+	if (!end)
+		return (free(s), free(tmp), free(path), NULL);
+	return (free(s), free(tmp), free(path), end);
 }

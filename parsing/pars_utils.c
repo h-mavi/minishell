@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/03 15:44:12 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/04 10:42:23 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,14 @@ int	check_error(char *s)
 		if (s[i] == '<' && werami(s, i) == -1 && \
 			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') \
 			|| (s[i + 1] == '<' && s[i + 2] == '<' && s[i + 3] == '<') || \
-			(s[i + 1] == '>' && s[i + 2] == '>')))
+			(s[i + 1] == '>') || (s[i + 1] == '>' && s[i + 2] == '>')))
 			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n"), 0); //si here_doc
 		if (s[i] == '>' && werami(s, i) == -1 && \
-			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') \
-			|| (s[i + 1] == '<') || (s[i + 1] == '>' && s[i + 2] == '>')))
+			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') || \
+			(s[i + 1] == '<') || (s[i + 1] == '>' && s[i + 2] == '>')))
 			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n"),0); //si here_doc
 	}
 	return (1);
 }
 
-//COSE DA FARE -> aprire gli here_doc in caso di syntax error + controllo doppio pipex
+//COSE DA FARE -> aprire gli here_doc in caso di syntax error
