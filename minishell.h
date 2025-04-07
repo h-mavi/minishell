@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:18:52 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/03 15:05:00 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/07 09:46:05 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,11 @@
 # define REDIR_3 6
 # define HEREDOC 7
 
-typedef struct s_struct
-{
-	int		exit_code;
-}	t_struct;
-
-
 typedef struct s_token
 {
 	int				type;
 	const char		*str;
+	int				ID;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;

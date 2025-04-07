@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/03 14:35:44 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/07 09:29:53 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_env(t_token *tree, char **env)
 
 	i = 0;
 	if (num_argument(tree->next) != 0)
-		return (perror("too many argument"), 1);
+		return (perror("too many argument"), exit_code(1), 1);
 	while (env[i])
 	{
 		j = 0;
@@ -43,25 +43,26 @@ void	print_export(char **env)
 {
 	int		i;
 	int		j;
-	char	c; 
+	bool	n;
 
-	i = 0;
-	c = '"';
-	while (env[i])
+	i = -1;
+	while (env[++i])
 	{
-		j = 0;
+		j = -1;
+		n = 0;
 		write(1, "declaire -x ", 12);
-		while (env[i][j])
+		while (env[i][++j])
 		{
 			write(1, &env[i][j], 1);
 			if (env[i][j] == '=')
-				write(1, &c, 1);
-			if (env[i][j + 1] == '\0')
-				write(1, &c, 1);
-			j++;
+			{
+				write(1, "\"", 1);
+				n = 1;
+			}
+			if (env[i][j + 1] == '\0' && n == 1)
+				write(1, "\"", 1);
 		}
 		write (1, "\n", 1);
-		i++;
 	}
 }
 

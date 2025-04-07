@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/03 15:16:49 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/07 09:34:18 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	heredoc(t_token *tree)
 
 	file = open("here_doc", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (file == -1)
-		return (perror("failed to open the file"));
+		return (perror("failed to open the file"), exit_code(1));
 	write(1, "> ", 2);
 	str = get_next_line(0);
 	while (control_str(str, tree->str) == 0)
@@ -126,7 +126,6 @@ char	**full_cmd(t_token *tree)
 //controllo se il comando e' una builtin e nel caso eseguo
 int	is_builtin(t_token *tree, char ***env)
 {
-//devono essere tutte int e non devo usare exit
 	if (ft_compare(tree->str, "env") == 0)
 		return (ft_env(tree, *env));
 	if (ft_compare(tree->str, "export") == 0)
@@ -217,8 +216,9 @@ int main(int arc, char **arg, char **env)
 		tree[i].prev = &tree[i - 1];
 	}
 	execute(&tree[1], &new_env);
-	ft_pwd();
+	// ft_pwd();
 	// ft_env(tree, new_env);
+	ft_export(&new_env, NULL);
 	freemtr(new_env);
 	return (0);
 }
