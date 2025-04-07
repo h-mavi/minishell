@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/03 15:44:03 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:42:21 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	**fill(char **dest, char *s, int len_arr)
 			{
 				conta++;
 				if (s[y] == 34 || s[y] == 39)
-					while (werami(s, y) != -1)
+					while (werami(s, y) != -1 && werami(s, y) != -2)
 					{
 						y++;
 						conta++;
@@ -111,7 +111,7 @@ char	**fill(char **dest, char *s, int len_arr)
 		else
 			while (s[y] != '\0' && s[i++] != ' ')
 				if (s[i] == 34 || s[i] == 39)
-					while (werami(s, i) != -1)
+					while (werami(s, i) != -1  && werami(s, y) != -2)
 						i++;
 	}
 	dest[x] = NULL;

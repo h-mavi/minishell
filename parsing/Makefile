@@ -6,7 +6,7 @@
 #    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/04/02 12:59:59 by mfanelli         ###   ########.fr        #
+#    Updated: 2025/04/07 14:30:40 by mfanelli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ pars_refine.c pars_rm.c
 OBJ = $(SOURCES:.c=.o)
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g -Ilibft -Llibft -lreadline -lhistory
+FLAGS = -Wall -Wextra -Werror -g -Ilibft -Llibft -lreadline -lhistory \
+#--suppressions=supp.supp
 
 all : $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/07 11:26:28 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:22:59 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ char *refine(char *s, char **env)
 			s = esp_special_case(s, env);
 		else if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
 			s = rm_dollar(s);
-		if (!s)
-			return (NULL);
+		if (s[0] == '\0')
+			return (s);
 	}
 	s = rm_app(s);
 	return (s);
