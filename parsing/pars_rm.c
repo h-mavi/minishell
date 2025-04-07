@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/07 14:18:16 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:41:02 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ char *rm_spaces(char *s)
 			while (s[i + x] == ' ')
 				x++;
 			if (find_char(s, (i + x)) != 0 || s[i + x] == '\0')
-				return (free(s), error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n")); //caso tipo <<     >a o <<   \0, si heredoc
+				return (free(s), error_exit(NULL, 1, i, "Syntax Error, unexpected token\n", s)); //si heredoc
 			s = rewrite(s, i, x - 1);
 		}
 		if (find_char(s, i) > 3 && s[i + 1] == '\0')
-			return (free(s), error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n")); //caso tipo <<\0, si heredoc
+			return (free(s), error_exit(NULL, 1, i, "Syntax Error, unexpected token\n", s)); //si heredoc
 	}
 	return (s);
 }

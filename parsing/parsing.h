@@ -6,13 +6,14 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/04 15:47:39 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:58:27 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 # include "./../libft/libft.h"
+# include "../get_next_line/get_next_line.h"
 
 # include <stdio.h>
 # include <signal.h>
@@ -49,7 +50,7 @@
 typedef struct s_token
 {
 	int				type;
-	const char		*str;
+	char			*str;
 	int				ID;
 	struct s_token	*prev;
 	struct s_token	*next;
@@ -89,7 +90,7 @@ char		*refine(char *s, char **env);
 // int 		check_if_cmd(char *cmd, char **env); non piu' usata
 int			check_error_lst(t_token *head);
 void		free_lst(t_token *head);
-char		*error_exit(t_token *head, char **arr, int syn, char *str);
+char		*error_exit(t_token *head, int syn, int where, char *str, char *input);
 
 //in parsing/parsing_set_data.c
 void		set_data(t_token **head, char *str, int flag, int ID);

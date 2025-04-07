@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/07 10:52:16 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:41:31 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,18 @@ int	check_error(char *s)
 	while (s[++i])
 	{
 		if (s[i] == '|' && s[i + 1] == '|' && werami(s, i) == -1)
-			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token '|'\n"), 0); //casi come ||| o ||, si here_doc
+			return (error_exit(NULL, 1, i, "Syntax Error, unexpected token '|'\n", s), 0); //si here_doc
 		if (s[i] == '<' && werami(s, i) == -1 && \
 			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') \
 			|| (s[i + 1] == '<' && s[i + 2] == '<') || \
 			(s[i + 1] == '>') || (s[i + 1] == '>' && s[i + 2] == '>') || \
 			(ft_isdigit(s[i + 1]) != 0 && find_char(s, i + 2) != 3 && find_char(s, i + 2) != 0)))
-			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n"), 0); //si here_doc
+			return (error_exit(NULL, 1, i, "Syntax Error, unexpected token\n", s), 0); //si here_doc
 		if (s[i] == '>' && werami(s, i) == -1 && \
 			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') || \
 			(s[i + 1] == '<') || (s[i + 1] == '>' && s[i + 2] == '>') || \
 			(ft_isdigit(s[i + 1]) != 0 && find_char(s, i + 2) != 3 && find_char(s, i + 2) != 0)))
-			return (error_exit(NULL, NULL, 1, "Syntax Error, unexpected token\n"),0); //si here_doc
+			return (error_exit(NULL, 1, i, "Syntax Error, unexpected token\n", s), 0); //si here_doc
 	}
 	return (1);
 }
-
-//COSE DA FARE -> aprire gli here_doc in caso di syntax error

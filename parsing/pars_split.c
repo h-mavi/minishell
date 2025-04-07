@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/07 12:42:21 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:41:22 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,12 @@ char	**custom_split(char *s)
 		return (NULL);
 	len_arr = len_arr_split(s);
 	if (len_arr == -1)
-		return (error_exit(NULL, NULL, 0, "Syntax Error, odd number of ' or \"\n"), NULL); //numero dispari di virgolette e apici, no here_doc
+		return (error_exit(NULL, 0, 0, "Syntax Error, odd number of ' or \"\n", NULL), NULL); //no here_doc
 	dest = (char **) malloc(sizeof(char *) * (len_arr + 1));
 	if (!dest)
-		return (error_exit(NULL, NULL, 0, "Failed Allocation\n"), NULL); // allocazione fallita, no here_doc
+		return (error_exit(NULL, 0, 0, "Failed Allocation\n", NULL), NULL); //no here_doc
 	if (!fill(dest, s, len_arr))
-		return (free(s), error_exit(NULL, dest, 0, "Failed Allocation\n"), NULL); //allocazione fallita, no here_doc
+		return (free(s), free_arr(dest), error_exit(NULL, 0, 0, "Failed Allocation\n", NULL), NULL); //no here_doc
 	return (free(s), dest);
 }
 
