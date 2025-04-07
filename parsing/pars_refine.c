@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/04 19:21:19 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:12:32 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ char *here_glued(char *s)
 		if ((((x != 0 && s[x] != ' ' && find_char(s, x) == 0 && \
 			werami(s, x) == -1) || (s[x] == 39 || s[x] == 34)) && \
 			find_char(s, x + 1) != 0 && find_char(s, x + 1) != 3) || (x != 0 && find_char(s, x) == 3 && \
-			werami(s, x) == -1 && find_char(s, x - 1) != 3 && find_char(s, x + 1) != 3 && ((s[x - 1] != ' ') || \
-			(s[x + 1] != ' ' && s[x + 1] != '\0')) && x != 0))
+			werami(s, x) == -1 && ((s[x - 1] != ' ') || (s[x + 1] != ' ' && s[x + 1] != '\0')) && x != 0))
 				s = divide(s, x);
 	return (s);
 }
@@ -66,12 +65,14 @@ char	*espand(char *s, char **env)
 	i = -1;
 	path = NULL;
 	if (find_dollar(s, 0) != -1)
-		tmp = ft_strchr(s, '$') + 1;
+		// tmp = ft_strchr(s, '$') + 1;
+		tmp = ft_strjoin(ft_strchr(s, '$') + 1, "=");
 	else
-		tmp = s;
+		// tmp = s;
+		tmp = ft_strjoin(s, "=");
 	while (env[++i])
 		if (ft_strncmp(env[i], tmp, ft_strlen(tmp)) == 0)
-			path = ft_strdup(env[i] + ft_strlen(tmp) + 1);
+			path = ft_strdup(env[i] + ft_strlen(tmp));
 	if (!path)
 	{
 		path = (char *)ft_calloc(1, sizeof(char));

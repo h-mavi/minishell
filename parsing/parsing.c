@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/04 17:16:34 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:26:28 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char *refine(char *s, char **env)
 		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
 			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
 			s = espand(s, env);
-		else if(s[0] == '"' && find_dollar(s, i) != -1 && \
+		else if(((s[i] == '"' && find_dollar(s, i) != -1) || (s[i] == '$' && werami(s, i) == 1 && s[0] == '"')) && \
 			((ft_isalpha(s[find_dollar(s, i) + 1]) != 0) || (s[find_dollar(s, i) + 1] == '_')))
 			s = esp_special_case(s, env);
 		else if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)

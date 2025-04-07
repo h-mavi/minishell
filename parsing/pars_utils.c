@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/04 19:22:59 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/07 10:52:16 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ int werami(char *s, int index)
 		return (-2);
 	while (s[++x] != '\0')
 	{
-	if (s[x] == 34 && app == 0 && virg == 0)
+	if (s[x] == '"' && app == 0 && virg == 0)
 		virg = 1;
-	else if (s[x] == 34 && app == 0 && virg == 1)
+	else if (s[x] == '"' && app == 0 && virg == 1)
 		virg = 0;
-	if (s[x] == 39 && app == 0 && virg == 0)
+	if (s[x] == '\'' && app == 0 && virg == 0)
 		app = 1;
-	else if (s[x] == 39 && app == 1 && virg == 0)
+	else if (s[x] == '\'' && app == 1 && virg == 0)
 		app = 0;
-	if (((s[x] == 39 && virg == 0) || (s[x] == 34 && app == 0)) && x == index)
+	if (((s[x] == '\'' && virg == 0) || (s[x] == '"' && app == 0)) && x == index)
 		return (0);
 	if ((x == index && app == 1) || (x == index && virg == 1))
 		return (1);
-	if (x == '\0' && ((app == 1) || (virg == 1)))
+	if (s[x] == '\0' && ((app == 1) || (virg == 1)))
 		return (-2);
 	}
 	return (-1);

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/04 12:16:09 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/07 10:52:27 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char *rm_spaces(char *s)
 	i = -1;
 	while (s[++i])
 	{
-		if (find_char(s, i) > 3 && s[i + 1] == ' ')
+		if (find_char(s, i) > 3 && s[i + 1] == ' ' && werami(s, i) == -1)
 		{
 			x = 1;
 			while (s[i + x] == ' ')
@@ -48,15 +48,15 @@ char	*rm_app(char *s)
 	i = -1;
 	len = 0;
 	while (s[++i])
-		if ((werami(s, i) != 0 && s[i] != 92) || ((werami(s, i) == 0 || \
-		s[i] == 92) && i != 0 && werami(s, i - 1) == 1 && werami(s, i + 1) == 1))
+		if ((werami(s, i) != 0 && s[i] != 92) || (((werami(s, i) == 0) || \
+		(s[i] == 92)) && i != 0 && werami(s, i - 1) == 1 && werami(s, i + 1) == 1))
 			len++;
 	i = -1;
 	x = 0;
 	new = (char *)ft_calloc(sizeof(char), len + 1);
 	while (s[++i])
-		if ((werami(s, i) != 0 && s[i] != 92) || ((werami(s, i) == 0 || \
-		s[i] == 92) && i != 0 && werami(s, i - 1) == 1 && werami(s, i + 1) == 1))
+		if ((werami(s, i) != 0 && s[i] != 92) || (((werami(s, i) == 0) || 
+		(s[i] == 92)) && i != 0 && werami(s, i - 1) == 1 && werami(s, i + 1) == 1))
 			new[x++] = s[i];
 	new[x] = '\0';
 	return (free(s), new);
@@ -100,8 +100,8 @@ char *divide(char *s, int y)
 	{
 		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1 && ft_isdigit(s[i]) == 0) || \
 		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && find_char(s, i + 1) != 0) || \
-		(find_char(s, i) == 3 && werami(s, i) == -1 && s[i + 1] != '|' && s[i + 1] != ' ') || \
-		(find_char(s, i) == 0 && find_char(s, i + 1) == 3)) && i <= y)
+		(find_char(s, i) == 3 && werami(s, i) == -1 && s[i + 1] != ' ') || \
+		(find_char(s, i) == 0 && find_char(s, i + 1) == 3 && s[i] != ' ')) && i <= y)
 			len++;
 		len++;
 	}
@@ -115,8 +115,8 @@ char *divide(char *s, int y)
 		end[x++] = s[i];
 		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1 && ft_isdigit(s[i]) == 0) || \
 		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && find_char(s, i + 1) != 0) || \
-		(i != 0 && find_char(s, i) == 3 && werami(s, i) == -1 && s[i + 1] != '|' && s[i + 1] != ' ') || \
-		(find_char(s, i) == 0 && find_char(s, i + 1) == 3)) && i <= y)
+		(i != 0 && find_char(s, i) == 3 && werami(s, i) == -1 && s[i + 1] != ' ') || \
+		(find_char(s, i) == 0 && find_char(s, i + 1) == 3 && s[i] != ' ')) && i <= y)
 			end[x++] = ' ';
 	}
 	end[x] = '\0';
