@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/04 17:17:12 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:04:51 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ t_token	*token_inator(char *cmd, char **env, t_token *head)
 		str[i] = refine(str[i], env);
 		if (check == 0 && find_char(str[i], 0) == 0)
 		{
-			set_data(&head, str[i], COMMAND, i);
+			set_data(&head, &str[i], COMMAND, i);
 			check = 1;
 		}
 		else if (find_char(str[i], 0) != 3 && find_char(str[i], 0) != 0)
-			set_data(&head, str[i], find_char(str[i], 0), i);
+			set_data(&head, &str[i], find_char(str[i], 0), i);
 		else if (find_char(str[i], 0) == PIPE)
 		{
-			set_data(&head, str[i], PIPE, i);
+			set_data(&head, &str[i], PIPE, i);
 			check = 0;
 		}
 		else
-			set_data(&head, str[i], FLAG, i);
+			set_data(&head, &str[i], FLAG, i);
 	}
 	if (check_error_lst(head) == 0)
 		return (free_arr(str), NULL);

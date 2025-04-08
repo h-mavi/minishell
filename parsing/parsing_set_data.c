@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/04 11:02:08 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:04:05 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,17 @@ void	lstadd_back(t_token **lst, t_token *new)
 }
 
 /* Setta i dati della lista di tipo t_token */
-void	set_data(t_token **head, char *str, int flag, int ID)
+void	set_data(t_token **head, char **str, int flag, int ID)
 {
 	t_token *node;
 
 	node = (t_token *)ft_calloc(1 ,sizeof(t_token));
 	if (!node)
 		return ;
+	*str = rm_app(*str);
     (*node).type = flag;
-    (*node).str = ft_strdup(str);
+    (*node).str = ft_strdup(*str);
+	// (*node).str = str;
 	(*node).ID = ID + 1;
 	lstadd_back(head, node);
 }

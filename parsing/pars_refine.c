@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/07 14:24:22 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:11:54 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,12 @@ char *here_glued(char *s)
 	x = -1;
 	while (s[++x])
 		if ((((x != 0 && s[x] != ' ' && find_char(s, x) == 0 && \
-			werami(s, x) == -1) || (s[x] == 39 || s[x] == 34)) && \
-			find_char(s, x + 1) != 0 && find_char(s, x + 1) != 3) || (x != 0 && find_char(s, x) == 3 && \
-			werami(s, x) == -1 && ((s[x - 1] != ' ') || (s[x + 1] != ' ' && s[x + 1] != '\0')) && x != 0))
+			werami(s, x) == -1) || \
+			(s[x] == 39 || s[x] == 34)) && find_char(s, x + 1) != 0 && \
+			find_char(s, x + 1) != 3) || \
+			(x != 0 && find_char(s, x) == 3 && werami(s, x) == -1 && \
+			((s[x - 1] != ' ') || \
+			(s[x + 1] != ' ' && s[x + 1] != '\0')) && x != 0))
 				s = divide(s, x);
 	return (s);
 }

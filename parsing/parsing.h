@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/07 15:58:27 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:04:22 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void		free_lst(t_token *head);
 char		*error_exit(t_token *head, int syn, int where, char *str, char *input);
 
 //in parsing/parsing_set_data.c
-void		set_data(t_token **head, char *str, int flag, int ID);
+void		set_data(t_token **head, char **str, int flag, int ID);
 void		print_lists(t_token *head);
 void		set_prev(t_token **head);
 

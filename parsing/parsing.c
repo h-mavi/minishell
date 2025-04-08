@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/07 17:56:43 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:17:18 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ char *refine(char *s, char **env)
 		if (s[0] == '\0')
 			return (s);
 	}
-	s = rm_app(s);
 	return (s);
 }
 
@@ -124,19 +123,21 @@ char *refine(char *s, char **env)
 
 int	check_error_lst(t_token *head)
 {
+	t_token *prima;
 	t_token *dopo;
 
-	dopo = head->next;
-	if (head->type == PIPE || head->str[0] == ';')
+	prima = head;
+	dopo = prima->next;
+	if (prima->type == PIPE || prima->str[0] == ';')
 		return (error_exit(head, 0, 0, "Syntax Error, unexpected token at the start of input\n", NULL), 0); //no here_doc
 	while (dopo != NULL)
 	{
-		if (dopo->type == PIPE && head->type == PIPE)
-			return (error_exit(head, 1, head->ID, "Syntax Error, unexpected token '|'\n", NULL), 0); //si here_doc
-		head = dopo;
-		dopo = head->next;
+		if (dopo->type == PIPE && prima->type == PIPE)
+			return (error_exit(head, 1, prima->ID, "Syntax Error, unexpected token '|'\n", NULL), 0); //si here_doc
+		prima = dopo;
+		dopo = prima->next;
 	}
-	if (head->type == PIPE)
+	if (prima->type == PIPE)
 		return (error_exit(head, 0, 0, "Syntax Error, unexpected token '|' at the end of input\n", NULL), 0); //no here doc
 	return (1);
 }
@@ -217,6 +218,7 @@ void	ft_openhd_str(char *str, int where)
 
 char *error_exit(t_token *head, int syn, int where, char *str, char *input)
 {
+	printf("%s", str);
 	if (syn == 1 && head != NULL && input == NULL)
 		ft_openhd_ls(head, where);
 	else if (syn == 1 && head == NULL && input != NULL)
@@ -225,6 +227,5 @@ char *error_exit(t_token *head, int syn, int where, char *str, char *input)
 		free(input);
 	if (head != NULL)
 		free_lst(head);
-	printf("%s", str);
 	return (NULL);
 }
