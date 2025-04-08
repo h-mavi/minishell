@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 14:30:37 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:03:34 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	werami(char *s, int index)
 			app = 1;
 		else if (s[x] == '\'' && app == 1 && virg == 0)
 			app = 0;
-		if (((s[x] == '\'' && virg == 0) || (s[x] == '"' && app == 0)) && x == index)
+		if (((s[x] == '\'' && virg == 0) || \
+			(s[x] == '"' && app == 0)) && x == index)
 			return (0);
 		if ((x == index && app == 1) || (x == index && virg == 1))
 			return (1);

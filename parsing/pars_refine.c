@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 14:36:40 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:01:50 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*espand(char *s, char **env)
 	if (!path)
 	{
 		path = (char *)ft_calloc(1, sizeof(char));
-		path[0] = '\0';
+		// path[0] = '\0';
 		return (free(s), path);
 	}
 	i = 0;

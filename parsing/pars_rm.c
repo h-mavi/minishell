@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 14:16:00 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:57:10 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,27 +91,36 @@ char	*rm_dollar(char *s)
 	return (free(s), tmp);
 }
 
+/* Funzione per contenere un if enorme utilizzato da divide. */
+int	if_divide(char *s, int i, int y)
+{
+	if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1 && \
+		ft_isdigit(s[i]) == 0) || ((s[i] == 39 || s[i] == 34) && \
+		werami(s, i + 1) != 1)) && find_char(s, i + 1) != 0) || \
+		(find_char(s, i) == 3 && werami(s, i) == -1 && s[i + 1] != ' ') || \
+		(find_char(s, i) == 0 && find_char(s, i + 1) == 3 && s[i] != ' ')) && \
+		i <= y)
+		return (1);
+	return (0);
+}
+
 /* La funzione chiamata da here_glued che divide redirection,
 heredoc e pipe attaccati */
 char	*divide(char *s, int y)
 {
 	int		i;
 	int		x;
-	int		len;
 	char	*end;
 
 	i = -1;
-	len = 0;
+	x = 0;
 	while (s[++i])
 	{
-		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1 && ft_isdigit(s[i]) == 0) || \
-		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && find_char(s, i + 1) != 0) || \
-		(find_char(s, i) == 3 && werami(s, i) == -1 && s[i + 1] != ' ') || \
-		(find_char(s, i) == 0 && find_char(s, i + 1) == 3 && s[i] != ' ')) && i <= y)
-			len++;
-		len++;
+		if (if_divide(s, i, y) == 1)
+			x++;
+		x++;
 	}
-	end = (char *)ft_calloc((len + 1), sizeof(char));
+	end = (char *)ft_calloc((x + 1), sizeof(char));
 	if (!end)
 		return (NULL);
 	i = -1;
@@ -119,13 +128,9 @@ char	*divide(char *s, int y)
 	while (s[++i])
 	{
 		end[x++] = s[i];
-		if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1 && ft_isdigit(s[i]) == 0) || \
-		((s[i] == 39 || s[i] == 34) && werami(s, i + 1) != 1)) && find_char(s, i + 1) != 0) || \
-		(i != 0 && find_char(s, i) == 3 && werami(s, i) == -1 && s[i + 1] != ' ') || \
-		(find_char(s, i) == 0 && find_char(s, i + 1) == 3 && s[i] != ' ')) && i <= y)
+		if (if_divide(s, i, y) == 1)
 			end[x++] = ' ';
 	}
 	end[x] = '\0';
-	free(s);
-	return (end);
+	return (free(s), end);
 }

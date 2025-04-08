@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 14:48:04 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:56:00 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char		*refine(char *s, char **env);
 char		*rm_spaces(char *s);
 char		*rm_app(char *s);
 char		*rm_dollar(char *s);
+int			if_divide(char *s, int i, int y);
 char		*divide(char *s, int y);
 
 //----------------------------------------------------------------------------
