@@ -6,33 +6,22 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/08 12:28:00 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:46:25 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	find_dollar(char *s, int i)
-{
-	int	x;
-
-	x = i;
-	while (s[x])
-	{
-		if (s[x] == '$')
-			return (x);
-		x++;
-	}
-	return (-1);
-}
-
-char *reassemble(char *first, char *espan, char *after, int len_cmd)
+/* Essenziale per riassemblare la stringa per un caso speciale
+di espansione */
+char	*reassemble(char *first, char *espan, char *after, int len_cmd)
 {
 	char	*end;
 	int		i;
 	int		x;
 
-	end = (char *)ft_calloc((ft_strlen(first) - len_cmd + ft_strlen(espan)) + 1, sizeof(char));
+	end = (char *)ft_calloc((ft_strlen(first) - len_cmd + ft_strlen(espan)) \
+	+ 1, sizeof(char));
 	i = 0;
 	x = -1;
 	while (first[++x] != '$')
@@ -48,74 +37,38 @@ char *reassemble(char *first, char *espan, char *after, int len_cmd)
 	return (end);
 }
 
-char *esp_special_case(char *s, char **env)
-{
-	char	*tmp;
-	int		start;
-	int		end;
-
-	start = find_dollar(s, 0);
-	end = start + 1;
-	while (s[end] == '_' || ft_isalpha(s[end]) != 0 || ft_isdigit(s[end]) != 0)
-		end++;
-	tmp = (char *)ft_calloc(end - start + 1, sizeof(char));
-	ft_strlcpy(tmp, s + start + 1, end - start);
-	tmp = espand(tmp, env);
-	s = reassemble(s, tmp, s + end, end - start);
-	free(tmp);
-	return (s);
-}
-
-/* Controlla se ci sono variabili da espandere e, nel caso sia necessario, toglie apici e virgolette. */
-char *refine(char *s, char **env)
-{
-	int	i;
-
-	i = -1;
-	while (s[++i])
-	{
-		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
-			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
-			s = espand(s, env);
-		else if(((s[i] == '"' && find_dollar(s, i) != -1) || (s[i] == '$' && werami(s, i) == 1 && s[0] == '"')) && \
-			((ft_isalpha(s[find_dollar(s, i) + 1]) != 0) || (s[find_dollar(s, i) + 1] == '_')))
-			s = esp_special_case(s, env);
-		else if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
-			s = rm_dollar(s);
-		if (s[0] == '\0')
-			return (s);
-	}
-	return (s);
-}
-
+/* Controlla errori filtrando la lista. */
 int	check_error_lst(t_token *head)
 {
-	t_token *prima;
-	t_token *dopo;
+	t_token	*prima;
+	t_token	*dopo;
 
 	prima = head;
 	dopo = prima->next;
 	if (prima->type == PIPE || prima->str[0] == ';')
-		return (error_exit(head, 0, 0, "Syntax Error, unexpected token at the start of input\n", NULL), 0); //no here_doc
+		return (error_exit(head, -1, \
+		"Syntax Error, unexpected token at the start of input\n", NULL), 0);
 	while (dopo != NULL)
 	{
 		if (dopo->type == PIPE && prima->type == PIPE)
-			return (error_exit(head, 1, prima->ID, "Syntax Error, unexpected token '|'\n", NULL), 0); //si here_doc
+			return (error_exit(head, prima->id, \
+			"Syntax Error, unexpected token '|'\n", NULL), 0);
 		prima = dopo;
 		dopo = prima->next;
 	}
 	if (prima->type == PIPE)
-		return (error_exit(head, 0, 0, "Syntax Error, unexpected token '|' at the end of input\n", NULL), 0); //no here doc
+		return (error_exit(head, -1, \
+		"Syntax Error, unexpected token '|' at the end of input\n", NULL), 0);
 	return (1);
 }
 
+/* Serve a liberare una lista. */
 void	free_lst(t_token *head)
 {
 	t_token	*tmp;
 
 	while (head->next != NULL)
 	{
-		
 		free((char *)(*head).str);
 		tmp = head;
 		head = head->next;
@@ -125,71 +78,17 @@ void	free_lst(t_token *head)
 	free(head);
 }
 
-int	control_str(char *str, char *argv)
-{
-	if (str == NULL)
-		return (1);
-	if ((ft_strncmp(str, argv, ft_strlen(argv)) == 0) && \
-	str[ft_strlen(argv)] == '\n')
-		return (1);
-	return (0);
-}
-
-void	here_doc(char *input)
-{
-	char	*str;
-
-	write(1, "> ", 2);
-	str = get_next_line(0);
-	while (control_str(str, input + 2) == 0)
-	{
-		free(str);
-		write(1, "> ", 2);
-		str = get_next_line(0);	
-	}
-	free(str);
-}
-
-void	ft_openhd_ls(t_token *head, int where)
-{
-	while (head->ID < where)
-	{
-		if (head->type == HEREDOC)
-			here_doc(head->str);
-		head = head->next;
-	}
-}
-
-void	ft_openhd_str(char *str, int where)
-{
-	int		i;
-	int		x;
-	char	*tmp;
-
-	i = 0;
-	tmp = NULL;
-	while (str[i] && i < where)
-	{
-		if (find_char(str, i) == HEREDOC)
-		{
-			x = i;
-			while (str[x] != ' ')
-				x++;
-			tmp = ft_substr(str, i, x - i); //devo prendere singolarmente <<a, penso che guardare come ho fatto le espansioni copiando e incollando sia una buona idea
-			here_doc(tmp);
-			free(tmp);
-		}
-		i++;
-	}
-}
-
-char *error_exit(t_token *head, int syn, int where, char *str, char *input)
+/* Funzione da chiamare in caso di errore! Libera la lista head e
+la stringa input e controlla se ci sono heredoc tramite syn.
+Se syn != -1 allora gli heredoc sono da aprire (in caso
+di errore di sintassi). */
+char	*error_exit(t_token *head, int syn, char *str, char *input)
 {
 	printf("%s", str);
-	if (syn == 1 && head != NULL && input == NULL)
-		ft_openhd_ls(head, where);
-	else if (syn == 1 && head == NULL && input != NULL)
-		ft_openhd_str(input, where);
+	if (syn != -1 && head != NULL && input == NULL)
+		ft_openhd_ls(head, syn);
+	else if (syn != -1 && head == NULL && input != NULL)
+		ft_openhd_str(input, syn);
 	if (input != NULL)
 		free(input);
 	if (head != NULL)

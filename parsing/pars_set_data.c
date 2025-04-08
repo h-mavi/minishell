@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 12:04:05 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:14:08 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,17 @@ void	lstadd_back(t_token **lst, t_token *new)
 }
 
 /* Setta i dati della lista di tipo t_token */
-void	set_data(t_token **head, char **str, int flag, int ID)
+void	set_data(t_token **head, char **str, int flag, int id)
 {
-	t_token *node;
+	t_token	*node;
 
-	node = (t_token *)ft_calloc(1 ,sizeof(t_token));
+	node = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!node)
 		return ;
 	*str = rm_app(*str);
-    (*node).type = flag;
-    (*node).str = ft_strdup(*str);
-	// (*node).str = str;
-	(*node).ID = ID + 1;
+	(*node).type = flag;
+	(*node).str = ft_strdup(*str);
+	(*node).id = id + 1;
 	lstadd_back(head, node);
 }
 
@@ -56,25 +55,25 @@ void	print_lists(t_token *head)
 		if (head->next == NULL && head->prev == NULL)
 		{
 			printf("\nID -> %d\nPrev -> NULL\nType -> %d\nInput -> %s\nNext -> NULL\n\n", \
-			head->ID, head->type, head->str);
+			head->id, head->type, head->str);
 			break ;
 		}
 		else if (head->prev == NULL)
 		{
 			printf("\nID -> %d\nPrev -> NULL\nType -> %d\nInput -> %s\nNext -> %s\n\n", \
-			head->ID, head->type, head->str, (head->next)->str);
+			head->id, head->type, head->str, (head->next)->str);
 			head = head->next;
 		}
 		else if (head->next == NULL)
 		{
 			printf("ID -> %d\nPrev -> %s\nType -> %d\nInput -> %s\nNext -> NULL\n\n", \
-			head->ID, (head->prev)->str, head->type, head->str);
+			head->id, (head->prev)->str, head->type, head->str);
 			break ;
 		}
 		else
 		{
 			printf("ID -> %d\nPrev -> %s\nType -> %d\nInput -> %s\nNext -> %s\n\n", \
-			head->ID, (head->prev)->str, head->type, head->str, (head->next)->str);
+			head->id, (head->prev)->str, head->type, head->str, (head->next)->str);
 			head = head->next;
 		}
 	}
@@ -85,7 +84,7 @@ void	set_prev(t_token **head)
 {
 	t_token	*prima;
 	t_token	*corr;
-	
+
 	prima = *head;
 	corr = prima->next;
 	prima->prev = NULL;

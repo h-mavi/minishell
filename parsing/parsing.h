@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 12:28:26 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:48:04 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,49 +51,76 @@ typedef struct s_token
 {
 	int				type;
 	char			*str;
-	int				ID;
+	int				id;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
 
+//----------------------------------------------------------------------------
+//in parsing/pars_heredoc.c
+
+void		here_doc(char *input);
+void		ft_openhd_ls(t_token *head, int where);
+void		ft_openhd_str(char *str, int where);
+int			control_str(char *str, char *argv);
+
+//----------------------------------------------------------------------------
 //in parsing/pars_main.c
+
 void		routine(int sig);
 t_token		*token_inator(char *cmd, char **env, t_token *head);
 int			parsing(char *pwd, char **env);
 
+//----------------------------------------------------------------------------
 //in parsing/pars_refine.c
+
 char		*rewrite(char *orig, int i, int x);
 char		*here_glued(char *s);
 char		*espand(char *s, char **env);
+char		*esp_special_case(char *s, char **env);
+char		*refine(char *s, char **env);
 
+//----------------------------------------------------------------------------
 //in parsing/pars_rm.c
-char	 	*rm_spaces(char *s);
+
+char		*rm_spaces(char *s);
 char		*rm_app(char *s);
-char 		*rm_dollar(char *s);
+char		*rm_dollar(char *s);
 char		*divide(char *s, int y);
 
+//----------------------------------------------------------------------------
+//in parsing/pars_set_data.c
+
+void		lstadd_back(t_token **lst, t_token *new);
+void		set_data(t_token **head, char **str, int flag, int id);
+void		print_lists(t_token *head);
+void		set_prev(t_token **head);
+
+//----------------------------------------------------------------------------
 //in parsing/pars_split.c
+
 int			len_arr_split(char *arr);
 void		frite(char *dest, int start, int len, char *s);
 char		**fill(char **dest, char *s, int len_arr);
 char		**custom_split(char *s);
 
+//----------------------------------------------------------------------------
 //in parsing/pars_utils.c
+
 void		free_arr(char **arr);
-int 		werami(char *s, int index);
-int 		find_char(char *s, int i);
+int			werami(char *s, int index);
+int			find_char(char *s, int i);
+int			find_dollar(char *s, int i);
 int			check_error(char *s);
 
+//----------------------------------------------------------------------------
 //in parsing/parsing.c
-int			find_dollar(char *s, int i);
-char		*refine(char *s, char **env);
+
+char		*reassemble(char *first, char *espan, char *after, int len_cmd);
 int			check_error_lst(t_token *head);
 void		free_lst(t_token *head);
-char		*error_exit(t_token *head, int syn, int where, char *str, char *input);
+char		*error_exit(t_token *head, int syn, char *str, char *input);
 
-//in parsing/parsing_set_data.c
-void		set_data(t_token **head, char **str, int flag, int ID);
-void		print_lists(t_token *head);
-void		set_prev(t_token **head);
+//----------------------------------------------------------------------------
 
 #endif

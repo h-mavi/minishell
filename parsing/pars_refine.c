@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 12:35:37 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:36:40 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,49 @@ char	*espand(char *s, char **env)
 	if (!end)
 		return (free(s), free(tmp), free(path), NULL);
 	return (free(s), free(tmp), free(path), end);
+}
+
+/* Funzione chiamata in refine per gestire casi particolari
+di espansioni di variabili. */
+char	*esp_special_case(char *s, char **env)
+{
+	char	*tmp;
+	int		start;
+	int		end;
+
+	start = find_dollar(s, 0);
+	end = start + 1;
+	while (s[end] == '_' || ft_isalpha(s[end]) != 0 || ft_isdigit(s[end]) != 0)
+		end++;
+	tmp = (char *)ft_calloc(end - start + 1, sizeof(char));
+	ft_strlcpy(tmp, s + start + 1, end - start);
+	tmp = espand(tmp, env);
+	s = reassemble(s, tmp, s + end, end - start);
+	free(tmp);
+	return (s);
+}
+
+/* Controlla se ci sono variabili da espandere e, nel caso sia necessario,
+toglie apici e virgolette. */
+char	*refine(char *s, char **env)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
+			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
+			s = espand(s, env);
+		else if (((s[i] == '"' && find_dollar(s, i) != -1) || \
+			(s[i] == '$' && werami(s, i) == 1 && s[0] == '"')) && \
+			((ft_isalpha(s[find_dollar(s, i) + 1]) != 0) || \
+			(s[find_dollar(s, i) + 1] == '_')))
+			s = esp_special_case(s, env);
+		else if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
+			s = rm_dollar(s);
+		if (s[0] == '\0')
+			return (s);
+	}
+	return (s);
 }

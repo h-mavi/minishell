@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/07 15:41:22 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:39:36 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	len_arr_split(char *arr)
 			while (arr[x] != '"' && arr[x] != '\0')
 				x++;
 			if (arr[x] == '\0')
-				return (-1); //ERROR
+				return (-1);
 		}
 		else if (arr[x] == 39)
 		{
@@ -40,7 +40,7 @@ int	len_arr_split(char *arr)
 			while (arr[x] != 39 && arr[x] != '\0')
 				x++;
 			if (arr[x] == '\0')
-				return (-1); //ERROR
+				return (-1);
 		}
 		if ((arr[x] == ' ' && arr[x + 1] != ' ' && arr[x + 1] != '\0') || \
 		(x == 0 && arr[x] != ' '))
@@ -90,16 +90,20 @@ char	**fill(char **dest, char *s, int len_arr)
 			}
 		}
 		else
+		{
 			while (s[y] != '\0' && s[y++] != ' ')
 			{
 				conta++;
 				if (s[y] == 34 || s[y] == 39)
+				{
 					while (werami(s, y) != -1 && werami(s, y) != -2)
 					{
 						y++;
 						conta++;
 					}
+				}
 			}
+		}
 		dest[x] = (char *) malloc(sizeof(char) * (conta + 1));
 		if (dest[x] == NULL)
 			return (NULL);
@@ -111,13 +115,15 @@ char	**fill(char **dest, char *s, int len_arr)
 		else
 			while (s[y] != '\0' && s[i++] != ' ')
 				if (s[i] == 34 || s[i] == 39)
-					while (werami(s, i) != -1  && werami(s, y) != -2)
+					while (werami(s, i) != -1 && werami(s, y) != -2)
 						i++;
 	}
 	dest[x] = NULL;
 	return (dest);
 }
 
+/* Split customizzato per addattarsi alle esigenze di minishell.
+Chiama le funzioni rm_spaces e here_glued. */
 char	**custom_split(char *s)
 {
 	int		x;
@@ -133,12 +139,13 @@ char	**custom_split(char *s)
 		return (NULL);
 	len_arr = len_arr_split(s);
 	if (len_arr == -1)
-		return (error_exit(NULL, 0, 0, "Syntax Error, odd number of ' or \"\n", NULL), NULL); //no here_doc
+		return (error_exit(NULL, -1, \
+		"Syntax Error, odd number of ' or \"\n", NULL), NULL);
 	dest = (char **) malloc(sizeof(char *) * (len_arr + 1));
 	if (!dest)
-		return (error_exit(NULL, 0, 0, "Failed Allocation\n", NULL), NULL); //no here_doc
+		return (error_exit(NULL, -1, "Failed Allocation\n", NULL), NULL);
 	if (!fill(dest, s, len_arr))
-		return (free(s), free_arr(dest), error_exit(NULL, 0, 0, "Failed Allocation\n", NULL), NULL); //no here_doc
+		return (free(s), free_arr(dest), error_exit(NULL, -1, \
+		"Failed Allocation\n", NULL), NULL);
 	return (free(s), dest);
 }
-
