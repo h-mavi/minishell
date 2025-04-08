@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 12:04:22 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:28:26 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int			check_error(char *s);
 //in parsing/parsing.c
 int			find_dollar(char *s, int i);
 char		*refine(char *s, char **env);
-// int 		check_if_cmd(char *cmd, char **env); non piu' usata
 int			check_error_lst(t_token *head);
 void		free_lst(t_token *head);
 char		*error_exit(t_token *head, int syn, int where, char *str, char *input);

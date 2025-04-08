@@ -6,18 +6,18 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 12:11:54 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:35:37 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-/* Funzione chiamata da rm_spaces che serve per riscrivere la stringa senza gli spazi in mezzo ai
-redir e il loro limiter. */
-char *rewrite(char *orig, int i, int x)
+/* Funzione chiamata da rm_spaces che serve per riscrivere la stringa
+senza gli spazi in mezzo ai redir e il loro limiter. */
+char	*rewrite(char *orig, int i, int x)
 {
-	int	y;
-	char *dest;
+	int		y;
+	char	*dest;
 
 	y = -1;
 	dest = (char *)ft_calloc(sizeof(char), (ft_strlen(orig) - x) + 1);
@@ -36,23 +36,23 @@ char *rewrite(char *orig, int i, int x)
 	return (dest);
 }
 
-/* Controlla se ci sono casi di redirection, heredoc o pipe attaccati. Nel caso ci siano li
-divide con uno spazio tramite la funzione divide, in modo che poi il custom_split
-possa dividerli in nodi seprarati.*/
-char *here_glued(char *s)
+/* Controlla se ci sono casi di redirection, heredoc o pipe attaccati.
+Nel caso ci siano li divide con uno spazio tramite la funzione divide,
+in modo che poi il custom_split possa dividerli in nodi seprarati.*/
+char	*here_glued(char *s)
 {
 	int	x;
 
 	x = -1;
 	while (s[++x])
 		if ((((x != 0 && s[x] != ' ' && find_char(s, x) == 0 && \
-			werami(s, x) == -1) || \
-			(s[x] == 39 || s[x] == 34)) && find_char(s, x + 1) != 0 && \
-			find_char(s, x + 1) != 3) || \
-			(x != 0 && find_char(s, x) == 3 && werami(s, x) == -1 && \
-			((s[x - 1] != ' ') || \
-			(s[x + 1] != ' ' && s[x + 1] != '\0')) && x != 0))
-				s = divide(s, x);
+		werami(s, x) == -1) || \
+		(s[x] == 39 || s[x] == 34)) && find_char(s, x + 1) != 0 && \
+		find_char(s, x + 1) != 3) || \
+		(x != 0 && find_char(s, x) == 3 && werami(s, x) == -1 && \
+		((s[x - 1] != ' ') || \
+		(s[x + 1] != ' ' && s[x + 1] != '\0')) && x != 0))
+			s = divide(s, x);
 	return (s);
 }
 
@@ -60,7 +60,7 @@ char *here_glued(char *s)
 char	*espand(char *s, char **env)
 {
 	int		i;
-	char 	*tmp;
+	char	*tmp;
 	char	*path;
 	char	*end;
 

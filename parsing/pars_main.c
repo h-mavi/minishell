@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 12:04:51 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:32:54 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ void	routine(int sig)
 	{
 		printf("\n");
 		rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
-/* Crea i token */
+/* Chiama custom_split, creo i token e compilo la lista che poi returno,
+liberando l'array*/
 t_token	*token_inator(char *cmd, char **env, t_token *head)
 {
 	int		i;
@@ -59,20 +60,20 @@ t_token	*token_inator(char *cmd, char **env, t_token *head)
 	set_prev(&head);
 	return (free_arr(str), head);
 }
-/* NOTA -> Quando liberiamo la lista dobbiamo anche liberare singolarmente le stringhe perche' sono allocate a se'.*/
 
-int parsing(char *pwd, char **env)
+/* Registra l'history, gestisce ^D e chiama token_inator*/
+int	parsing(char *pwd, char **env)
 {
-	char    *cmd;
-	t_token *head;
+	char	*cmd;
+	t_token	*head;
 
-    cmd = readline(pwd);
+	cmd = readline(pwd);
 	head = NULL;
-    add_history(cmd);
-    if (!cmd)
+	add_history(cmd);
+	if (!cmd)
 	{
 		printf("exit\n");
-        free(cmd);
+		free(cmd);
 		return (0);
 	}
 	head = token_inator(cmd, env, head);
@@ -86,9 +87,9 @@ int	main(int argc, char *argv[], char **env)
 {
 	char	*temp;
 	char	*pwd;
-	
-    (void)argc;
-    (void)argv;
+
+	(void)argc;
+	(void)argv;
 	signal(SIGINT, routine);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -96,10 +97,10 @@ int	main(int argc, char *argv[], char **env)
 		temp = getcwd(NULL, 0);
 		pwd = ft_strjoin(temp, "$ ");
 		free(temp);
-		if(parsing(pwd, env) == 0)
-			break;
+		if (parsing(pwd, env) == 0)
+			break ;
 		free(pwd);
 	}
 	free(pwd);
-	return(0);
+	return (0);
 }
