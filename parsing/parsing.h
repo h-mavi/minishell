@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 14:56:00 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:12:26 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ typedef struct s_token
 }	t_token;
 
 //----------------------------------------------------------------------------
+//in parsing/pars_extra.c
+
+char		*set_str(char *s);
+char		*set_path(char *tmp, char **env);
+int			len_arr_utils(char *s, int *i, int *x, int app);
+int			count_len_wrd(char *s, int *y, int conta);
+int			realigning_i(char *s, int i, int y);
+
+//----------------------------------------------------------------------------
 //in parsing/pars_heredoc.c
 
 void		here_doc(char *input);
@@ -68,6 +77,7 @@ int			control_str(char *str, char *argv);
 //in parsing/pars_main.c
 
 void		routine(int sig);
+void		compile_inator(char **str, char **env, t_token **head);
 t_token		*token_inator(char *cmd, char **env, t_token *head);
 int			parsing(char *pwd, char **env);
 
@@ -102,7 +112,7 @@ void		set_prev(t_token **head);
 
 int			len_arr_split(char *arr);
 void		frite(char *dest, int start, int len, char *s);
-char		**fill(char **dest, char *s, int len_arr);
+char		**fill(char **dest, char *s, int len_arr, int i);
 char		**custom_split(char *s);
 
 //----------------------------------------------------------------------------
