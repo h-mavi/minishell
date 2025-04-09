@@ -6,7 +6,7 @@
 #    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 09:06:57 by mbiagi            #+#    #+#              #
-#    Updated: 2025/04/03 09:53:11 by mbiagi           ###   ########.fr        #
+#    Updated: 2025/04/09 09:11:02 by mbiagi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME = minishell_exec
 
-SOURCES = execute.c execute_utils.c \
+SOURCES = execute.c execute_utils.c execute_pipe.c \
 ../builtin/builtin_env_controls.c ../builtin/builtin.c ../builtin/builtin_env.c
 OBJ = $(SOURCES:.c=.o)
 
