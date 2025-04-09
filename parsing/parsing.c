@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/08 14:46:25 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:22:09 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,6 @@ int	check_error_lst(t_token *head)
 		return (error_exit(head, -1, \
 		"Syntax Error, unexpected token '|' at the end of input\n", NULL), 0);
 	return (1);
-}
-
-/* Serve a liberare una lista. */
-void	free_lst(t_token *head)
-{
-	t_token	*tmp;
-
-	while (head->next != NULL)
-	{
-		free((char *)(*head).str);
-		tmp = head;
-		head = head->next;
-		free(tmp);
-	}
-	free((char *)(*head).str);
-	free(head);
 }
 
 /* Funzione da chiamare in caso di errore! Libera la lista head e
