@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:40:15 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 10:25:41 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:35:58 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,21 +92,15 @@ int	count_len_wrd(char *s, int *y, int conta)
 	return (conta);
 }
 
-/* Chiamata da fill nel custom_split, porta ad allinearsi con y.*/
-int	realigning_i(char *s, int i, int y)
+char	*smells_goog(char *s, int *i, char **env)
 {
-	if (s[i] == 34 || s[i] == 39)
+	while (s[++(*i)] != '"')
 	{
-		while (s[y] != '\0' && ((werami(s, i) != -1) || \
-		(werami(s, i) == -1 && s[i] != ' ')))
-			i++;
+		if (s[*i] == '$' && s[(*i) + 1] == '$')
+			*i += 2;
+		if ((s[*i] == '$' && werami(s, *i) == 1 && \
+			((ft_isalpha(s[(*i) + 1]) != 0) || (s[(*i) + 1] == '_'))))
+			s = esp_special_case(s, env, *i);
 	}
-	else
-	{
-		while (s[y] != '\0' && s[i++] != ' ')
-			if (s[i] == 34 || s[i] == 39)
-				while (werami(s, i) != -1 && werami(s, y) != -2)
-					i++;
-	}
-	return (i);
+	return (s);
 }

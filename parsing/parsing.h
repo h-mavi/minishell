@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 15:14:06 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:35:36 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char		*set_str(char *s);
 char		*set_path(char *tmp, char **env);
 int			len_arr_utils(char *s, int *i, int *x, int app);
 int			count_len_wrd(char *s, int *y, int conta);
-int			realigning_i(char *s, int i, int y);
+char		*smells_goog(char *s, int *i, char **env);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_heredoc.c
@@ -110,6 +110,7 @@ void		set_prev(t_token **head);
 //----------------------------------------------------------------------------
 //in parsing/pars_split.c
 
+int			realigning_i(char *s, int i, int y);
 int			len_arr_split(char *arr);
 void		frite(char *dest, int start, int len, char *s);
 char		**fill(char **dest, char *s, int len_arr, int i);

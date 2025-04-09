@@ -6,11 +6,30 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 10:12:46 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:27:33 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+/* Chiamata da fill nel custom_split, porta ad allinearsi con y.*/
+int	realigning_i(char *s, int i, int y)
+{
+	if (s[i] == 34 || s[i] == 39)
+	{
+		while (s[y] != '\0' && ((werami(s, i) != -1) || \
+		(werami(s, i) == -1 && s[i] != ' ')))
+			i++;
+	}
+	else
+	{
+		while (s[y] != '\0' && s[i++] != ' ')
+			if (s[i] == 34 || s[i] == 39)
+				while (werami(s, i) != -1 && werami(s, y) != -2)
+					i++;
+	}
+	return (i);
+}
 
 /* returna il numero di elementi presenti nell'input */
 int	len_arr_split(char *arr)

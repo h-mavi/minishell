@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 15:25:45 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:59:43 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,22 @@ char	*refine(char *s, char **env)
 	i = -1;
 	while (s[++i])
 	{
+		if (s[i] == '$' && s[i + 1] == '$')
+			i += 2;
 		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
 			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
-			s = espand(s, env);
+			s = esp_special_case(s, env, i);
 		else if (s[i] == '"' && werami(s, i + 1) == 1)
+		{
 			while (s[++i] != '"')
-				if ((s[i] == '$' && werami(s, i) == 1 && ((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
+			{
+				if (s[i] == '$' && s[i + 1] == '$')
+					i += 2;
+				if ((s[i] == '$' && werami(s, i) == 1 && \
+					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
 					s = esp_special_case(s, env, i);
+			}
+		}
 		else if (i == 0 && s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
 		{
 			s = rm_dollar(s);
@@ -130,4 +139,16 @@ char	*refine(char *s, char **env)
 	return (s);
 }
 
-//devo fare in modo che espandi solo con numeri dispari di dollari
+
+// char *smells_goog(char *s, int *i, char **env)
+// {
+// 	while (s[++(*i)] != '"')
+// 	{
+// 		if (s[*i] == '$' && s[(*i) + 1] == '$')
+// 			*i += 2;
+// 		if ((s[*i] == '$' && werami(s, *i) == 1 && \
+// 			((ft_isalpha(s[(*i) + 1]) != 0) || (s[(*i) + 1] == '_'))))
+// 			s = esp_special_case(s, env, *i);
+// 	}
+// 	return (s);
+// }
