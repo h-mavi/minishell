@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 12:32:54 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 09:24:11 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,36 @@ void	routine(int sig)
 	}
 }
 
-/* Chiama custom_split, creo i token e compilo la lista che poi returno,
-liberando l'array*/
+/* Compila la lista con i nodi-token */
+void	compile_inator(char **str, char **env, t_token **head)
+{
+	int	i;
+	int	check;
+
+	i = -1;
+	check = 0;
+	while (str[++i] != NULL)
+	{
+		str[i] = refine(str[i], env);
+		if (check == 0 && find_char(str[i], 0) == 0)
+		{
+			set_data(head, &str[i], COMMAND, i);
+			check = 1;
+		}
+		else if (find_char(str[i], 0) != 3 && find_char(str[i], 0) != 0)
+			set_data(head, &str[i], find_char(str[i], 0), i);
+		else if (find_char(str[i], 0) == PIPE)
+		{
+			set_data(head, &str[i], PIPE, i);
+			check = 0;
+		}
+		else
+			set_data(head, &str[i], FLAG, i);
+	}
+}
+
+/* Chiama custom_split e il compile_inator e poi returno la lista
+liberando anche l'array*/
 t_token	*token_inator(char *cmd, char **env, t_token *head)
 {
 	int		i;
@@ -37,24 +65,7 @@ t_token	*token_inator(char *cmd, char **env, t_token *head)
 	str = custom_split(cmd);
 	if (!str)
 		return (NULL);
-	while (str[++i] != NULL)
-	{
-		str[i] = refine(str[i], env);
-		if (check == 0 && find_char(str[i], 0) == 0)
-		{
-			set_data(&head, &str[i], COMMAND, i);
-			check = 1;
-		}
-		else if (find_char(str[i], 0) != 3 && find_char(str[i], 0) != 0)
-			set_data(&head, &str[i], find_char(str[i], 0), i);
-		else if (find_char(str[i], 0) == PIPE)
-		{
-			set_data(&head, &str[i], PIPE, i);
-			check = 0;
-		}
-		else
-			set_data(&head, &str[i], FLAG, i);
-	}
+	compile_inator(str, env, &head);
 	if (check_error_lst(head) == 0)
 		return (free_arr(str), NULL);
 	set_prev(&head);

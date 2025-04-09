@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 14:39:36 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:12:46 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,14 @@ int	len_arr_split(char *arr)
 	x = -1;
 	while (arr[++x] != '\0')
 	{
-		if (arr[x] == '"')
+		if (arr[x] == 34)
 		{
-			if (x == 0 && arr[x] != ' ')
-				i++;
-			x++;
-			while (arr[x] != '"' && arr[x] != '\0')
-				x++;
-			if (arr[x] == '\0')
+			if (len_arr_utils(arr, &i, &x, 34) == -1)
 				return (-1);
 		}
 		else if (arr[x] == 39)
 		{
-			if (x == 0 && arr[x] != ' ')
-				i++;
-			x++;
-			while (arr[x] != 39 && arr[x] != '\0')
-				x++;
-			if (arr[x] == '\0')
+			if (len_arr_utils(arr, &i, &x, 39) == -1)
 				return (-1);
 		}
 		if ((arr[x] == ' ' && arr[x + 1] != ' ' && arr[x + 1] != '\0') || \
@@ -64,14 +54,12 @@ void	frite(char *dest, int start, int len, char *s)
 	dest[i] = '\0';
 }
 
-char	**fill(char **dest, char *s, int len_arr)
+char	**fill(char **dest, char *s, int len_arr, int i)
 {
-	int	i;
 	int	x;
 	int	y;
 	int	conta;
 
-	i = 0;
 	x = 0;
 	y = 0;
 	while (x < len_arr)
@@ -80,43 +68,12 @@ char	**fill(char **dest, char *s, int len_arr)
 		while (s[i] == 32)
 			i++;
 		y = i;
-		if (s[y] == 34 || s[y] == 39)
-		{
-			while (s[y] != '\0' && ((werami(s, y) != -1) || \
-			(werami(s, y) == -1 && s[y] != ' ')))
-			{
-				y++;
-				conta++;
-			}
-		}
-		else
-		{
-			while (s[y] != '\0' && s[y++] != ' ')
-			{
-				conta++;
-				if (s[y] == 34 || s[y] == 39)
-				{
-					while (werami(s, y) != -1 && werami(s, y) != -2)
-					{
-						y++;
-						conta++;
-					}
-				}
-			}
-		}
+		conta = count_len_wrd(s, &y, conta);
 		dest[x] = (char *) malloc(sizeof(char) * (conta + 1));
 		if (dest[x] == NULL)
 			return (NULL);
 		frite(dest[x++], i, conta, s);
-		if (s[i] == 34 || s[i] == 39)
-			while (s[y] != '\0' && ((werami(s, i) != -1) || \
-			(werami(s, i) == -1 && s[i] != ' ')))
-				i++;
-		else
-			while (s[y] != '\0' && s[i++] != ' ')
-				if (s[i] == 34 || s[i] == 39)
-					while (werami(s, i) != -1 && werami(s, y) != -2)
-						i++;
+		i = realigning_i(s, i, y);
 	}
 	dest[x] = NULL;
 	return (dest);
@@ -144,7 +101,7 @@ char	**custom_split(char *s)
 	dest = (char **) malloc(sizeof(char *) * (len_arr + 1));
 	if (!dest)
 		return (error_exit(NULL, -1, "Failed Allocation\n", NULL), NULL);
-	if (!fill(dest, s, len_arr))
+	if (!fill(dest, s, len_arr, 0))
 		return (free(s), free_arr(dest), error_exit(NULL, -1, \
 		"Failed Allocation\n", NULL), NULL);
 	return (free(s), dest);

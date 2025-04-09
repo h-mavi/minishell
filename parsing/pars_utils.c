@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 15:03:34 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:21:55 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,31 @@ dentro o fuori gi apici/ virgolette. Se returna 0 s[index] e'
 uguale ad un'apice/virgoletta, se returna 1 s[index] e'
 negli apici, se returna -1 e' fuori.
 Se 's' o 's[index]' sono uguali a NULL returnano -2.*/
-int	werami(char *s, int index)
+int	werami(char *s, int i)
 {
 	int	x;
-	int	app;
-	int	virg;
+	int	a;
+	int	v;
 
 	x = -1;
-	app = 0;
-	virg = 0;
-	if (s == NULL || s[index] == '\0')
+	a = 0;
+	v = 0;
+	if (s == NULL || s[i] == '\0')
 		return (-2);
 	while (s[++x] != '\0')
 	{
-		if (s[x] == '"' && app == 0 && virg == 0)
-			virg = 1;
-		else if (s[x] == '"' && app == 0 && virg == 1)
-			virg = 0;
-		if (s[x] == '\'' && app == 0 && virg == 0)
-			app = 1;
-		else if (s[x] == '\'' && app == 1 && virg == 0)
-			app = 0;
-		if (((s[x] == '\'' && virg == 0) || \
-			(s[x] == '"' && app == 0)) && x == index)
+		if (s[x] == '"' && a == 0 && v == 0)
+			v = 1;
+		else if (s[x] == '"' && a == 0 && v == 1)
+			v = 0;
+		if (s[x] == '\'' && a == 0 && v == 0)
+			a = 1;
+		else if (s[x] == '\'' && a == 1 && v == 0)
+			a = 0;
+		if (((s[x] == '\'' && v == 0) || (s[x] == '"' && a == 0)) && x == i)
 			return (0);
-		if ((x == index && app == 1) || (x == index && virg == 1))
+		if ((x == i && a == 1) || (x == i && v == 1))
 			return (1);
-		if (s[x] == '\0' && ((app == 1) || (virg == 1)))
-			return (-2);
 	}
 	return (-1);
 }
