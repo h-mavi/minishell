@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/07 09:34:18 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/09 14:08:44 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,30 @@ void	heredoc(t_token *tree)
 }
 
 //redirige i file
-void	redir_check(t_token tree)
+void	redir_check(t_token *tree)
 {
 	int	file;
 
-	while (tree.next)
+	while (tree != NULL && tree->type != PIPE)
 	{
-		if (tree.type == REDIR_1)
+		if (tree->type == REDIR_1)
 		{
-			file = open(tree.str, O_RDONLY);
-			file_control(&tree, file, 0);
+			file = open(tree->str, O_RDONLY);
+			file_control(tree, file, 0);
 		}
-		else if (tree.type == REDIR_2)
+		else if (tree->type == REDIR_2)
 		{
-			file = open(tree.str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-			file_control(&tree, file, 1);
+			file = open(tree->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+			file_control(tree, file, 1);
 		}
-		else if (tree.type == REDIR_3)
+		else if (tree->type == REDIR_3)
 		{
-			file = open(tree.str, O_WRONLY | O_CREAT | O_APPEND , 0777);
-			file_control(&tree, file, 1);
+			file = open(tree->str, O_WRONLY | O_CREAT | O_APPEND , 0777);
+			file_control(tree, file, 1);
 		}
-		else if (tree.type == HEREDOC)
-			heredoc(&tree);
-		tree = *(tree.next);
+		else if (tree->type == HEREDOC)
+			heredoc(tree);
+		tree = tree->next;
 	}
 }
 
@@ -106,7 +106,7 @@ char	**full_cmd(t_token *tree)
 	i = 0;
 	head = tree;
 	option = 1;
-	while(tree->next)
+	while(tree)
 	{
 		if (tree->type == FLAG || tree->type == COMMAND)
 			option++;
@@ -114,7 +114,7 @@ char	**full_cmd(t_token *tree)
 	}
 	mtr = ft_calloc(option, sizeof(char *));
 	tree = head;
-	while(tree->next)
+	while(tree)
 	{
 		if (tree->type == FLAG || tree->type == COMMAND)
 			mtr[i++] = ft_strdup(tree->str);
@@ -166,9 +166,9 @@ void	execute(t_token *tree, char ***env)
 
 	std[0] = dup(0);
 	std[1] = dup(1);
-	// if (pipe_check(tree) == 1)
-	// 	return (for_fork(tree));//PIPE CONTROL IS YET TO BE DONE
-	redir_check(*tree);
+	if (pipe_check(tree) == 1)
+	 	return (for_fork(tree, env, std));
+	redir_check(tree);
 	tree = find_comand(tree);
 	if (is_builtin(tree, env) == 1)
 		return (reset_fd(std));
@@ -201,11 +201,23 @@ int main(int arc, char **arg, char **env)
 	while (arg[++i])
 	{
 		if (i == 1)
-			tree[i].type = REDIR_1;
-		else if (i == 2)
-			tree[i].type = REDIR_2;
-		else if (i == 3)
 			tree[i].type = COMMAND;
+		else if (i == 3)
+			tree[i].type = PIPE;
+		else if (i == 4)
+			tree[i].type = COMMAND;
+		else if (i == 5)
+			tree[i].type = PIPE;
+		else if (i == 6)
+			tree[i].type = COMMAND;
+		// else if (i == 9)
+		// 	tree[i].type = REDIR_2;
+		else if (i == 9)
+			tree[i].type = PIPE;
+		else if (i == 10)
+			tree[i].type = COMMAND;
+		// else if (i == 3)
+		// 	tree[i].type = COMMAND;
 		else
 			tree[i].type = FLAG;
 		tree[i].str = arg[i];
@@ -216,10 +228,9 @@ int main(int arc, char **arg, char **env)
 		tree[i].prev = &tree[i - 1];
 	}
 	execute(&tree[1], &new_env);
-	// ft_pwd();
+	ft_pwd();
 	// ft_env(tree, new_env);
-	ft_export(&new_env, NULL);
+	// ft_export(&new_env, NULL);
 	freemtr(new_env);
 	return (0);
 }
-//cc execute/execute.c execute/execute_utils.c builtin/builtin_env_controls.c builtin/builtin.c builtin/builtin_env.c libft/libft.a get_next_line/libget_next_line.a -g

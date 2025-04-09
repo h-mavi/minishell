@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/07 09:51:20 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/09 10:29:48 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ int	num_argument(t_token *tree)
 	int	i;
 
 	i = 0;
-	while (tree)
+	while (tree && tree->type != PIPE)
 	{
 		if (tree->type == FLAG)
 			return(1);
 		i++;
+		tree = tree->next;
 	}
 	return (0);
 }
@@ -91,6 +92,28 @@ int	is_n(const char *str, char c)
 	return (free(cmp), 1);
 }
 
+void	print_option(t_token *tree)
+{
+	int	i;
+
+	i = 0;
+	while (tree && tree->type != PIPE)
+	{
+		if (tree->type == FLAG)
+		{
+			if (i != 0)
+				printf(" ");
+			if (tree->str[0] == '$' && tree->str[1] == '?' && \
+			tree->str[2] == '\0')
+				exit_code(1000);
+			else
+				printf("%s", tree->str);
+		}
+		tree = tree->next;
+		i++;
+	}
+}
+
 int	ft_echo(t_token *tree)
 {
 	bool	n;
@@ -102,14 +125,7 @@ int	ft_echo(t_token *tree)
 		n = 0;
 		tree = tree->next;
 	}
-	printf("%s", tree->str);
-	tree = tree->next;
-	while (tree->next)
-	{
-		if (tree->type == FLAG)
-			printf(" %s", tree->str);
-		tree = tree->next;
-	}
+	print_option(tree);
 	if (n == 1)
 		printf("\n");
 	return (1);
