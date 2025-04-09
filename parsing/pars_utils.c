@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 10:21:55 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:22:04 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ int	find_char(char *s, int i)
 	return (0);
 }
 
-/* Cerca un carattere '$' nella stringa s partendo
-dall'indice i*/
+/* Cerca un carattere '$' valido nella stringa s partendo
+dall'indice i. Con valido si intende un $ che e' poi seguito
+da una variabile da espandere.*/
 int	find_dollar(char *s, int i)
 {
 	int	x;
@@ -87,7 +88,8 @@ int	find_dollar(char *s, int i)
 	x = i;
 	while (s[x])
 	{
-		if (s[x] == '$')
+		if (s[x] == '$' && s[x + 1] != '$' && \
+			((ft_isalpha(s[x + 1]) != 0) || (s[x + 1] == '_')))
 			return (x);
 		x++;
 	}

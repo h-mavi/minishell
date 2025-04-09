@@ -6,7 +6,7 @@
 #    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/04/09 09:40:33 by mfanelli         ###   ########.fr        #
+#    Updated: 2025/04/09 11:15:14 by mfanelli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,5 +51,10 @@ gnl:
 		@echo Compiling get_next_line...
 		make -C ../get_next_line/
 
-.PHONY: all clean fclean re libft gnl
+exe:
+		make
+		make clean
+		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.supp ./$(NAME)
+
+.PHONY: all clean fclean re libft gnl exe
 .SILENT:

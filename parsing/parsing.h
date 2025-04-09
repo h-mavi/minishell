@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 10:12:26 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:14:06 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int			parsing(char *pwd, char **env);
 char		*rewrite(char *orig, int i, int x);
 char		*here_glued(char *s);
 char		*espand(char *s, char **env);
-char		*esp_special_case(char *s, char **env);
+char		*esp_special_case(char *s, char **env, int i);
 char		*refine(char *s, char **env);
 
 //----------------------------------------------------------------------------

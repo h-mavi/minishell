@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/08 14:46:25 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:26:20 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ char	*reassemble(char *first, char *espan, char *after, int len_cmd)
 	+ 1, sizeof(char));
 	i = 0;
 	x = -1;
-	while (first[++x] != '$')
+	while (++x < find_dollar(first, ft_strlen(first) - len_cmd - \
+	ft_strlen(after)))
 		end[i++] = first[x];
 	x = -1;
 	while (espan[++x] != '\0')
