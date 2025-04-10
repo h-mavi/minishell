@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/09 14:08:44 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:19:02 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,12 +169,14 @@ void	execute(t_token *tree, char ***env)
 	if (pipe_check(tree) == 1)
 	 	return (for_fork(tree, env, std));
 	redir_check(tree);
+	// ft_printf("succhio cazziiiiiiiiiiiiiiiiiiiii");
 	tree = find_comand(tree);
 	if (is_builtin(tree, env) == 1)
 		return (reset_fd(std));
 	pid = fork();
 	if (pid == 0)
 		exec_cmd(tree, *env);
+	wait(NULL);
 	reset_fd(std);
 }
 
@@ -185,9 +187,9 @@ int main(int arc, char **arg, char **env)
 	int		i;
 
 	i = 0;
-	if (arc < 3)
+	if (arc < 2)
 	{
-		printf("MA SEI UN COGLIONE!?!?!?");
+		ft_printf("MA SEI UN COGLIONE!?!?!?");
 		exit(1);
 	}
 	new_env = ft_calloc(ft_matrixlen(env) + 1, sizeof(char *));
@@ -202,33 +204,35 @@ int main(int arc, char **arg, char **env)
 	{
 		if (i == 1)
 			tree[i].type = COMMAND;
+		else if (i == 2)
+			tree[i].type = REDIR_2;
 		else if (i == 3)
-			tree[i].type = PIPE;
+			tree[i].type = REDIR_2;
 		else if (i == 4)
-			tree[i].type = COMMAND;
+			tree[i].type = REDIR_2;
 		else if (i == 5)
-			tree[i].type = PIPE;
-		else if (i == 6)
-			tree[i].type = COMMAND;
-		// else if (i == 9)
-		// 	tree[i].type = REDIR_2;
-		else if (i == 9)
-			tree[i].type = PIPE;
-		else if (i == 10)
-			tree[i].type = COMMAND;
-		// else if (i == 3)
+			tree[i].type = REDIR_2;
+		// else if (i == 6)
 		// 	tree[i].type = COMMAND;
+		// // else if (i == 9)
+		// // 	tree[i].type = REDIR_2;
+		// else if (i == 9)
+		// 	tree[i].type = PIPE;
+		// else if (i == 10)
+		// 	tree[i].type = COMMAND;
+		// // else if (i == 3)
+		// // 	tree[i].type = COMMAND;
 		else
 			tree[i].type = FLAG;
 		tree[i].str = arg[i];
 		if (i < arc - 1)
 			tree[i].next = &tree[i + 1];
 		else
-		tree[i].next = NULL;
+			tree[i].next = NULL;
 		tree[i].prev = &tree[i - 1];
 	}
 	execute(&tree[1], &new_env);
-	ft_pwd();
+	// ft_pwd();
 	// ft_env(tree, new_env);
 	// ft_export(&new_env, NULL);
 	freemtr(new_env);

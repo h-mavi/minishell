@@ -6,18 +6,20 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/09 10:29:48 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:19:31 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "builtin.h"
 
-//RITORNARE UN VALORE DIVERSO IN CASO DI ERRORE
+//devo sempre tornare al nodo iniziale
 int	ft_exit(t_token *tree)
 {
+	// while (tree->prev)
+	// 	tree = tree->prev;
+	// free_lst(tree);
 	(void)tree;
-	//liberare la stuttura e tutte cose
 	exit(0);
 	return (1);
 }
@@ -27,7 +29,7 @@ int	ft_pwd()
 	char	*str;
 
 	str = getcwd(NULL, 0);
-	printf("%s\n", str);
+	ft_printf("%s\n", str);
 	free(str);
 	return (1);
 }
@@ -102,12 +104,12 @@ void	print_option(t_token *tree)
 		if (tree->type == FLAG)
 		{
 			if (i != 0)
-				printf(" ");
+				ft_printf(" ");
 			if (tree->str[0] == '$' && tree->str[1] == '?' && \
 			tree->str[2] == '\0')
 				exit_code(1000);
 			else
-				printf("%s", tree->str);
+				ft_printf("%s", tree->str);
 		}
 		tree = tree->next;
 		i++;
@@ -127,6 +129,6 @@ int	ft_echo(t_token *tree)
 	}
 	print_option(tree);
 	if (n == 1)
-		printf("\n");
+		ft_printf("\n");
 	return (1);
 }

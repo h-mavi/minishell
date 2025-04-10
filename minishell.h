@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:18:52 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/09 14:22:49 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:23:06 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 // # include "./get_next_line/get_next_line.h"
 # include "./libft/libft.h"
+# include "./printf/ft_printf.h"
 
 # include <stdio.h>
 # include <signal.h>

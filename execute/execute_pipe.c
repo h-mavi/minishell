@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/09 10:16:29 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/10 13:49:04 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	for_fork(t_token *tree, char ***env, int *std)
 		if (npipe < p)
 		{
 			file_control(tree, fd[1], 1);
-			tree = find_comand(tree);
 			redir_check(tree);
+			tree = find_comand(tree);
 			pid = fork();
 			if (pid == 0)
 			{
@@ -57,8 +57,8 @@ void	for_fork(t_token *tree, char ***env, int *std)
 		}
 		else
 		{
-			tree = find_comand(tree);
 			redir_check(tree);
+			tree = find_comand(tree);
 			if (is_builtin(tree, env) == 1)
 				return (reset_fd(std));
 			pid = fork();
@@ -67,6 +67,8 @@ void	for_fork(t_token *tree, char ***env, int *std)
 		}
 		npipe++;
 		tree = tree->next;
+		while (tree && tree->prev->type != PIPE)
+			tree = tree->next;
 		reset_fd(std);
 	}
 	reset_fd(std);

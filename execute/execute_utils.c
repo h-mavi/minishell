@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/07 11:21:44 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:19:20 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_code(int n)
 	static int	exit_code;
 
 	if (n == 1000)
-		printf("%d", exit_code);
+		ft_printf("%d", exit_code);
 	else
 		exit_code = n;
 }
@@ -44,7 +44,7 @@ int	pipe_check(t_token *tree)
 {
 	while (tree->next)
 	{
-		if (tree->type != PIPE)
+		if (tree->type == PIPE)
 			return (1);
 		tree = tree->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/07 09:29:53 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:19:35 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_env(t_token *tree, char **env)
 		{
 			if (env[i][j] == '=')
 			{
-				printf("%s\n", env[i]);
+				ft_printf("%s\n", env[i]);
 				break;
 			}
 			j++;
