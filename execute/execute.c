@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/11 11:27:15 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/11 14:39:01 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	heredoc(t_token *tree)
 		return (perror("failed to open the file"), exit_code(1));
 	write(1, "> ", 2);
 	str = get_next_line(0);
-	while (control_str(str, tree->str) == 0)
+	while (ctrl_str(str, tree->str) == 0)
 	{
 		ft_putstr_fd(str, file);
 		free(str);
@@ -179,61 +179,62 @@ void	execute(t_token *tree, char ***env)
 	reset_fd(std);
 }
 
-int main(int arc, char **arg, char **env)
-{
-	t_token	*tree;
-	char	**new_env;
-	int		i;
+// int main(int arc, char **arg, char **env)
+// {
+// 	t_token	*tree;
+// 	char	**new_env;
+// 	int		i;
 
-	i = 0;
-	if (arc < 2)
-	{
-		ft_printf("MA SEI UN COGLIONE!?!?!?");
-		exit(1);
-	}
-	new_env = ft_calloc(ft_matrixlen(env) + 1, sizeof(char *));
-	while (env[i])
-	{
-		new_env[i] = ft_strdup(env[i]);
-		i++;
-	}
-	i = 0;
-	tree = ft_calloc(arc, sizeof(t_token));
-	while (arg[++i])
-	{
-		if (i == 1)
-			tree[i].type = COMMAND;
-		// else if (i == 2)
-		// 	tree[i].type = REDIR_2;
-		else if (i == 3)
-			tree[i].type = PIPE;
-		else if (i == 4)
-			tree[i].type = COMMAND;
-		else if (i == 5)
-			tree[i].type = PIPE;
-		else if (i == 6)
-			tree[i].type = COMMAND;
-		// else if (i == 9)
-		// 	tree[i].type = REDIR_2;
-		else if (i == 9)
-			tree[i].type = PIPE;
-		else if (i == 10)
-			tree[i].type = COMMAND;
-		// // else if (i == 3)
-		// // 	tree[i].type = COMMAND;
-		else
-			tree[i].type = FLAG;
-		tree[i].str = arg[i];
-		if (i < arc - 1)
-			tree[i].next = &tree[i + 1];
-		else
-			tree[i].next = NULL;
-		tree[i].prev = &tree[i - 1];
-	}
-	execute(&tree[1], &new_env);
-	// ft_pwd();
-	// ft_env(tree, new_env);
-	// ft_export(&new_env, NULL);
-	freemtr(new_env);
-	return (0);
-}
+// 	i = 0;
+// 	if (arc < 2)
+// 	{
+// 		ft_printf("MA SEI UN COGLIONE!?!?!?");
+// 		exit(1);
+// 	}
+// 	new_env = ft_calloc(ft_matrixlen(env) + 1, sizeof(char *));
+// 	while (env[i])
+// 	{
+// 		new_env[i] = ft_strdup(env[i]);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	tree = ft_calloc(arc, sizeof(t_token));
+// 	while (arg[++i])
+// 	{
+// 		if (i == 1)
+// 			tree[i].type = COMMAND;
+// 		// else if (i == 2)
+// 		// 	tree[i].type = REDIR_2;
+// 		else if (i == 3)
+// 			tree[i].type = PIPE;
+// 		else if (i == 4)
+// 			tree[i].type = COMMAND;
+// 		else if (i == 5)
+// 			tree[i].type = PIPE;
+// 		else if (i == 6)
+// 			tree[i].type = COMMAND;
+// 		// else if (i == 9)
+// 		// 	tree[i].type = REDIR_2;
+// 		else if (i == 9)
+// 			tree[i].type = PIPE;
+// 		else if (i == 10)
+// 			tree[i].type = COMMAND;
+// 		// // else if (i == 3)
+// 		// // 	tree[i].type = COMMAND;
+// 		else
+// 			tree[i].type = FLAG;
+// 		tree[i].str = arg[i];
+// 		if (i < arc - 1)
+// 			tree[i].next = &tree[i + 1];
+// 		else
+// 			tree[i].next = NULL;
+// 		tree[i].prev = &tree[i - 1];
+// 	}
+// 	execute(&tree[1], &new_env);
+// 	// ft_pwd();
+// 	// ft_env(tree, new_env);
+// 	// ft_export(&new_env, NULL);
+// 	freemtr(new_env);
+// 	// free_lst(&tree[1]);
+// 	return (0);
+// }

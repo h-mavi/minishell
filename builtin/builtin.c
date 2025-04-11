@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/11 11:56:57 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/11 14:14:28 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	ft_cd(t_token *tree , char **env)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin("OLDPWD=", temp);
+			free(temp);
 		}
 		i++;
 	}
@@ -83,7 +84,7 @@ int	is_n(const char *str, char c)
 	char	*cmp;
 
 	i = 0;
-	cmp = ft_calloc(ft_strlen(str), sizeof(char));
+	cmp = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	while (str[i])
 	{
 		cmp[i] = c;

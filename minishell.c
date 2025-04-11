@@ -6,27 +6,27 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:14:58 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 14:22:34 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/11 14:44:01 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Serve a liberare una lista. */
-void	free_lst(t_token *head)
-{
-	t_token	*tmp;
+// void	free_lst(t_token *head)
+// {
+// 	t_token	*tmp;
 
-	while (head->next != NULL)
-	{
-		free((char *)(*head).str);
-		tmp = head;
-		head = head->next;
-		free(tmp);
-	}
-	free((char *)(*head).str);
-	free(head);
-}
+// 	while (head->next != NULL)
+// 	{
+// 		free((char *)(*head).str);
+// 		tmp = head;
+// 		head = head->next;
+// 		free(tmp);
+// 	}
+// 	free((char *)(*head).str);
+// 	free(head);
+// }
 
 // gestisce i segnali con SIGINT (^c) e SIGQUIT (^\)
 void	routine(int sig)

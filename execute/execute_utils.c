@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/10 15:19:20 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/11 14:38:47 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	file_control(t_token *tree, int file, int std)
 }
 
 //controlla il limiter dell' heredoc
-int	control_str(char *str, const char *limiter)
+int	ctrl_str(char *str, const char *limiter)
 {
 	if (str == NULL)
 		return (1);
