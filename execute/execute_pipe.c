@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/10 13:49:04 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/11 10:49:05 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ void	for_fork(t_token *tree, char ***env, int *std)
 	int	pid;
 	int	npipe;
 	int	p;
+	// int	w;
 
+	// w = 0;
 	npipe = 0;
 	p = pipe_number(tree);
 	while (tree)
 	{
 		if (pipe(fd) == -1)
-		return (perror("pipe failed"), exit_code(1));
-		if (npipe != 0)
-			file_control(tree, fd[0], 0);
+			return (perror("pipe failed"), exit_code(1));
 		if (npipe < p)
 		{
 			file_control(tree, fd[1], 1);
@@ -57,6 +57,7 @@ void	for_fork(t_token *tree, char ***env, int *std)
 		}
 		else
 		{
+			dup2(std[1], 1);
 			redir_check(tree);
 			tree = find_comand(tree);
 			if (is_builtin(tree, env) == 1)
@@ -65,12 +66,15 @@ void	for_fork(t_token *tree, char ***env, int *std)
 			if (pid == 0)
 				exec_cmd(tree, *env);
 		}
+		file_control(tree, fd[0], 0);
+		// waitpid(pid, NULL, 0);
 		npipe++;
 		tree = tree->next;
 		while (tree && tree->prev->type != PIPE)
 			tree = tree->next;
-		reset_fd(std);
 	}
+	// while (wait(&w) > 0)
+	// 	;
 	reset_fd(std);
 }
 //set follow-fork-mode child

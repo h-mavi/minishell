@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/10 15:19:02 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/11 11:27:15 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	**full_cmd(t_token *tree)
 	i = 0;
 	head = tree;
 	option = 1;
-	while(tree)
+	while(tree && tree->type != PIPE)
 	{
 		if (tree->type == FLAG || tree->type == COMMAND)
 			option++;
@@ -114,7 +114,7 @@ char	**full_cmd(t_token *tree)
 	}
 	mtr = ft_calloc(option, sizeof(char *));
 	tree = head;
-	while(tree)
+	while(tree && tree->type != PIPE)
 	{
 		if (tree->type == FLAG || tree->type == COMMAND)
 			mtr[i++] = ft_strdup(tree->str);
@@ -169,7 +169,6 @@ void	execute(t_token *tree, char ***env)
 	if (pipe_check(tree) == 1)
 	 	return (for_fork(tree, env, std));
 	redir_check(tree);
-	// ft_printf("succhio cazziiiiiiiiiiiiiiiiiiiii");
 	tree = find_comand(tree);
 	if (is_builtin(tree, env) == 1)
 		return (reset_fd(std));
@@ -204,22 +203,22 @@ int main(int arc, char **arg, char **env)
 	{
 		if (i == 1)
 			tree[i].type = COMMAND;
-		else if (i == 2)
-			tree[i].type = REDIR_2;
+		// else if (i == 2)
+		// 	tree[i].type = REDIR_2;
 		else if (i == 3)
-			tree[i].type = REDIR_2;
+			tree[i].type = PIPE;
 		else if (i == 4)
-			tree[i].type = REDIR_2;
+			tree[i].type = COMMAND;
 		else if (i == 5)
-			tree[i].type = REDIR_2;
-		// else if (i == 6)
-		// 	tree[i].type = COMMAND;
-		// // else if (i == 9)
-		// // 	tree[i].type = REDIR_2;
+			tree[i].type = PIPE;
+		else if (i == 6)
+			tree[i].type = COMMAND;
 		// else if (i == 9)
-		// 	tree[i].type = PIPE;
-		// else if (i == 10)
-		// 	tree[i].type = COMMAND;
+		// 	tree[i].type = REDIR_2;
+		else if (i == 9)
+			tree[i].type = PIPE;
+		else if (i == 10)
+			tree[i].type = COMMAND;
 		// // else if (i == 3)
 		// // 	tree[i].type = COMMAND;
 		else
