@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/09 09:12:18 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/11 11:31:24 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ int		ft_compare2(const char *s1, const char *s2);
 void	for_fork(t_token *tree, char ***env, int *std);
 int		is_builtin(t_token *tree, char ***env);
 void	exec_cmd(t_token *tree, char **env);
+void	exit_code(int n);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/11 10:49:05 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/11 12:12:36 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	for_fork(t_token *tree, char ***env, int *std)
 	int	pid;
 	int	npipe;
 	int	p;
-	// int	w;
+	int	w;
 
-	// w = 0;
+	w = 0;
 	npipe = 0;
 	p = pipe_number(tree);
 	while (tree)
@@ -67,14 +67,14 @@ void	for_fork(t_token *tree, char ***env, int *std)
 				exec_cmd(tree, *env);
 		}
 		file_control(tree, fd[0], 0);
-		// waitpid(pid, NULL, 0);
+		waitpid(pid, NULL, 0);
 		npipe++;
 		tree = tree->next;
 		while (tree && tree->prev->type != PIPE)
 			tree = tree->next;
 	}
-	// while (wait(&w) > 0)
-	// 	;
+	while (wait(&w) > 0)
+		;
 	reset_fd(std);
 }
 //set follow-fork-mode child
