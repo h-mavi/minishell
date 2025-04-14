@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/11 14:38:47 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:01:51 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,12 @@ int	pipe_check(t_token *tree)
 //protegge gli open
 void	file_control(t_token *tree, int file, int std)
 {
-	(void)tree;
 	if (file == -1)
 	{
-		// free_list(tree);//da creare ancora
+		free_lst(tree);
 		perror("filed to open the file");
 		exit_code(1);
-		exit(1);//da cambiare per non far chiudere minishell
+		exit(1);
 	}
 	dup_file(file, std);
 }

@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/11 14:14:28 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:00:32 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 #include "builtin.h"
 
 //devo sempre tornare al nodo iniziale
-int	ft_exit(t_token *tree)
+int	ft_exit(t_token *tree, char **env)
 {
-	// while (tree->prev)
-	// 	tree = tree->prev;
-	// free_lst(tree);
-	(void)tree;
+	free_lst(tree);
+	freemtr(env);
 	exit(0);
 	return (1);
 }

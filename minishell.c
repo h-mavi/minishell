@@ -6,81 +6,83 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:14:58 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/11 14:44:01 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:00:55 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Serve a liberare una lista. */
-// void	free_lst(t_token *head)
-// {
-// 	t_token	*tmp;
+void	free_lst(t_token *head)
+{
+	t_token	*tmp;
 
-// 	while (head->next != NULL)
+	while (head->prev)
+		head = head->prev;
+	while (head->next != NULL)
+	{
+		free((char *)(*head).str);
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+	free((char *)(*head).str);
+	free(head);
+}
+
+// // gestisce i segnali con SIGINT (^c) e SIGQUIT (^\)
+// void	routine(int sig)
+// {
+// 	if (sig == SIGINT)
 // 	{
-// 		free((char *)(*head).str);
-// 		tmp = head;
-// 		head = head->next;
-// 		free(tmp);
+// 		printf("\n");
+// 		rl_on_new_line();
+//         rl_replace_line("", 0);
+//         rl_redisplay();
 // 	}
-// 	free((char *)(*head).str);
-// 	free(head);
 // }
 
-// gestisce i segnali con SIGINT (^c) e SIGQUIT (^\)
-void	routine(int sig)
-{
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-	}
-}
-
-//un primo tentativo mooootlo basico di parsing, gestisce ^D e ls
-int	parsing(char *cmd)
-{
-	DIR				*dir;
-	struct dirent	*entry;
+// //un primo tentativo mooootlo basico di parsing, gestisce ^D e ls
+// int	parsing(char *cmd)
+// {
+// 	DIR				*dir;
+// 	struct dirent	*entry;
 	
-	if (!cmd)
-	{
-		printf("exit\n");
-		return (0);
-	}
-	if (cmd[0] == 'l' && cmd[1] == 's' && cmd[2] == '\0')
-	{
-		dir = opendir(".");
-		while ((entry = readdir(dir)) != NULL)
-			if (entry->d_name[0] != '.')
-				printf("%s ", entry->d_name);
-		closedir(dir);
-		printf("\n");
-		rl_on_new_line();
-	}
-	free(cmd);
-	return (1);
-}
+// 	if (!cmd)
+// 	{
+// 		printf("exit\n");
+// 		return (0);
+// 	}
+// 	if (cmd[0] == 'l' && cmd[1] == 's' && cmd[2] == '\0')
+// 	{
+// 		dir = opendir(".");
+// 		while ((entry = readdir(dir)) != NULL)
+// 			if (entry->d_name[0] != '.')
+// 				printf("%s ", entry->d_name);
+// 		closedir(dir);
+// 		printf("\n");
+// 		rl_on_new_line();
+// 	}
+// 	free(cmd);
+// 	return (1);
+// }
 
-int	main(void)
-{
-	char	*temp;
-	char	*pwd;
+// int	main(void)
+// {
+// 	char	*temp;
+// 	char	*pwd;
 	
-	signal(SIGINT, routine);
-	signal(SIGQUIT, SIG_IGN);
-	while (1)
-	{
-		temp = getcwd(NULL, 0);
-		pwd = ft_strjoin(temp, "$ ");
-		free(temp);
-		if(parsing(readline(pwd)) == 0)
-			break;
-		free(pwd);
-	}
-	free(pwd);
-	return(0);
-}
+// 	signal(SIGINT, routine);
+// 	signal(SIGQUIT, SIG_IGN);
+// 	while (1)
+// 	{
+// 		temp = getcwd(NULL, 0);
+// 		pwd = ft_strjoin(temp, "$ ");
+// 		free(temp);
+// 		if(parsing(readline(pwd)) == 0)
+// 			break;
+// 		free(pwd);
+// 	}
+// 	free(pwd);
+// 	return(0);
+// }

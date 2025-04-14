@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/11 13:10:25 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:10:05 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	for_fork(t_token *tree, char ***env, int *std)
 	while (tree)
 	{
 		if (pipe(fd) == -1)
-			return (perror("pipe failed"), exit_code(1));
+			return (perror("pipe failed"), exit(1));
 		if (npipe < p)
 		{
 			file_control(tree, fd[1], 1);
@@ -52,7 +52,7 @@ void	for_fork(t_token *tree, char ***env, int *std)
 			{
 				if (is_builtin(tree, env) != 1)
 					exec_cmd(tree, *env);
-				return (freemtr(*env), exit (0));
+				return (freemtr(*env), free_lst(tree), exit(1));
 			}
 		}
 		else
@@ -67,7 +67,7 @@ void	for_fork(t_token *tree, char ***env, int *std)
 				exec_cmd(tree, *env);
 		}
 		file_control(tree, fd[0], 0);
-		waitpid(pid, NULL, 0);
+		// waitpid(pid, NULL, 0);
 		npipe++;
 		tree = tree->next;
 		while (tree && tree->prev->type != PIPE)
