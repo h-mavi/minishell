@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/14 15:00:32 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/15 10:27:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,20 @@ int	num_argument(t_token *tree)
 	return (0);
 }
 
-int	ft_cd(t_token *tree , char **env)
+void	change_dir(char **env, char *temp)
 {
 	int		i;
-	char	*temp;
+	char	*temp2;
 
 	i = 0;
-	if (num_argument(tree->next) != 0)
-		return (perror("too many argument"), exit_code(1), 1);
-	temp = getcwd(NULL, 0);
-	if (chdir(tree->str) == -1)
-		return (perror("no such directory"), exit_code(127), 1);
+	temp2 = getcwd(NULL, 0);
 	while (env[i])
 	{
 		if (ft_compare(env[i], "PWD") == 0)
 		{
 			free(env[i]);
-			env[i] = ft_strjoin("PWD=", getcwd(NULL, 0));
+			env[i] = ft_strjoin("PWD=", temp2);
+			free(temp2);
 		}
 		else if (ft_compare(env[i], "OLDPWD") == 0)
 		{
@@ -73,6 +70,25 @@ int	ft_cd(t_token *tree , char **env)
 		}
 		i++;
 	}
+}
+
+int	ft_cd(t_token *tree , char **env)
+{
+	char	*temp;
+
+	temp = getcwd(NULL, 0);
+	if (tree == NULL || tree->type == PIPE)
+	{
+		if (chdir("/home/cormax") == -1)//sbagliato eh
+			return (perror("no such directory"), free(temp), exit_code(127), 1);
+		change_dir(env, temp);
+		return (1);
+	}
+	if (num_argument(tree->next) != 0)
+		return (perror("too many argument"), free(temp), exit_code(1), 1);
+	if (chdir(tree->str) == -1)
+		return (perror("no such directory"), free(temp), exit_code(127), 1);
+	change_dir(env, temp);
 	return (1);
 }
 
@@ -120,7 +136,9 @@ int	ft_echo(t_token *tree)
 	bool	n;
 
 	n = 1;
-	if (tree->str[0] == '-' && tree->str[1] == 'n' && \
+	while (tree->type != FLAG && tree->type != PIPE && tree->next)
+		tree = tree->next;
+	while (tree && tree->str[0] == '-' && tree->str[1] == 'n' && \
 	is_n(&tree->str[1], 'n') == 0)
 	{
 		n = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/10 15:19:35 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/15 09:58:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char	**change_param(t_token *tree, char **env)
 	new_env = ft_calloc((ft_matrixlen(env) + 1), sizeof(char *));
 	while (env[i])
 	{
-		if (ft_compare2(env[i], tree->str) == 0)
+		if (ft_compare2(tree->str, env[i]) == 0)
 		{
 			if (tree->str[until(tree->str)] == '+')
 				new_env[i] = ft_strjoin(env[i], (tree->str + until(tree->str) + 2));
@@ -158,7 +158,7 @@ int	ft_export(char ***env, t_token *tree)
 			{
 				if (new_variable(tree->str, *env) == 1)
 					*env = export_param(tree, *env);
-				else if (new_variable(tree->str, *env) == 0)
+				else
 					*env = change_param(tree, *env);
 			}
 		}

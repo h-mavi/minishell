@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/15 09:09:39 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/15 10:05:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ int main(int arc, char **arg, char **env)
 	{
 		if (i == 1)
 			tree[i].type = COMMAND;
-		//else if (i == 2)
+		// else if (i == 2)
 		//	tree[i].type = REDIR_1;
 		// else if (i == 3)
 		// 	tree[i].type = PIPE;
