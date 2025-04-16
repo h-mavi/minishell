@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/14 15:00:32 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:53:17 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ void	print_option(t_token *tree)
 				exit_code(1000);
 			else
 				ft_printf("%s", tree->str);
+			i++;
 		}
 		tree = tree->next;
-		i++;
 	}
 }
 
@@ -120,6 +120,8 @@ int	ft_echo(t_token *tree)
 	bool	n;
 
 	n = 1;
+	while (tree->type != FLAG && tree->type != PIPE && tree->next)
+		tree = tree->next;
 	if (tree->str[0] == '-' && tree->str[1] == 'n' && \
 	is_n(&tree->str[1], 'n') == 0)
 	{

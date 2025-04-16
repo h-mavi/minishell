@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/14 15:07:31 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:52:18 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,8 +222,8 @@ int main(int arc, char **arg, char **env)
 		// 	tree[i].type = PIPE;
 		// else if (i == 10)
 		// 	tree[i].type = COMMAND;
-		// // // else if (i == 3)
-		// // // 	tree[i].type = COMMAND;
+		// // else if (i == 3)
+		// // 	tree[i].type = COMMAND;
 		else
 			tree[i].type = FLAG;
 		tree[i].str = arg[i];
