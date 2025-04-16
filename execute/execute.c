@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/16 08:42:10 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/16 11:08:31 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,20 @@ void	exec_cmd(t_token *tree, char **env)
 	arg = full_cmd(tree);
 	if (!path)
 		path = arg[0];
+	// free_lst(tree);
 	execve(path, arg, env);
-	ft_printf("%s :", tree->str);
+	if (arg[0][0] == '$' && arg[0][1] == '?' && \
+	arg[0][2] == '\0')
+		exit_code(1000);
+	else if (arg[0][0] == '\0')
+	{
+		free(path);
+		// write (2, "\"\" :", 5);
+	}
+	// else
+	// 	write(2, &arg[0], ft_strlen(arg[0]));
 	perror("command not found");
-	return (freemtr(arg), freemtr(env), free_lst(tree), exit(127));
+	return (freemtr(arg), freemtr(env), exit(127));
 }
 
 //funzione principale che richiama le altre
@@ -204,12 +214,12 @@ int main(int arc, char **arg, char **env)
 	{
 		if (i == 1)
 			tree[i].type = COMMAND;
-		// else if (i == 2)
-		//	tree[i].type = REDIR_1;
-		// else if (i == 3)
-		// 	tree[i].type = PIPE;
-		// else if (i == 4)
-		// 	tree[i].type = COMMAND;
+		else if (i == 2)
+			tree[i].type = REDIR_3;
+		else if (i == 3)
+			tree[i].type = PIPE;
+		else if (i == 4)
+			tree[i].type = COMMAND;
 		// else if (i == 5)
 		// 	tree[i].type = PIPE;
 		// else if (i == 6)
@@ -235,7 +245,7 @@ int main(int arc, char **arg, char **env)
 	// ft_pwd();
 	// ft_env(tree, new_env);
 	// ft_export(&new_env, NULL);
-	// free_lst(&tree[1]);
+	free_lst(&tree[1]);
 	freemtr(new_env);
 	return (0);
 }

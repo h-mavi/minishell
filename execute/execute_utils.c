@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/15 09:33:59 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/16 09:02:26 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@
 //funzione che serve a gestire gli exit code
 void	exit_code(int n)
 {
-	static int	exit_code;
+	static int	code;
 
 	if (n == 1000)
-		ft_printf("%d", exit_code);
+	{
+		ft_printf("%d", code);
+		exit_code(0);
+	}
 	else
-		exit_code = n;
+		code = n;
 }
 
 //funzione di ausilio per trovarmi subito il comando
