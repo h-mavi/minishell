@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/14 15:01:51 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/15 09:33:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	ft_compare2(const char *s1, const char *s2)
 	int	i;
 
 	i = 0;
-	while (s1[i] != '=' && s2[i] != '=' && s2[i] != '+')
+	while (s2[i] != '=' && s1[i] != '=' && s1[i] != '+')
 	{
 		if (s1[i] != s2[i])
 			return (1);
@@ -132,8 +132,9 @@ int	ft_compare2(const char *s1, const char *s2)
 	}
 	if ((s1[i] == '=' || s1[i] == '+') && s2[i] == '_')
 		return (0);
-	if (s1[i] != s2[i])
-		return (1);
-	else
+	if ((s2[i] == '=' && (s1[i] == '=' || s1[i] == '+')) && \
+	(s1[i - 1] == s2[i - 1]))
 		return (0);
+	else
+		return (1);
 }

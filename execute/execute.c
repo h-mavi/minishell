@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/14 15:52:18 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/16 08:42:10 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,8 @@ void	exec_cmd(t_token *tree, char **env)
 	if (!path)
 		path = arg[0];
 	execve(path, arg, env);
-	if (tree->str[0] == '$' && tree->str[1] == '?' && \
-	tree->str[2] == '\0')
-		exit_code(1000);
-	perror(" command not found");
+	ft_printf("%s :", tree->str);
+	perror("command not found");
 	return (freemtr(arg), freemtr(env), free_lst(tree), exit(127));
 }
 
@@ -174,7 +172,7 @@ void	execute(t_token *tree, char ***env)
 	redir_check(tree);
 	tree = find_comand(tree);
 	if (is_builtin(tree, env) == 1)
-		return (reset_fd(std));
+		return (reset_fd(std), free_lst(tree));
 	pid = fork();
 	if (pid == 0)
 		exec_cmd(tree, *env);
@@ -206,8 +204,8 @@ int main(int arc, char **arg, char **env)
 	{
 		if (i == 1)
 			tree[i].type = COMMAND;
-		else if (i == 2)
-			tree[i].type = REDIR_1;
+		// else if (i == 2)
+		//	tree[i].type = REDIR_1;
 		// else if (i == 3)
 		// 	tree[i].type = PIPE;
 		// else if (i == 4)

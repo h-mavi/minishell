@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env_controls.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:34:02 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/07 09:29:13 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/15 10:07:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	new_variable(const char *var, char **env)
 	while (env[i])
 	{
 		if (ft_compare(env[i], str) == 0)
-			return (0);
+			return (free(str), 0);
 		i++;
 	}
-	return (1);
+	return (free(str), 1);
 }
