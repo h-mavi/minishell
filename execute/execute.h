@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/14 15:02:24 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/18 09:43:45 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@
 
 void	dup_file(int file, int std);
 int		pipe_check(t_token *tree);
-void	file_control(t_token *tree, int file, int std);
+int		file_control(int file, int std);
 void	heredoc(t_token *tree);
 t_token	*find_comand(t_token *tree);
 int		ctrl_str(char *str, const char *limiter);
 void	freemtr(char **mtr);
 void	reset_fd(int *std);
-void	redir_check(t_token *tree);
+int		redir_check(t_token *tree, int n);
 int		ft_compare(const char *s1, const char *s2);
 int		ft_compare2(const char *s1, const char *s2);
 void	for_fork(t_token *tree, char ***env, int *std);

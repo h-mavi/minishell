@@ -6,7 +6,7 @@
 #    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 09:06:57 by mbiagi            #+#    #+#              #
-#    Updated: 2025/04/14 08:47:14 by mbiagi           ###   ########.fr        #
+#    Updated: 2025/04/17 12:44:55 by mbiagi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@
 
 NAME = minishell_exec
 
-SOURCES = execute.c execute_utils.c execute_pipe.c \
-../builtin/builtin_env_controls.c ../builtin/builtin.c ../builtin/builtin_env.c \
+SOURCES = execute.c execute_utils.c execute_utils2.c execute_pipe.c \
+execute_redir.c ../builtin/builtin_env_controls.c ../builtin/builtin.c \
+../builtin/builtin_env.c ../builtin/builtin_env_utils.c ../builtin/builtin2.c \
 ../minishell.c
 OBJ = $(SOURCES:.c=.o)
 
@@ -25,6 +26,7 @@ FLAGS = -Wall -Wextra -Werror -g -Ilibft -Llibft -Iprintf -Lprintf
 all : $(NAME)
 
 $(NAME): $(OBJ) $(SOURCES)
+		@echo Compiling...
 		make -C ../libft/
 		make -C ../get_next_line/
 		make -C ../printf/
@@ -46,10 +48,6 @@ fclean: clean
 		rm -f $(NAME)
 
 re : fclean all
-
-# libft:
-# 		@echo Compiling Libft...
-# 		make bonus -C ../libft/
 
 .PHONY: all clean fclean re libft get_next_line printf
 .SILENT:

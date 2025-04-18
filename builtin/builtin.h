@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/14 08:51:05 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/17 12:39:29 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,21 @@
 # define REDIR_3 6
 # define HEREDOC 7
 
-int	ft_export(char ***env, t_token *tree);
-int	ft_env(t_token *tree, char **env);
-int	ft_exit(t_token *tree, char **env);
-int	ft_pwd();
-int	ft_cd(t_token *tree, char **env);
-int	ft_echo(t_token *tree);
-int	ft_unset(t_token *tree, char ***env);
-int	control_variable(const char *var);
-int	new_variable(const char *var, char **env);
-int	num_argument(t_token *tree);
+int		ft_export(char ***env, t_token *tree);
+int		ft_env(t_token *tree, char **env);
+int		ft_exit(t_token *tree, char **env);
+int		ft_pwd(void);
+int		ft_cd(t_token *tree, char **env);
+int		ft_echo(t_token *tree);
+int		ft_unset(t_token *tree, char ***env);
+int		control_variable(const char *var);
+int		new_variable(const char *var, char **env);
+int		num_argument(t_token *tree);
+char	*string_control(const char *str);
+size_t	until(const char *str);
+char	**unset_param(t_token *tree, char **env);
+void	print_export(char **env);
+char	**change_param(t_token *tree, char **env);
+char	**export_param(t_token *tree, char **env);
 
 #endif
