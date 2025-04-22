@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_refine.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 16:59:43 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:40:27 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ char	*refine(char *s, char **env)
 	}
 	return (s);
 }
-
 
 // char *smells_goog(char *s, int *i, char **env)
 // {

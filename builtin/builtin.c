@@ -6,28 +6,19 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/09 10:29:48 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/18 11:18:09 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "builtin.h"
 
-//RITORNARE UN VALORE DIVERSO IN CASO DI ERRORE
-int	ft_exit(t_token *tree)
-{
-	(void)tree;
-	//liberare la stuttura e tutte cose
-	exit(0);
-	return (1);
-}
-
-int	ft_pwd()
+int	ft_pwd(void)
 {
 	char	*str;
 
 	str = getcwd(NULL, 0);
-	printf("%s\n", str);
+	ft_printf("%s\n", str);
 	free(str);
 	return (1);
 }
@@ -40,93 +31,71 @@ int	num_argument(t_token *tree)
 	while (tree && tree->type != PIPE)
 	{
 		if (tree->type == FLAG)
-			return(1);
+			return (1);
 		i++;
 		tree = tree->next;
 	}
 	return (0);
 }
 
-int	ft_cd(t_token *tree , char **env)
+void	change_dir(char **env, char *temp)
 {
 	int		i;
-	char	*temp;
+	char	*temp2;
 
 	i = 0;
-	if (num_argument(tree->next) != 0)
-		return (perror("too many argument"), exit_code(1), 1);
-	temp = getcwd(NULL, 0);
-	if (chdir(tree->str) == -1)
-		return (perror("no such directory"), exit_code(127), 1);
+	temp2 = getcwd(NULL, 0);
 	while (env[i])
 	{
 		if (ft_compare(env[i], "PWD") == 0)
 		{
 			free(env[i]);
-			env[i] = ft_strjoin("PWD=", getcwd(NULL, 0));
+			env[i] = ft_strjoin("PWD=", temp2);
+			free(temp2);
 		}
 		else if (ft_compare(env[i], "OLDPWD") == 0)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin("OLDPWD=", temp);
+			free(temp);
 		}
 		i++;
 	}
-	return (1);
 }
 
-int	is_n(const char *str, char c)
-{
-	int		i;
-	char	*cmp;
-
-	i = 0;
-	cmp = ft_calloc(ft_strlen(str), sizeof(char));
-	while (str[i])
-	{
-		cmp[i] = c;
-		i++;
-	}
-	if (ft_strncmp(str, cmp, ft_strlen(cmp)) == 0)
-		return (free(cmp), 0);
-	return (free(cmp), 1);
-}
-
-void	print_option(t_token *tree)
+void	return_home(char **env)
 {
 	int	i;
 
 	i = 0;
-	while (tree && tree->type != PIPE)
+	while (env[i])
 	{
-		if (tree->type == FLAG)
+		if (ft_compare(env[i], "HOME") == 0)
 		{
-			if (i != 0)
-				printf(" ");
-			if (tree->str[0] == '$' && tree->str[1] == '?' && \
-			tree->str[2] == '\0')
-				exit_code(1000);
-			else
-				printf("%s", tree->str);
+			chdir(env[i] + 5);
+			break ;
 		}
-		tree = tree->next;
 		i++;
 	}
+	perror("HOME not set");
+	exit_code(1);
 }
 
-int	ft_echo(t_token *tree)
+int	ft_cd(t_token *tree, char **env)
 {
-	bool	n;
+	char	*temp;
 
-	n = 1;
-	if (tree->str[0] == '-' && tree->str[1] == 'n' && \
-	is_n(&tree->str[1], 'n') == 0)
+	temp = getcwd(NULL, 0);
+	if (tree == NULL || tree->type == PIPE)
 	{
-		n = 0;
-		tree = tree->next;
+		return_home(env);
+		change_dir(env, temp);
+		return (1);
 	}
-	print_option(tree);
-	if (n == 1)
-		printf("\n");
+	if (num_argument(tree->next) != 0)
+		return (perror("too many argument"), free(temp), exit_code(1), 1);
+	if (chdir(tree->str) == -1)
+		return (perror("no such directory"), free(temp), exit_code(1), 1);
+	change_dir(env, temp);
 	return (1);
 }

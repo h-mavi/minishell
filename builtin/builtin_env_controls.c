@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:34:02 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/07 09:29:13 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/17 12:36:04 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,46 @@ int	new_variable(const char *var, char **env)
 	while (env[i])
 	{
 		if (ft_compare(env[i], str) == 0)
-			return (0);
+			return (free(str), 0);
 		i++;
 	}
-	return (1);
+	return (free(str), 1);
+}
+
+//funzione che controlla la presenza di "+=" e nel caso leva il '+'
+//usata nel caso la variabile che cerchiamo di aggiungere non eista
+char	*string_control(const char *str)
+{
+	int		i;
+	int		j;
+	char	*nstr;
+
+	i = 0;
+	j = 0;
+	while (str[i] != '=')
+		i++;
+	if (str[i - 1] != '+')
+		return (ft_strdup(str));
+	i = 0;
+	nstr = ft_calloc(ft_strlen(str), sizeof(char));
+	while (str[i])
+	{
+		if (str[i] != '+')
+		{
+			nstr[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	return (nstr);
+}
+
+size_t	until(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '=' && str[i] != '+' && str[i] != '\0')
+		i++;
+	return (i);
 }
