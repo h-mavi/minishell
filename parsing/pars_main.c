@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/22 10:46:54 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:08:16 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	compile_inator(char **str, char **env, t_token **head)
 	while (str[++i] != NULL)
 	{
 		str[i] = refine(str[i], env);
+		if (str[i][0] == '\0')
+			continue;
 		if (check == 0 && find_char(str[i], 0) == 0)
 		{
 			set_data(head, &str[i], COMMAND, i);

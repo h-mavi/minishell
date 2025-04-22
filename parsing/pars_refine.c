@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_refine.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/17 09:40:27 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 15:23:44 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,42 +112,33 @@ char	*refine(char *s, char **env)
 	i = -1;
 	while (s[++i])
 	{
-		if (s[i] == '$' && s[i + 1] == '$')
+		if (s[i] == '$' && s[i + 1] == '$' && werami(s, i + 2) != 0 && s[i + 2] != '\0')
 			i += 2;
 		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
 			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
 			s = esp_special_case(s, env, i);
-		else if (s[i] == '"' && werami(s, i + 1) == 1)
+		else if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
+		{
+			s = rm_dollar(s);
+			if (i > 0)
+				i -= 1;
+		}
+		if (s[i] == '"' && werami(s, i + 1) == 1)
 		{
 			while (s[++i] != '"')
 			{
-				if (s[i] == '$' && s[i + 1] == '$')
+				if (s[i] == '$' && s[i + 1] == '$' && werami(s, i + 2) != 0)
 					i += 2;
 				if ((s[i] == '$' && werami(s, i) == 1 && \
 					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
 					s = esp_special_case(s, env, i);
 			}
 		}
-		else if (i == 0 && s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
-		{
-			s = rm_dollar(s);
-			i -= 1;
-		}
+		if (s[i] == '$' && s[i + 1] == '$' && werami(s, i + 2) != 0 && s[i + 2] != '\0')
+			i += 2;
 		if (s[0] == '\0')
 			return (s);
 	}
 	return (s);
 }
 
-// char *smells_goog(char *s, int *i, char **env)
-// {
-// 	while (s[++(*i)] != '"')
-// 	{
-// 		if (s[*i] == '$' && s[(*i) + 1] == '$')
-// 			*i += 2;
-// 		if ((s[*i] == '$' && werami(s, *i) == 1 && \
-// 			((ft_isalpha(s[(*i) + 1]) != 0) || (s[(*i) + 1] == '_'))))
-// 			s = esp_special_case(s, env, *i);
-// 	}
-// 	return (s);
-// }

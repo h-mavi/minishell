@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 14:57:10 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:38:37 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,22 @@ char	*rm_dollar(char *s)
 	i = -1;
 	x = 0;
 	while (s[++i])
-		if (s[i] != '$' || (s[i] == '$' && werami(s, i) == 1))
-			x++;
+	{
+		x++;
+		if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
+			x--;
+	}
 	tmp = (char *)ft_calloc(x + 1, sizeof(char));
 	if (!tmp)
 		return (NULL);
 	i = -1;
 	x = 0;
 	while (s[++i])
-		if (s[i] != '$' || (s[i] == '$' && werami(s, i) == 1))
-			tmp[x++] = s[i];
+	{
+		if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
+			i++;
+		tmp[x++] = s[i];
+	}
 	tmp[x] = '\0';
 	return (free(s), tmp);
 }
