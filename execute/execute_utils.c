@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 09:48:38 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:06:50 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //funzione che serve a gestire gli exit code
 void	exit_code(int n)
 {
-	static int	code;
+	static int	code = 0;
 
 	if (n == 1000)
 	{

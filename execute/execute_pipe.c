@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 09:48:49 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:47:12 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	other_command(t_token *tree, int *fd, char ***env)
 	{
 		if (is_builtin(tree, env) != 1)
 			exec_cmd(tree, *env);
-		return (freemtr(*env), free_lst(tree), exit(1));
+		return (freemtr(*env), free_lst(tree), exit(0));
 	}
 }
 

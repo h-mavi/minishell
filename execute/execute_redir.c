@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 10:29:43 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:17:02 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	heredoc(t_token *tree)
 	file = open("here_doc", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (file == -1)
 		return (perror("failed to open the file"), exit_code(1));
-	write(1, "> ", 2);
+	write(0, "> ", 2);
 	str = get_next_line(0);
 	while (ctrl_str(str, tree->str) == 0)
 	{
 		ft_putstr_fd(str, file);
 		free(str);
-		write(1, "> ", 2);
+		write(0, "> ", 2);
 		str = get_next_line(0);
 	}
 	free(str);

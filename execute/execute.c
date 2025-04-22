@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 09:48:05 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:12:43 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	**full_cmd(t_token *tree)
 //controllo se il comando e' una builtin e nel caso eseguo
 int	is_builtin(t_token *tree, char ***env)
 {
-	exit_code(0);
 	if (ft_compare(tree->str, "env") == 0)
 		return (ft_env(tree, *env));
 	if (ft_compare(tree->str, "export") == 0)
@@ -138,66 +137,66 @@ void	execute(t_token *tree, char ***env)
 	exit_code(n / 256);
 	reset_fd(std);
 }
-/* 
-int	main(int arc, char **arg, char **env)
-{
-	t_token	*tree;
-	char	**new_env;
-	int		i;
 
-	i = 0;
-	if (arc < 2)
-	{
-		ft_printf("MA SEI UN COGLIONE!?!?!?");
-		exit(1);
-	}
-	new_env = ft_calloc(ft_matrixlen(env) + 1, sizeof(char *));
-	while (env[i])
-	{
-		new_env[i] = ft_strdup(env[i]);
-		i++;
-	}
-	i = 0;
-	tree = ft_calloc(arc, sizeof(t_token));
-	while (arg[++i])
-	{
-		if (i == 1)
-			tree[i].type = COMMAND;
-		// else if (i == 2)
-		// 	tree[i].type = REDIR_1;
-		// else if (i == 3)
-		// 	tree[i].type = PIPE;
-		// else if (i == 4)
-		// 	tree[i].type = COMMAND;
-		// else if (i == 5)
-		// 	tree[i].type = REDIR_1;
-		// else if (i == 5)
-		// 	tree[i].type = PIPE;
-		// else if (i == 6)
-		// 	tree[i].type = COMMAND;
-		// // else if (i == 9)
-		// // 	tree[i].type = REDIR_2;
-		// else if (i == 9)
-		// 	tree[i].type = PIPE;
-		// else if (i == 10)
-		// 	tree[i].type = COMMAND;
-		// // else if (i == 3)
-		// // 	tree[i].type = COMMAND;
-		else
-			tree[i].type = FLAG;
-		tree[i].str = arg[i];
-		if (i < arc - 1)
-			tree[i].next = &tree[i + 1];
-		else
-			tree[i].next = NULL;
-		tree[i].prev = &tree[i - 1];
-	}
-	execute(&tree[1], &new_env);
-	// ft_pwd();
-	// ft_env(tree, new_env);
-	// ft_export(&new_env, NULL);
-	exit_code(1000);
-	free_lst(&tree[1]);
-	freemtr(new_env);
-	return (0);
-} */
+// int	main(int arc, char **arg, char **env)
+// {
+// 	t_token	*tree;
+// 	char	**new_env;
+// 	int		i;
+
+// 	i = 0;
+// 	if (arc < 2)
+// 	{
+// 		ft_printf("MA SEI UN COGLIONE!?!?!?");
+// 		exit(1);
+// 	}
+// 	new_env = ft_calloc(ft_matrixlen(env) + 1, sizeof(char *));
+// 	while (env[i])
+// 	{
+// 		new_env[i] = ft_strdup(env[i]);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	tree = ft_calloc(arc, sizeof(t_token));
+// 	while (arg[++i])
+// 	{
+// 		if (i == 1)
+// 			tree[i].type = COMMAND;
+// 		// else if (i == 2)
+// 		// 	tree[i].type = REDIR_1;
+// 		else if (i == 3)
+// 			tree[i].type = HEREDOC;
+// 		else if (i == 4)
+// 			tree[i].type = PIPE;
+// 		else if (i == 5)
+// 			tree[i].type = COMMAND;
+// 		// else if (i == 5)
+// 		// 	tree[i].type = PIPE;
+// 		// else if (i == 6)
+// 		// 	tree[i].type = COMMAND;
+// 		// // else if (i == 9)
+// 		// // 	tree[i].type = REDIR_2;
+// 		// else if (i == 9)
+// 		// 	tree[i].type = PIPE;
+// 		// else if (i == 10)
+// 		// 	tree[i].type = COMMAND;
+// 		// // else if (i == 3)
+// 		// // 	tree[i].type = COMMAND;
+// 		else
+// 			tree[i].type = FLAG;
+// 		tree[i].str = arg[i];
+// 		if (i < arc - 1)
+// 			tree[i].next = &tree[i + 1];
+// 		else
+// 			tree[i].next = NULL;
+// 		tree[i].prev = &tree[i - 1];
+// 	}
+// 	execute(&tree[1], &new_env);
+// 	// ft_pwd();
+// 	// ft_env(tree, new_env);
+// 	// ft_export(&new_env, NULL);
+// 	exit_code(1000);
+// 	free_lst(&tree[1]);
+// 	freemtr(new_env);
+// 	return (0);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:43:25 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 09:49:18 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:31:30 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ int	ft_echo(t_token *tree)
 	print_option(tree);
 	if (n == 1)
 		ft_printf("\n");
-	return (1);
+	return (exit_code(0), 1);
 }
