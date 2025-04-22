@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/08 14:35:04 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:33:44 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,24 @@
 void	here_doc(char *input)
 {
 	char	*str;
+	int		file;
 
+	file = open("here_doc", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	if (file == -1)
+		return ;
 	write(1, "> ", 2);
 	str = get_next_line(0);
 	while (control_str(str, input + 2) == 0)
 	{
+		ft_putstr_fd(str, file);
 		free(str);
 		write(1, "> ", 2);
 		str = get_next_line(0);
 	}
 	free(str);
+	get_next_line(file);
+	close(file);
+	unlink("here_doc");
 }
 
 /* Filtra la lista head fino al nodo 'where' 

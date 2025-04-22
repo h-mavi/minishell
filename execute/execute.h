@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/18 09:43:45 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 12:03:58 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
 # include "../builtin/builtin.h"
+# include "../parsing/parsing.h"
+# include "../parsing/token.h"
+# include "../printf/ft_printf.h"
 
 # include <stdio.h>
 # include <signal.h>
@@ -53,15 +56,16 @@ int		pipe_check(t_token *tree);
 int		file_control(int file, int std);
 void	heredoc(t_token *tree);
 t_token	*find_comand(t_token *tree);
-int		ctrl_str(char *str, const char *limiter);
+int		ctrl_str(char *str, char *limiter);
 void	freemtr(char **mtr);
 void	reset_fd(int *std);
 int		redir_check(t_token *tree, int n);
-int		ft_compare(const char *s1, const char *s2);
-int		ft_compare2(const char *s1, const char *s2);
+int		ft_compare(char *s1, char *s2);
+int		ft_compare2(char *s1, char *s2);
 void	for_fork(t_token *tree, char ***env, int *std);
 int		is_builtin(t_token *tree, char ***env);
 void	exec_cmd(t_token *tree, char **env);
 void	exit_code(int n);
+void	execute(t_token *tree, char ***env);
 
 #endif

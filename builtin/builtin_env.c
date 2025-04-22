@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/17 12:37:52 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 09:49:24 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
 #include "builtin.h"
 
 int	ft_env(t_token *tree, char **env)

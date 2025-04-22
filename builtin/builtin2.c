@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:43:25 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/18 11:26:39 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 09:49:18 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
 #include "builtin.h"
 
 //devo sempre tornare al nodo iniziale
@@ -29,7 +28,7 @@ int	ft_exit(t_token *tree, char **env)
 	return (1);
 }
 
-int	is_n(const char *str, char c)
+int	is_n(char *str, char c)
 {
 	int		i;
 	char	*cmp;

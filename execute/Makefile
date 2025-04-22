@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
+#    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 09:06:57 by mbiagi            #+#    #+#              #
-#    Updated: 2025/04/17 12:44:55 by mbiagi           ###   ########.fr        #
+#    Updated: 2025/04/22 12:04:06 by mfanelli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,7 @@ NAME = minishell_exec
 
 SOURCES = execute.c execute_utils.c execute_utils2.c execute_pipe.c \
 execute_redir.c ../builtin/builtin_env_controls.c ../builtin/builtin.c \
-../builtin/builtin_env.c ../builtin/builtin_env_utils.c ../builtin/builtin2.c \
-../minishell.c
+../builtin/builtin_env.c ../builtin/builtin_env_utils.c ../builtin/builtin2.c
 OBJ = $(SOURCES:.c=.o)
 
 CC = cc

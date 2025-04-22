@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:01:48 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/17 11:02:22 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 09:48:34 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
 #include "execute.h"
 
 //controlla il limiter dell' heredoc
-int	ctrl_str(char *str, const char *limiter)
+int	ctrl_str(char *str, char *limiter)
 {
 	if (str == NULL)
 		return (1);
@@ -50,7 +49,7 @@ void	reset_fd(int *std)
 
 //funzione ausiliaria ch emi serve per comparare
 // il nome dei comandi alle builtin
-int	ft_compare(const char *s1, const char *s2)
+int	ft_compare(char *s1, char *s2)
 {
 	int	i;
 
@@ -69,7 +68,7 @@ int	ft_compare(const char *s1, const char *s2)
 		return (0);
 }
 
-int	ft_compare2(const char *s1, const char *s2)
+int	ft_compare2(char *s1, char *s2)
 {
 	int	i;
 

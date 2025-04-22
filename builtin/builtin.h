@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/17 12:39:29 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 12:03:28 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
 # include "../execute/execute.h"
+# include "../printf/ft_printf.h"
+# include "../parsing/token.h"
 
 # include <stdio.h>
 # include <signal.h>
@@ -55,11 +57,11 @@ int		ft_pwd(void);
 int		ft_cd(t_token *tree, char **env);
 int		ft_echo(t_token *tree);
 int		ft_unset(t_token *tree, char ***env);
-int		control_variable(const char *var);
-int		new_variable(const char *var, char **env);
+int		control_variable(char *var);
+int		new_variable(char *var, char **env);
 int		num_argument(t_token *tree);
-char	*string_control(const char *str);
-size_t	until(const char *str);
+char	*string_control(char *str);
+size_t	until(char *str);
 char	**unset_param(t_token *tree, char **env);
 void	print_export(char **env);
 char	**change_param(t_token *tree, char **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:18:52 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/11 11:29:18 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 10:04:30 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 // # include "./get_next_line/get_next_line.h"
 # include "./libft/libft.h"
-# include "./printf/ft_printf.h"
 
 # include <stdio.h>
 # include <signal.h>
@@ -51,7 +50,7 @@
 typedef struct s_token
 {
 	int				type;
-	const char		*str;
+	char			*str;
 	int				id;
 	struct s_token	*prev;
 	struct s_token	*next;

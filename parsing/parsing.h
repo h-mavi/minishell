@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 16:35:36 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:04:45 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define PARSING_H
 # include "./../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
+# include "./../execute/execute.h"
+# include "token.h"
 
 # include <stdio.h>
 # include <signal.h>
@@ -46,15 +48,6 @@
 // >>
 # define REDIR_3 6
 # define HEREDOC 7
-
-typedef struct s_token
-{
-	int				type;
-	char			*str;
-	int				id;
-	struct s_token	*prev;
-	struct s_token	*next;
-}	t_token;
 
 //----------------------------------------------------------------------------
 //in parsing/pars_extra.c

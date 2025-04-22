@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env_controls.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:34:02 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/17 12:36:04 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 09:49:35 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
 #include "builtin.h"
 
-int	control_variable(const char *var)
+int	control_variable(char *var)
 {
 	int	i;
 
@@ -33,7 +32,7 @@ int	control_variable(const char *var)
 	return (1);
 }
 
-int	new_variable(const char *var, char **env)
+int	new_variable(char *var, char **env)
 {
 	int		i;
 	int		n;
@@ -61,7 +60,7 @@ int	new_variable(const char *var, char **env)
 
 //funzione che controlla la presenza di "+=" e nel caso leva il '+'
 //usata nel caso la variabile che cerchiamo di aggiungere non eista
-char	*string_control(const char *str)
+char	*string_control(char *str)
 {
 	int		i;
 	int		j;
@@ -87,7 +86,7 @@ char	*string_control(const char *str)
 	return (nstr);
 }
 
-size_t	until(const char *str)
+size_t	until(char *str)
 {
 	size_t	i;
 

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 09:24:11 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:46:54 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,30 @@ t_token	*token_inator(char *cmd, char **env, t_token *head)
 	return (free_arr(str), head);
 }
 
+char **ft_env_cpy(char **env)
+{
+	char	**new_env;
+	int		i;
+	
+	i = 0;
+	new_env = (char **)ft_calloc(ft_matrixlen(env) + 1, sizeof(char *));
+	while (env[i])
+	{
+		new_env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	return (new_env);
+}
+
 /* Registra l'history, gestisce ^D e chiama token_inator*/
-int	parsing(char *pwd, char **env)
+int	parsing(char *pwd, char **env_cpy)
 {
 	char	*cmd;
 	t_token	*head;
 
 	cmd = readline(pwd);
 	head = NULL;
+	free(pwd);
 	add_history(cmd);
 	if (!cmd)
 	{
@@ -87,8 +103,11 @@ int	parsing(char *pwd, char **env)
 		free(cmd);
 		return (0);
 	}
-	head = token_inator(cmd, env, head);
+	head = token_inator(cmd, env_cpy, head);
+	if (head == NULL)
+		return (1);
 	print_lists(head);
+	execute(head, &env_cpy);
 	if (head != NULL)
 		free_lst(head);
 	return (1);
@@ -98,20 +117,21 @@ int	main(int argc, char *argv[], char **env)
 {
 	char	*temp;
 	char	*pwd;
+	char	**env_cpy;
 
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, routine);
 	signal(SIGQUIT, SIG_IGN);
+	env_cpy = ft_env_cpy(env);
 	while (1)
 	{
 		temp = getcwd(NULL, 0);
 		pwd = ft_strjoin(temp, "$ ");
 		free(temp);
-		if (parsing(pwd, env) == 0)
+		if (parsing(pwd, env_cpy) == 0)
 			break ;
-		free(pwd);
 	}
-	free(pwd);
+	free_arr(env_cpy);
 	return (0);
 }

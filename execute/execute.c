@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/18 11:39:43 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 09:48:05 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
 #include "execute.h"
 
 //funzione che trova il path corretto del cmd, se non lo trova retituisce NULL
@@ -139,7 +138,7 @@ void	execute(t_token *tree, char ***env)
 	exit_code(n / 256);
 	reset_fd(std);
 }
-
+/* 
 int	main(int arc, char **arg, char **env)
 {
 	t_token	*tree;
@@ -201,4 +200,4 @@ int	main(int arc, char **arg, char **env)
 	free_lst(&tree[1]);
 	freemtr(new_env);
 	return (0);
-}
+} */
