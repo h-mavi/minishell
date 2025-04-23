@@ -6,18 +6,19 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 12:17:02 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 08:50:00 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
 //funzione che crea l' heredoc e lo duplica nello stdin
-void	heredoc(t_token *tree)
+void	heredoc(t_token *tree, int *std)
 {
 	int		file;
 	char	*str;
 
+	dup2(std[0], 0);
 	file = open("here_doc", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (file == -1)
 		return (perror("failed to open the file"), exit_code(1));
@@ -39,7 +40,7 @@ void	heredoc(t_token *tree)
 }
 
 //redirige i file
-int	redir_check(t_token *tree, int n)
+int	redir_check(t_token *tree, int n, int *std)
 {
 	int	file;
 
@@ -51,7 +52,7 @@ int	redir_check(t_token *tree, int n)
 			n = file_control(file, 0);
 		}
 		else if (tree->type == HEREDOC)
-			heredoc(tree);
+			heredoc(tree, std);
 		else if (tree->type == REDIR_2 || tree->type == REDIR_3)
 		{
 			if (tree->type == REDIR_2)

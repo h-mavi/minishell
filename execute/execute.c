@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 13:12:43 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 16:13:56 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,16 @@ void	execute(t_token *tree, char ***env)
 	int	pid;
 	int	std[2];
 	int	n;
-
+	//controlla il reset delle redirection in heredoc
 	std[0] = dup(0);
 	std[1] = dup(1);
 	if (pipe_check(tree) == 1)
 		return (for_fork(tree, env, std));
-	if (redir_check(tree, 0) == 1)
+	if (redir_check(tree, 0, std) == 1)
 		return (reset_fd(std));
 	tree = find_comand(tree);
+	if (tree == NULL)
+		return (reset_fd(std));
 	if (is_builtin(tree, env) == 1)
 		return (reset_fd(std));
 	pid = fork();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 12:03:58 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:09:44 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@
 void	dup_file(int file, int std);
 int		pipe_check(t_token *tree);
 int		file_control(int file, int std);
-void	heredoc(t_token *tree);
+void	heredoc(t_token *tree, int *std);
 t_token	*find_comand(t_token *tree);
 int		ctrl_str(char *str, char *limiter);
 void	freemtr(char **mtr);
 void	reset_fd(int *std);
-int		redir_check(t_token *tree, int n);
+int		redir_check(t_token *tree, int n, int *std);
 int		ft_compare(char *s1, char *s2);
 int		ft_compare2(char *s1, char *s2);
 void	for_fork(t_token *tree, char ***env, int *std);

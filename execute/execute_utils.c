@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 13:06:50 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/22 15:51:27 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ void	exit_code(int n)
 //funzione di ausilio per trovarmi subito il comando
 t_token	*find_comand(t_token *tree)
 {
-	while (tree->type != COMMAND)
+	while (tree != NULL)
+	{
+		if (tree->type == COMMAND)
+			break;
 		tree = tree->next;
+	}
 	return (tree);
 }
 
