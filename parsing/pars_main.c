@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 14:53:10 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:03:23 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int	parsing(char *pwd, char **env_cpy)
 	head = token_inator(cmd, env_cpy, head);
 	if (head == NULL)
 		return (1);
-	print_lists(head);
-	// execute(head, &env_cpy);
+	// print_lists(head);
+	execute(head, &env_cpy);
 	if (head != NULL)
 		free_lst(head);
 	return (1);

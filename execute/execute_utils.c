@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 12:03:46 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 15:22:03 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ t_token	*find_comand(t_token *tree)
 			break;
 		tree = tree->next;
 	}
-	if (tree->type == COMMAND)
-		return (tree);
+	if (tree != NULL)
+		if (tree->type == COMMAND)
+			return (tree);
 	return (NULL);
 }
 
