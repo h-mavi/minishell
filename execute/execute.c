@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 11:00:08 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 14:31:02 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	execute(t_token *tree, char ***env)
 	std[1] = dup(1);
 	if (pipe_check(tree) == 1)
 		return (for_fork(tree, env, std));
-	if (redir_check(tree, 0, std) == 1)
+	if (redir_check(tree, 0, std, *env) == 1)
 		return (reset_fd(std));
 	tree = find_comand(tree);
 	if (tree == NULL)

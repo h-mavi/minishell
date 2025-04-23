@@ -6,14 +6,14 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 11:54:03 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 14:32:26 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
 //funzione che crea l' heredoc e lo duplica nello stdin
-void	heredoc(t_token *tree, int *std)
+void	heredoc(t_token *tree, int *std, char **env)
 {
 	int		file;
 	char	*str;
@@ -26,6 +26,7 @@ void	heredoc(t_token *tree, int *std)
 	str = get_next_line(0);
 	while (ctrl_str(str, tree->str) == 0)
 	{
+		str = refine(str, env);
 		ft_putstr_fd(str, file);
 		free(str);
 		write(0, "> ", 2);
@@ -40,7 +41,7 @@ void	heredoc(t_token *tree, int *std)
 }
 
 //redirige i file
-int	redir_check(t_token *tree, int n, int *std)
+int	redir_check(t_token *tree, int n, int *std, char **env)
 {
 	int	file;
 
@@ -52,7 +53,7 @@ int	redir_check(t_token *tree, int n, int *std)
 			n = file_control(file, 0);
 		}
 		else if (tree->type == HEREDOC)
-			heredoc(tree, std);
+			heredoc(tree, std, env);
 		else if (tree->type == REDIR_2 || tree->type == REDIR_3)
 		{
 			if (tree->type == REDIR_2)

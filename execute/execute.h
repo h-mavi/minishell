@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 11:31:25 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:33:01 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	for_fork(t_token *tree, char ***env, int *std);
 //----------------------------------------------------------------------------
 //in execute/execute_redir.c
 
-void	heredoc(t_token *tree, int *std);
-int		redir_check(t_token *tree, int n, int *std);
+void	heredoc(t_token *tree, int *std, char **env);
+int		redir_check(t_token *tree, int n, int *std, char **env);
 
 //----------------------------------------------------------------------------
 //in execute/execute_utils.c
