@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 15:44:06 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:05:51 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@ char	*simple_refine(char *s, char **env)
 	while (s[++i])
 	{
 		i = do_skip(s, i);
-		if (s[i] == '$' && ft_isdigit(s[i + 1]) != 0)
-			s = ft_mycpy(s);
-		if (i > 1 && s[i] == '$' && s[i - 1] == '<' && s[i - 2] == '<')
-			i++;
 		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
 			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
 			s = esp_special_case(s, env, i);

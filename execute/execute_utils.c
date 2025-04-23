@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 15:22:03 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:02:23 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_token	*find_comand(t_token *tree)
 	while (tree != NULL && tree->type != PIPE)
 	{
 		if (tree->type == COMMAND)
-			break;
+			break ;
 		tree = tree->next;
 	}
 	if (tree != NULL)
@@ -65,7 +65,6 @@ int	file_control(int file, int std)
 {
 	if (file == -1)
 	{
-		// free_lst(tree);
 		perror("filed to open the file");
 		exit_code(1);
 		return (1);

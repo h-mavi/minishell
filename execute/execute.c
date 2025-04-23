@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 14:31:02 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:01:45 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	execute(t_token *tree, char ***env)
 	int	pid;
 	int	std[2];
 	int	n;
+
 	std[0] = dup(0);
 	std[1] = dup(1);
 	if (pipe_check(tree) == 1)
