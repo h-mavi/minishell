@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 11:52:20 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 14:31:35 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	other_command(t_token *tree, int *fd, char ***env, int *std)
 	int	pid;
 
 	file_control(fd[1], 1);
-	if (redir_check(tree, 0, std) == 1)
+	if (redir_check(tree, 0, std, *env) == 1)
 		return ;
 	tree = find_comand(tree);
 	if (tree == NULL)
@@ -51,7 +51,7 @@ void	last_command(int *std, t_token *tree, char ***env, int *ex)
 
 	*ex = 0;
 	dup2(std[1], 1);
-	if (redir_check(tree, 0, std) == 1)
+	if (redir_check(tree, 0, std, *env) == 1)
 		return ;
 	tree = find_comand(tree);
 	if (tree == NULL)
