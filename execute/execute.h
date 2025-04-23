@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 16:09:44 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 11:31:25 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,42 @@
 # define REDIR_3 6
 # define HEREDOC 7
 
+//----------------------------------------------------------------------------
+//in execute/execute_pipe.c
+
+void	for_fork(t_token *tree, char ***env, int *std);
+
+//----------------------------------------------------------------------------
+//in execute/execute_redir.c
+
+void	heredoc(t_token *tree, int *std);
+int		redir_check(t_token *tree, int n, int *std);
+
+//----------------------------------------------------------------------------
+//in execute/execute_utils.c
+
+void	exit_code(int n);
+t_token	*find_comand(t_token *tree);
 void	dup_file(int file, int std);
 int		pipe_check(t_token *tree);
 int		file_control(int file, int std);
-void	heredoc(t_token *tree, int *std);
-t_token	*find_comand(t_token *tree);
+
+//----------------------------------------------------------------------------
+//in execute/execute_utils2.c
+
 int		ctrl_str(char *str, char *limiter);
 void	freemtr(char **mtr);
 void	reset_fd(int *std);
-int		redir_check(t_token *tree, int n, int *std);
 int		ft_compare(char *s1, char *s2);
 int		ft_compare2(char *s1, char *s2);
-void	for_fork(t_token *tree, char ***env, int *std);
+
+//----------------------------------------------------------------------------
+//in execute/execute.c
+
 int		is_builtin(t_token *tree, char ***env);
 void	exec_cmd(t_token *tree, char **env);
-void	exit_code(int n);
 void	execute(t_token *tree, char ***env);
+
+//----------------------------------------------------------------------------
 
 #endif
