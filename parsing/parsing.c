@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 15:39:35 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 10:50:41 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,14 @@ char	*error_exit(t_token *head, int syn, char *str, char *input)
 	if (head != NULL)
 		free_lst(head);
 	return (NULL);
+}
+
+/* Funzione che serve per limitare le linee, chiamata da refine, controlla
+se ci sono doppi dollari da saltare. */
+int	do_skip(char *s, int i)
+{
+	if (s[i] == '$' && s[i + 1] == '$' && werami(s, i + 2) != 0 && \
+		s[i + 2] != '\0')
+		return (i + 2);
+	return (i);
 }

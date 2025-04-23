@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 10:21:05 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 10:54:14 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	compile_inator(char **str, char **env, t_token **head)
 	{
 		str[i] = refine(str[i], env);
 		if (str[i][0] == '\0')
-			continue;
+			continue ;
 		if (check == 0 && find_char(str[i], 0) == 0)
 		{
 			set_data(head, &str[i], COMMAND);
@@ -81,21 +81,6 @@ t_token	*token_inator(char *cmd, char **env, t_token *head)
 	return (free_arr(str), head);
 }
 
-char **ft_env_cpy(char **env)
-{
-	char	**new_env;
-	int		i;
-	
-	i = 0;
-	new_env = (char **)ft_calloc(ft_matrixlen(env) + 1, sizeof(char *));
-	while (env[i])
-	{
-		new_env[i] = ft_strdup(env[i]);
-		i++;
-	}
-	return (new_env);
-}
-
 /* Registra l'history, gestisce ^D e chiama token_inator*/
 int	parsing(char *pwd, char **env_cpy)
 {
@@ -117,7 +102,7 @@ int	parsing(char *pwd, char **env_cpy)
 	head = token_inator(cmd, env_cpy, head);
 	if (head == NULL)
 		return (1);
-	print_lists(head);
+	// print_lists(head);
 	execute(head, &env_cpy);
 	if (head != NULL)
 		free_lst(head);

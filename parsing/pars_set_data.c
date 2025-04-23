@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 09:09:28 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 10:54:32 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	lstadd_back(t_token **lst, t_token *new)
 /* Setta i dati della lista di tipo t_token */
 void	set_data(t_token **head, char **str, int flag)
 {
-	t_token	*node;
-	static int id = 0;
+	t_token		*node;
+	static int	id = 0;
 
 	if (head == NULL)
 	{
 		id = 0;
-		return;
+		return ;
 	}
 	node = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!node)
@@ -107,4 +107,20 @@ void	set_prev(t_token **head)
 		corr = corr->next;
 	}
 	return ;
+}
+
+/* Funzione per copiare l'env */
+char	**ft_env_cpy(char **env)
+{
+	char	**new_env;
+	int		i;
+
+	i = 0;
+	new_env = (char **)ft_calloc(ft_matrixlen(env) + 1, sizeof(char *));
+	while (env[i])
+	{
+		new_env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	return (new_env);
 }

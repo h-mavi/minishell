@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 09:07:27 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 10:54:43 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char		*set_str(char *s);
 char		*set_path(char *tmp, char **env);
 int			len_arr_utils(char *s, int *i, int *x, int app);
 int			count_len_wrd(char *s, int *y, int conta);
-char		*smells_goog(char *s, int *i, char **env);
+char		*ft_mycpy(char *str);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_heredoc.c
@@ -99,6 +99,7 @@ void		lstadd_back(t_token **lst, t_token *new);
 void		set_data(t_token **head, char **str, int flag);
 void		print_lists(t_token *head);
 void		set_prev(t_token **head);
+char		**ft_env_cpy(char **env);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_split.c
@@ -125,6 +126,7 @@ char		*reassemble(char *first, char *espan, char *after, int len_cmd);
 int			check_error_lst(t_token *head);
 void		free_lst(t_token *head);
 char		*error_exit(t_token *head, int syn, char *str, char *input);
+int			do_skip(char *s, int i);
 
 //----------------------------------------------------------------------------
 

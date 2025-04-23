@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/22 10:33:44 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:26:12 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	here_doc(char *input)
 		return ;
 	write(1, "> ", 2);
 	str = get_next_line(0);
-	while (control_str(str, input + 2) == 0)
+	while (control_str(str, input) == 0)
 	{
 		ft_putstr_fd(str, file);
 		free(str);
@@ -79,6 +79,8 @@ int	control_str(char *str, char *argv)
 {
 	if (str == NULL)
 		return (1);
+	if (argv[0] == '<')
+		argv = argv + 2;
 	if ((ft_strncmp(str, argv, ft_strlen(argv)) == 0) && \
 	str[ft_strlen(argv)] == '\n')
 		return (1);

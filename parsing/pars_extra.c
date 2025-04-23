@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:40:15 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 16:35:58 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 10:51:01 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,19 @@ int	count_len_wrd(char *s, int *y, int conta)
 	return (conta);
 }
 
-char	*smells_goog(char *s, int *i, char **env)
+/* Funzione stupidissima chiamata da refine per gestire unicamente casi come
+$1ciao che diventa ciao. */
+char	*ft_mycpy(char *str)
 {
-	while (s[++(*i)] != '"')
-	{
-		if (s[*i] == '$' && s[(*i) + 1] == '$')
-			*i += 2;
-		if ((s[*i] == '$' && werami(s, *i) == 1 && \
-			((ft_isalpha(s[(*i) + 1]) != 0) || (s[(*i) + 1] == '_'))))
-			s = esp_special_case(s, env, *i);
-	}
-	return (s);
+	char	*new;
+	int		i;
+	int		x;
+
+	i = 0;
+	x = 1;
+	new = (char *)ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	while (str[++x])
+		new[i++] = str[x];
+	free(str);
+	return (new);
 }

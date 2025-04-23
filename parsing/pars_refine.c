@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/22 15:23:44 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 10:51:11 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,9 @@ char	*refine(char *s, char **env)
 	i = -1;
 	while (s[++i])
 	{
-		if (s[i] == '$' && s[i + 1] == '$' && werami(s, i + 2) != 0 && s[i + 2] != '\0')
-			i += 2;
+		i = do_skip(s, i);
+		if (s[i] == '$' && ft_isdigit(s[i + 1]) != 0)
+			s = ft_mycpy(s);
 		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
 			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
 			s = esp_special_case(s, env, i);
@@ -127,18 +128,15 @@ char	*refine(char *s, char **env)
 		{
 			while (s[++i] != '"')
 			{
-				if (s[i] == '$' && s[i + 1] == '$' && werami(s, i + 2) != 0)
-					i += 2;
+				i = do_skip(s, i);
 				if ((s[i] == '$' && werami(s, i) == 1 && \
 					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
 					s = esp_special_case(s, env, i);
 			}
 		}
-		if (s[i] == '$' && s[i + 1] == '$' && werami(s, i + 2) != 0 && s[i + 2] != '\0')
-			i += 2;
+		i = do_skip(s, i);
 		if (s[0] == '\0')
 			return (s);
 	}
 	return (s);
 }
-
