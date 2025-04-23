@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 14:29:54 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 10:37:41 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	return_home(char **env)
 		if (ft_compare(env[i], "HOME") == 0)
 		{
 			chdir(env[i] + 5);
-			break ;
+			return ;
 		}
 		i++;
 	}

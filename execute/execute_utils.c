@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 15:51:27 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 12:03:46 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ void	exit_code(int n)
 //funzione di ausilio per trovarmi subito il comando
 t_token	*find_comand(t_token *tree)
 {
-	while (tree != NULL)
+	while (tree != NULL && tree->type != PIPE)
 	{
 		if (tree->type == COMMAND)
 			break;
 		tree = tree->next;
 	}
-	return (tree);
+	if (tree->type == COMMAND)
+		return (tree);
+	return (NULL);
 }
 
 //funzione di  ausilio per duplicare e chiudere i file

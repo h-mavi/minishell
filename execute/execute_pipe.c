@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 08:58:36 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 11:52:20 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	last_command(int *std, t_token *tree, char ***env, int *ex)
 		return ;
 	tree = find_comand(tree);
 	if (tree == NULL)
-		return (reset_fd(std));
+		return ;
 	if (is_builtin(tree, env) == 1)
 	{
 		*ex = 0;

@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 09:35:09 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 11:00:08 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ void	execute(t_token *tree, char ***env)
 	int	pid;
 	int	std[2];
 	int	n;
-	//controlla il reset delle redirection in heredoc
 	std[0] = dup(0);
 	std[1] = dup(1);
 	if (pipe_check(tree) == 1)
