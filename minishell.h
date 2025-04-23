@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:18:52 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 10:04:30 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:49:23 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 // >>
 # define REDIR_3 6
 # define HEREDOC 7
+// << "$USER"
+# define HEREDOC_2 8
 
 typedef struct s_token
 {

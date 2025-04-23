@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 15:22:04 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:00:57 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,12 @@ int	find_char(char *s, int i)
 		return (5);
 	if (s[i] == '>' && s[i + 1] == '>')
 		return (6);
-	if (s[i] == '<' && s[i + 1] == '<')
+	if (s[i] == '<' && s[i + 1] == '<' && \
+		werami(s, i + 2) != 0)
 		return (7);
+	if (s[i] == '<' && s[i + 1] == '<' && \
+		werami(s, i + 2) == 0)
+		return (8);
 	return (0);
 }
 
@@ -101,7 +105,7 @@ int	find_dollar(char *s, int i)
 <|<a, <;<a, <#<a, <1<a, 
 >|>a, >;>a, >#>a, >1>a,
 >>|a, >>;a, >>#a, <<|a, <<;a, <<#a,
->;a, >#a, <|a, <;a, <#a, */
+>;a, >#a, <|a, <;a, <#a */
 int	check_error(char *s)
 {
 	int	i;

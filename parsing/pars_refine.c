@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 10:51:11 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:58:50 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ char	*refine(char *s, char **env)
 		i = do_skip(s, i);
 		if (s[i] == '$' && ft_isdigit(s[i + 1]) != 0)
 			s = ft_mycpy(s);
+		if (i > 1 && s[i] == '$' && s[i - 1] == '<' && s[i - 2] == '<')
+			i++;
 		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
 			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
 			s = esp_special_case(s, env, i);
@@ -129,6 +131,8 @@ char	*refine(char *s, char **env)
 			while (s[++i] != '"')
 			{
 				i = do_skip(s, i);
+				if (s[i] == '$' && s[0] == '<' && s[1] == '<')
+					i++;
 				if ((s[i] == '$' && werami(s, i) == 1 && \
 					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
 					s = esp_special_case(s, env, i);

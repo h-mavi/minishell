@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 10:54:32 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:52:41 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	set_data(t_token **head, char **str, int flag)
 	(*node).type = flag;
 	if (flag == REDIR_1 || flag == REDIR_2)
 		(*node).str = ft_strdup(*str + 1);
-	else if (flag == REDIR_3 || flag == HEREDOC)
+	else if (flag == REDIR_3 || flag == HEREDOC || \
+		flag == HEREDOC_2)
 		(*node).str = ft_strdup(*str + 2);
 	else
 		(*node).str = ft_strdup(*str);
