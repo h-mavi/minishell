@@ -6,11 +6,51 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 15:07:07 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 15:44:06 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+char	*simple_refine(char *s, char **env)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		i = do_skip(s, i);
+		if (s[i] == '$' && ft_isdigit(s[i + 1]) != 0)
+			s = ft_mycpy(s);
+		if (i > 1 && s[i] == '$' && s[i - 1] == '<' && s[i - 2] == '<')
+			i++;
+		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
+			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
+			s = esp_special_case(s, env, i);
+		else if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
+		{
+			s = rm_dollar(s);
+			if (i > 0)
+				i -= 1;
+		}
+		if (werami(s, i) == 0 && werami(s, i + 1) == 1)
+		{
+			while (werami(s, ++i) != 0)
+			{
+				i = do_skip(s, i);
+				if (s[i] == '$' && s[0] == '<' && s[1] == '<')
+					i++;
+				if ((s[i] == '$' && werami(s, i) == 1 && \
+					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
+					s = esp_special_case(s, env, i);
+			}
+		}
+		i = do_skip(s, i);
+		if (s[0] == '\0')
+			return (s);
+	}
+	return (s);
+}
 
 //funzione che crea l' heredoc e lo duplica nello stdin
 void	heredoc(t_token *tree, int *std, char **env)
@@ -27,7 +67,7 @@ void	heredoc(t_token *tree, int *std, char **env)
 	while (ctrl_str(str, tree->str) == 0)
 	{
 		if (tree->type == HEREDOC)
-			str = refine(str, env);
+			str = simple_refine(str, env);
 		ft_putstr_fd(str, file);
 		free(str);
 		write(0, "> ", 2);
