@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/22 12:04:45 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:07:27 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char		*divide(char *s, int y);
 //in parsing/pars_set_data.c
 
 void		lstadd_back(t_token **lst, t_token *new);
-void		set_data(t_token **head, char **str, int flag, int id);
+void		set_data(t_token **head, char **str, int flag);
 void		print_lists(t_token *head);
 void		set_prev(t_token **head);
 
