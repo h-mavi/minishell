@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 12:03:28 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:36:54 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 
 int		ft_export(char ***env, t_token *tree);
 int		ft_env(t_token *tree, char **env);
-int		ft_exit(t_token *tree, char **env);
+void	ft_exit(t_token *tree, char **env);
 int		ft_pwd(void);
 int		ft_cd(t_token *tree, char **env);
 int		ft_echo(t_token *tree);

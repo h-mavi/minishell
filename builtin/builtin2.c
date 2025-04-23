@@ -6,26 +6,50 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:43:25 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 14:31:30 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 10:00:14 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-//devo sempre tornare al nodo iniziale
-int	ft_exit(t_token *tree, char **env)
+int	is_all_digit(char *str)
 {
-	ft_printf("exit\n");
-	if (num_argument(tree->next->next) != 0)
+	int	i;
+
+	i = 0;
+	while (str[i])
 	{
-		perror("too many arguments");
-		exit_code(1);
-		return (1);
+		if (ft_isdigit(str[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+//devo sempre tornare al nodo iniziale
+void	ft_exit(t_token *tree, char **env)
+{
+	int	ex;
+
+	ft_printf("exit\n");
+	if (tree->next)
+	{
+		if (is_all_digit(tree->next->str) == 0)
+			return (perror("not numeric argument"), free_lst(tree), \
+			freemtr(env), exit(2));
+		if (tree->next->next)
+			return (perror("too many arguments"), exit_code(1));
+		if (is_all_digit(tree->next->str) != 0)
+		{
+			ex = ft_atoi(tree->next->str);
+			free_lst(tree);
+			freemtr(env);
+			exit(ex);
+		}
 	}
 	free_lst(tree);
 	freemtr(env);
-	exit(ft_atoi(tree->next->str));
-	return (1);
+	exit(0);
 }
 
 int	is_n(char *str, char c)

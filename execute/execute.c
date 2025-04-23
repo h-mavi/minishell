@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 16:13:56 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/23 09:35:09 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	is_builtin(t_token *tree, char ***env)
 	if (ft_compare(tree->str, "export") == 0)
 		return (ft_export(env, tree->next));
 	if (ft_compare(tree->str, "exit") == 0)
-		return (ft_exit(tree, *env));
+		return (ft_exit(tree, *env), 1);
 	if (ft_compare(tree->str, "echo") == 0)
 		return (ft_echo(tree));
 	if (ft_compare(tree->str, "cd") == 0)
