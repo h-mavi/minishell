@@ -32,6 +32,26 @@ int	control_variable(char *var)
 	return (1);
 }
 
+int	existing_variable(char *var, char **env)
+{
+	int	i;
+
+	i = 0;
+	while (var[i])
+	{
+		if (var[i] == '=')
+			return (1);
+		i++;
+	}
+	while (env[i])
+	{
+		if (ft_compare(env[i], var) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	new_variable(char *var, char **env)
 {
 	int		i;

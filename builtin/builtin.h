@@ -55,6 +55,7 @@
 //----------------------------------------------------------------------------
 //in builtin/builtin_env_controls.c
 
+int	    existing_variable(char *var, char **env);
 int		control_variable(char *var);
 int		new_variable(char *var, char **env);
 char	*string_control(char *str);

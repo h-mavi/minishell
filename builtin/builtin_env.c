@@ -68,7 +68,7 @@ int	ft_unset(t_token *tree, char ***env)
 		{
 			if (control_variable(tree->str) == 1)
 			{
-				if (new_variable(tree->str, *env) == 0)
+				if (existing_variable(tree->str, *env) == 0)
 					*env = unset_param(tree, *env);
 			}
 		}
