@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 10:06:03 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:09:44 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,8 @@ void	compile_inator(char **str, char **env, t_token **head)
 liberando anche l'array*/
 t_token	*token_inator(char *cmd, char **env, t_token *head)
 {
-	int		i;
-	int		check;
 	char	**str;
 
-	i = -1;
-	check = 0;
 	str = custom_split(cmd);
 	if (!str)
 		return (NULL);

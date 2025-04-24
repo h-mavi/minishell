@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/09 16:27:33 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:10:19 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,9 @@ char	**fill(char **dest, char *s, int len_arr, int i)
 Chiama le funzioni rm_spaces e here_glued. */
 char	**custom_split(char *s)
 {
-	int		x;
 	int		len_arr;
 	char	**dest;
 
-	x = 0;
 	s = rm_spaces(s);
 	if (!s)
 		return (NULL);
