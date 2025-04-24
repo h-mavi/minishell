@@ -21,7 +21,7 @@ int	control_variable(char *var)
 		return (perror("not valid identifier"), exit_code(1), 0);
 	if (var[0] == '_' && var[1] == '=')
 		return (0);
-	while (var[i] != '=' && var[i] != '+')
+	while (var[i] != '=' && var[i] != '+' && var[i])
 	{
 		if (ft_isalnum(var[i]) == 0 && var[i] != '_' && var[i] != '\0')
 			return (perror("not valid identifier"), exit_code(1), 0);
@@ -68,7 +68,7 @@ char	*string_control(char *str)
 
 	i = 0;
 	j = 0;
-	while (str[i] != '=')
+	while (str[i] != '=' && str[i])
 		i++;
 	if (str[i - 1] != '+')
 		return (ft_strdup(str));
