@@ -101,7 +101,7 @@ void	for_fork(t_token *tree, char ***env, int *std)
 	}
 	while (wait(&w) > 0)
 		exit_child(ex, w);
-	reset_fd(std);
+	return (reset_fd(std));
 }
 //set follow-fork-mode child
 //set detach-on-fork off

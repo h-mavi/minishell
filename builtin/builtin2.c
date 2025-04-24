@@ -34,19 +34,21 @@ void	ft_exit(t_token *tree, char **env)
 	ft_printf("exit\n");
 	if (tree->next)
 	{
-		if (is_all_digit(tree->next->str) == 0)
-			return (perror("not numeric argument"), free_lst(tree), \
-			freemtr(env), exit(2));
-		if (tree->next->next)
-			return (perror("too many arguments"), exit_code(1));
-		if (is_all_digit(tree->next->str) != 0)
+		if (tree->next->type == FLAG)
 		{
-			ex = ft_atoi(tree->next->str);
-			free_lst(tree);
-			freemtr(env);
-			if (ex > 256)
-				exit (ex % 256);
-			exit(ex);
+			if (is_all_digit(tree->next->str) == 0)
+				return (perror("not numeric argument"), free_lst(tree), \
+				freemtr(env), exit(2));
+			if (tree->next->next)
+				if (tree->next->next->type == FLAG)
+					return (perror("too many arguments"), exit_code(1));
+			if (is_all_digit(tree->next->str) != 0)
+			{
+				ex = ft_atoi(tree->next->str);
+				if (ex > 256)
+					exit (ex % 256);
+				return (freemtr(env), free_lst(tree), exit(ex));
+			}
 		}
 	}
 	free_lst(tree);
