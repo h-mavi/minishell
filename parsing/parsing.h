@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 14:49:01 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:03:10 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			control_str(char *str, char *argv);
 void		routine(int sig);
 void		compile_inator(char **str, char **env, t_token **head);
 t_token		*token_inator(char *cmd, char **env, t_token *head);
-int			parsing(char *pwd, char **env);
+int			parsing(char *pwd, char ***env);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_refine.c

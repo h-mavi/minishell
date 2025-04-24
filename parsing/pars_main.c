@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 08:46:42 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:06:03 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_token	*token_inator(char *cmd, char **env, t_token *head)
 }
 
 /* Registra l'history, gestisce ^D e chiama token_inator*/
-int	parsing(char *pwd, char **env_cpy)
+int	parsing(char *pwd, char ***env_cpy)
 {
 	char	*cmd;
 	t_token	*head;
@@ -99,11 +99,11 @@ int	parsing(char *pwd, char **env_cpy)
 	}
 	else if (cmd[0] == '\0')
 		return (free(cmd), routine(-1), 1);
-	head = token_inator(cmd, env_cpy, head);
+	head = token_inator(cmd, *env_cpy, head);
 	if (head == NULL)
 		return (1);
 	// print_lists(head);
-	execute(head, &env_cpy);
+	execute(head, env_cpy);
 	if (head != NULL)
 		free_lst(head);
 	return (1);
@@ -125,7 +125,7 @@ int	main(int argc, char *argv[], char **env)
 		temp = getcwd(NULL, 0);
 		pwd = ft_strjoin(temp, "$ ");
 		free(temp);
-		if (parsing(pwd, env_cpy) == 0)
+		if (parsing(pwd, &env_cpy) == 0)
 			break ;
 	}
 	free_arr(env_cpy);
