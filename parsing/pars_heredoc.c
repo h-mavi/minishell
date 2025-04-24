@@ -6,11 +6,25 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 09:26:12 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:42:38 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+/* Fa la comparazione tra l'input dato dallo user e il limiter
+dell'heredoc */
+static int	control_str(char *str, char *argv)
+{
+	if (str == NULL)
+		return (1);
+	if (argv[0] == '<')
+		argv = argv + 2;
+	if ((ft_strncmp(str, argv, ft_strlen(argv)) == 0) && \
+	str[ft_strlen(argv)] == '\n')
+		return (1);
+	return (0);
+}
 
 /* Apre l'heredoc usando input come limiter */
 void	here_doc(char *input)
@@ -73,16 +87,3 @@ void	ft_openhd_str(char *str, int where)
 	}
 }
 
-/* Fa la comparazione tra l'input dato dallo user e il limiter
-dell'heredoc */
-int	control_str(char *str, char *argv)
-{
-	if (str == NULL)
-		return (1);
-	if (argv[0] == '<')
-		argv = argv + 2;
-	if ((ft_strncmp(str, argv, ft_strlen(argv)) == 0) && \
-	str[ft_strlen(argv)] == '\n')
-		return (1);
-	return (0);
-}

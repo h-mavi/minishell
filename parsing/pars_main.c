@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 10:09:44 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:45:51 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	routine(int sig)
 }
 
 /* Compila la lista con i nodi-token */
-void	compile_inator(char **str, char **env, t_token **head)
+static void	compile_inator(char **str, char **env, t_token **head)
 {
 	int	i;
 	int	check;
@@ -62,7 +62,7 @@ void	compile_inator(char **str, char **env, t_token **head)
 
 /* Chiama custom_split e il compile_inator e poi returno la lista
 liberando anche l'array*/
-t_token	*token_inator(char *cmd, char **env, t_token *head)
+static t_token	*token_inator(char *cmd, char **env, t_token *head)
 {
 	char	**str;
 
@@ -78,7 +78,7 @@ t_token	*token_inator(char *cmd, char **env, t_token *head)
 }
 
 /* Registra l'history, gestisce ^D e chiama token_inator*/
-int	parsing(char *pwd, char ***env_cpy)
+static int	parsing(char *pwd, char ***env_cpy)
 {
 	char	*cmd;
 	t_token	*head;

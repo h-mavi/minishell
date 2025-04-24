@@ -6,14 +6,14 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 14:52:41 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:50:47 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /* Funzione che aggiunge il nodo new infondo alla lista di tipo t_token lst */
-void	lstadd_back(t_token **lst, t_token *new)
+static void	lstadd_back(t_token **lst, t_token *new)
 {
 	t_token	*ex;
 

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/22 12:38:37 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:49:13 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*rm_dollar(char *s)
 }
 
 /* Funzione per contenere un if enorme utilizzato da divide. */
-int	if_divide(char *s, int i, int y)
+static int	if_divide(char *s, int i, int y)
 {
 	if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i) == -1 && \
 		ft_isdigit(s[i]) == 0) || ((s[i] == 39 || s[i] == 34) && \

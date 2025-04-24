@@ -6,14 +6,14 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 10:10:19 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:40:06 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /* Chiamata da fill nel custom_split, porta ad allinearsi con y.*/
-int	realigning_i(char *s, int i, int y)
+static int	realigning_i(char *s, int i, int y)
 {
 	if (s[i] == 34 || s[i] == 39)
 	{
@@ -32,7 +32,7 @@ int	realigning_i(char *s, int i, int y)
 }
 
 /* returna il numero di elementi presenti nell'input */
-int	len_arr_split(char *arr)
+static int	len_arr_split(char *arr)
 {
 	int	i;
 	int	x;
@@ -58,7 +58,7 @@ int	len_arr_split(char *arr)
 	return (i);
 }
 
-void	frite(char *dest, int start, int len, char *s)
+static void	frite(char *dest, int start, int len, char *s)
 {
 	int	i;
 
@@ -73,7 +73,7 @@ void	frite(char *dest, int start, int len, char *s)
 	dest[i] = '\0';
 }
 
-char	**fill(char **dest, char *s, int len_arr, int i)
+static char	**fill(char **dest, char *s, int len_arr, int i)
 {
 	int	x;
 	int	y;

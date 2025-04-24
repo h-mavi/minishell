@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 10:03:10 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:56:18 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # define HEREDOC_2 8
 
 //----------------------------------------------------------------------------
-//in parsing/pars_extra.c
+//in parsing/pars_extra.c (ft 5/5)
 
 char		*set_str(char *s);
 char		*set_path(char *tmp, char **env);
@@ -61,23 +61,19 @@ int			count_len_wrd(char *s, int *y, int conta);
 char		*ft_mycpy(char *str);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_heredoc.c
+//in parsing/pars_heredoc.c (ft 4/5)
 
 void		here_doc(char *input);
 void		ft_openhd_ls(t_token *head, int where);
 void		ft_openhd_str(char *str, int where);
-int			control_str(char *str, char *argv);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_main.c
+//in parsing/pars_main.c (ft 5/5)
 
 void		routine(int sig);
-void		compile_inator(char **str, char **env, t_token **head);
-t_token		*token_inator(char *cmd, char **env, t_token *head);
-int			parsing(char *pwd, char ***env);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_refine.c
+//in parsing/pars_refine.c (ft 5/5)
 
 char		*rewrite(char *orig, int i, int x);
 char		*here_glued(char *s);
@@ -86,34 +82,28 @@ char		*esp_special_case(char *s, char **env, int i);
 char		*refine(char *s, char **env);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_rm.c
+//in parsing/pars_rm.c (ft 5/5)
 
 char		*rm_spaces(char *s);
 char		*rm_app(char *s);
 char		*rm_dollar(char *s);
-int			if_divide(char *s, int i, int y);
 char		*divide(char *s, int y);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_set_data.c
+//in parsing/pars_set_data.c (ft 5/5)
 
-void		lstadd_back(t_token **lst, t_token *new);
 void		set_data(t_token **head, char **str, int flag);
 void		print_lists(t_token *head);
 void		set_prev(t_token **head);
 char		**ft_env_cpy(char **env);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_split.c
+//in parsing/pars_split.c (ft 5/5)
 
-int			realigning_i(char *s, int i, int y);
-int			len_arr_split(char *arr);
-void		frite(char *dest, int start, int len, char *s);
-char		**fill(char **dest, char *s, int len_arr, int i);
 char		**custom_split(char *s);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_utils.c
+//in parsing/pars_utils.c (ft 5/5)
 
 void		free_arr(char **arr);
 int			werami(char *s, int index);
@@ -122,7 +112,7 @@ int			find_dollar(char *s, int i);
 int			check_error(char *s);
 
 //----------------------------------------------------------------------------
-//in parsing/parsing.c
+//in parsing/parsing.c (ft 5/5)
 
 char		*reassemble(char *first, char *espan, char *after, int len_cmd);
 int			check_error_lst(t_token *head);
