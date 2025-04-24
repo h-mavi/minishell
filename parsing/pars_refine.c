@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 14:58:50 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 09:08:07 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,9 @@ char	*refine(char *s, char **env)
 			if (i > 0)
 				i -= 1;
 		}
+		if (s[i] == '\'' && werami(s, i + 1) != -1)
+			while (s[++i] != '\'')
+				;
 		if (s[i] == '"' && werami(s, i + 1) == 1)
 		{
 			while (s[++i] != '"')
