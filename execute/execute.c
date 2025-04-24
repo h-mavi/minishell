@@ -26,7 +26,7 @@ char	*parse_cmd(char *argv, char **env)
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 			path = ft_split(env[i] + 5, ':');
 	if (!path)
-		return (argv);
+		return (ft_strdup(argv));
 	i = -1;
 	while (path[++i])
 	{
@@ -97,7 +97,7 @@ void	exec_cmd(t_token *tree, char **env)
 	path = parse_cmd((char *)tree->str, env);
 	arg = full_cmd(tree);
 	if (!path)
-		path = arg[0];
+		path = ft_strdup(arg[0]);
 	free_lst(tree);
 	execve(path, arg, env);
 	if (arg[0][0] == '$' && arg[0][1] == '?' && \
@@ -111,7 +111,7 @@ void	exec_cmd(t_token *tree, char **env)
 	else
 		write(2, arg[0], ft_strlen(arg[0]));
 	perror(" :command not found");
-	return (freemtr(arg), freemtr(env), exit(127));
+	return (free(path), freemtr(arg), freemtr(env), exit(127));
 }
 
 //funzione principale che richiama le altre
