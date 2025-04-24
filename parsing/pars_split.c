@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 10:40:06 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:40:04 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char	**custom_split(char *s)
 		return (NULL);
 	len_arr = len_arr_split(s);
 	if (len_arr == -1)
-		return (error_exit(NULL, -1, \
+		return (exit_code(2), error_exit(NULL, -1, \
 		"Syntax Error, odd number of ' or \"\n", NULL), NULL);
 	dest = (char **) malloc(sizeof(char *) * (len_arr + 1));
 	if (!dest)
