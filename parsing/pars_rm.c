@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 10:49:13 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:41:34 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*rm_spaces(char *s)
 			s = rewrite(s, i, x - 1);
 		}
 		if (find_char(s, i) > 3 && s[i + 1] == '\0' && \
-		find_char(s, i - 1) == 0 && i > 0)
+		i > 0 && ((find_char(s, i - 1) == 0) || (find_char(s, i - 1) > 3)))
 			return (error_exit(NULL, i, \
 			"Syntax Error, unexpected token\n", s));
 	}

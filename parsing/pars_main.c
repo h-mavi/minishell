@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/28 10:02:19 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:29:50 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	routine(int sig)
 	{
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		// rl_redisplay();
 	}
 }
 

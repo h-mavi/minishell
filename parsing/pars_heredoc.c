@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/28 10:02:35 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:58:57 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,14 @@ void	ft_openhd_str(char *str, int where)
 	tmp = NULL;
 	while (str[i] && i < where)
 	{
-		if (find_char(str, i) == HEREDOC)
+		if (find_char(str, i) == HEREDOC || find_char(str, i) == HEREDOC_2)
 		{
 			x = i;
-			while (str[x] != ' ')
+			while (str[x] != ' ' && str[x] != '"' && str[x] == '\'')
 				x++;
 			tmp = ft_substr(str, i, x - i);
+			if (tmp[0] == '"' || tmp[0] == '\'')
+				rm_spaces(tmp);
 			here_doc(tmp);
 			free(tmp);
 		}
