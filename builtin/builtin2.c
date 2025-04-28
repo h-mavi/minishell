@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:43:25 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/28 10:00:01 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/28 11:13:32 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_exit(t_token *tree, char **env, int *std)
 			{
 				ex = ft_atoi(tree->next->str);
 				if (ex > 256)
-					exit (ex % 256);
+					return (freemtr(env), free_lst(tree), exit(ex % 256));
 				return (freemtr(env), free_lst(tree), exit(ex));
 			}
 		}

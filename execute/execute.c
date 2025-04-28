@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/28 09:58:28 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/28 11:24:23 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,7 @@ void	exec_cmd(t_token *tree, char **env)
 	arg[0][2] == '\0')
 		exit_code(1000);
 	else if (arg[0][0] == '\0')
-	{
-		free(path);
 		write (2, "\"\"", 3);
-	}
 	else
 		write(2, arg[0], ft_strlen(arg[0]));
 	perror(" :command not found");
