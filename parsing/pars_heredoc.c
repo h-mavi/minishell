@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/28 12:13:24 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/28 15:51:52 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,26 @@ void	ft_openhd_str(char *str, int where)
 	int		x;
 	char	*tmp;
 
-	i = 0;
+	i = -1;
 	tmp = NULL;
-	if (find_char(str, where) != HEREDOC && find_char(str, where) != HEREDOC_2)
-		where -= 1;
-	while (str[i] && i < where)
+	if ((size_t)where == ft_strlen(str) - 1)
+		if (find_char(str, where - 1) != 0 && where > 0)
+			where -= 1;
+	while (str[++i] && i < where)
 	{
 		if (find_char(str, i) == HEREDOC || find_char(str, i) == HEREDOC_2)
 		{
-			x = i;
-			while (str[x] != ' ' && str[x] != '"' && str[x] == '\'')
+			x = i + 2;
+			while (str[x] != ' ' && str[x] != '"' && str[x] != '\'' && find_char(str, x) == 0)
 				x++;
+			if (x > where)
+				continue;
 			tmp = ft_substr(str, i, x - i);
 			if (tmp[0] == '"' || tmp[0] == '\'')
 				rm_spaces(tmp);
 			here_doc(tmp);
 			free(tmp);
 		}
-		i++;
 	}
 }
 
