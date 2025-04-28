@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 14:31:35 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/28 09:58:46 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,38 @@ void	other_command(t_token *tree, int *fd, char ***env, int *std)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (is_builtin(tree, env) != 1)
+		if (is_builtin(tree, env, std) != 1)
 			exec_cmd(tree, *env);
-		return (freemtr(*env), free_lst(tree), exit(0));
+		return (freemtr(*env), free_lst(tree), close(fd[0]), exit(0));
+	}
+	else
+	{
+		file_control(fd[0], 0);
+		dup2(std[1], 1);
 	}
 }
 
-void	last_command(int *std, t_token *tree, char ***env, int *ex)
+int	last_command(int *std, t_token *tree, char ***env, int *fd)
 {
 	int	pid;
 
-	*ex = 0;
 	dup2(std[1], 1);
 	if (redir_check(tree, 0, std, *env) == 1)
-		return ;
+		return (0);
 	tree = find_comand(tree);
 	if (tree == NULL)
-		return ;
-	if (is_builtin(tree, env) == 1)
-	{
-		*ex = 0;
-		return (reset_fd(std));
-	}
-	*ex = 53550;
+		return (0);
+	if (is_builtin(tree, env, std) == 1)
+		return (reset_fd(std), close(fd[0]), close(fd[1]), 0);
 	pid = fork();
 	if (pid == 0)
 		exec_cmd(tree, *env);
+	else
+	{
+		close(fd[0]);
+		close(fd[1]);
+	}
+	return (53550);
 }
 
 void	exit_child(int ex, int w)
@@ -93,8 +99,7 @@ void	for_fork(t_token *tree, char ***env, int *std)
 		if (++npipe < p)
 			other_command(tree, fd, env, std);
 		else
-			last_command(std, tree, env, &ex);
-		file_control(fd[0], 0);
+			ex = last_command(std, tree, env, fd);
 		tree = tree->next;
 		while (tree && tree->prev->type != PIPE)
 			tree = tree->next;

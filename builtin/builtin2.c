@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:43:25 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 14:24:04 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/28 10:00:01 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_all_digit(char *str)
 }
 
 //devo sempre tornare al nodo iniziale
-void	ft_exit(t_token *tree, char **env)
+void	ft_exit(t_token *tree, char **env, int *std)
 {
 	int	ex;
 
@@ -51,9 +51,7 @@ void	ft_exit(t_token *tree, char **env)
 			}
 		}
 	}
-	free_lst(tree);
-	freemtr(env);
-	exit(0);
+	return (free_lst(tree), freemtr(env), reset_fd(std), exit(0));
 }
 
 int	is_n(char *str, char c)

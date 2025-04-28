@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 16:01:45 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/28 09:58:28 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ char	**full_cmd(t_token *tree)
 }
 
 //controllo se il comando e' una builtin e nel caso eseguo
-int	is_builtin(t_token *tree, char ***env)
+int	is_builtin(t_token *tree, char ***env, int *std)
 {
 	if (ft_compare(tree->str, "env") == 0)
 		return (ft_env(tree, *env));
 	if (ft_compare(tree->str, "export") == 0)
 		return (ft_export(env, tree->next));
 	if (ft_compare(tree->str, "exit") == 0)
-		return (ft_exit(tree, *env), 1);
+		return (ft_exit(tree, *env, std), 1);
 	if (ft_compare(tree->str, "echo") == 0)
 		return (ft_echo(tree));
 	if (ft_compare(tree->str, "cd") == 0)
@@ -130,7 +130,7 @@ void	execute(t_token *tree, char ***env)
 	tree = find_comand(tree);
 	if (tree == NULL)
 		return (reset_fd(std));
-	if (is_builtin(tree, env) == 1)
+	if (is_builtin(tree, env, std) == 1)
 		return (reset_fd(std));
 	pid = fork();
 	if (pid == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 14:49:19 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/28 10:00:21 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		ft_cd(t_token *tree, char **env);
 //----------------------------------------------------------------------------
 //in builtin/builtin2.c
 
-void	ft_exit(t_token *tree, char **env);
+void	ft_exit(t_token *tree, char **env, int *std);
 int		ft_echo(t_token *tree);
 
 //----------------------------------------------------------------------------

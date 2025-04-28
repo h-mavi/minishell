@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/04/22 10:09:09 by mfanelli         ###   ########.fr        #
+#    Updated: 2025/04/28 09:12:19 by mbiagi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ ft_printf:
 exe:
 		make
 		make clean
-		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.supp ./$(NAME)
+		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.supp --track-fds=yes ./$(NAME)
 
 .PHONY: all clean fclean re libft gnl ft_printf exe
 .SILENT:
