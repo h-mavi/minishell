@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 10:56:18 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/28 10:03:01 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char		*ft_mycpy(char *str);
 void		here_doc(char *input);
 void		ft_openhd_ls(t_token *head, int where);
 void		ft_openhd_str(char *str, int where);
+int			is_all_whitespace(char *cmd);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_main.c (ft 5/5)

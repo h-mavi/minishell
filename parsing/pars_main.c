@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 17:48:17 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/28 10:02:19 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ void	routine(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+	}
+	if (sig == -2)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		// rl_redisplay();
 	}
 }
 
@@ -87,7 +93,6 @@ static int	parsing(char *pwd, char ***env_cpy)
 	cmd = readline(pwd);
 	head = NULL;
 	free(pwd);
-	add_history(cmd);
 	if (!cmd)
 	{
 		printf("exit\n");
@@ -96,6 +101,9 @@ static int	parsing(char *pwd, char ***env_cpy)
 	}
 	else if (cmd[0] == '\0')
 		return (free(cmd), routine(-1), 1);
+	else if (is_all_whitespace(cmd) == 0)
+		return (free(cmd), routine(-2), 1);
+	add_history(cmd);
 	head = token_inator(cmd, *env_cpy, head);
 	if (head == NULL)
 		return (1);

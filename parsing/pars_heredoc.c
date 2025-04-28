@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 10:42:38 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/28 10:02:35 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,3 +87,20 @@ void	ft_openhd_str(char *str, int where)
 	}
 }
 
+int is_all_whitespace(char *cmd)
+{
+	int		i;
+	size_t	x;
+
+	i = 0;
+	x = 0;
+	while (cmd[i] != '\0' && cmd[i] != '\n')
+	{
+		if(cmd[i] > 0 && cmd[i] < 33)
+			x++;
+		i++;
+	}
+	if (x == ft_strlen(cmd))
+		return (0);
+	return (1);
+}
