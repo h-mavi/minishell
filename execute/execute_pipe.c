@@ -62,13 +62,19 @@ static int	last_command(int *std, t_token *tree, char ***env, int *fd)
 	tree = find_comand(tree);
 	if (tree == NULL)
 		return (0);
-	if (ft_compare(tree->str, "exit") == 0)
-		return (0);
-	if (is_builtin(tree, env, std) == 1)
+	if (ft_compare(tree->str, "cd") == 0)
+	{
+		is_builtin(tree, env, std);
 		return (reset_fd(std), close(fd[0]), close(fd[1]), 0);
+	}
 	pid = fork();
 	if (pid == 0)
-		exec_cmd(tree, *env);
+	{
+		if (is_builtin(tree, env, std) != 1)
+			exec_cmd(tree, *env);
+		return (freemtr(*env), free_lst(tree), close(fd[1]), close(fd[0]), \
+		exit(0), 0);
+	}
 	else
 	{
 		close(fd[0]);
