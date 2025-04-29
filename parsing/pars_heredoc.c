@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/29 11:48:40 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:40:18 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	ft_openhd_str(char *str, int where)
 			while (str[x] != ' ' && find_char(str, x) == 0)
 				x++;
 			if (x > where)
-				continue;
+				continue ;
 			tmp = ft_substr(str, i, x - i);
 			if (find_char(str, i) == HEREDOC_2)
 				tmp = rm_app(tmp);
@@ -93,7 +93,7 @@ void	ft_openhd_str(char *str, int where)
 	}
 }
 
-int is_all_whitespace(char *cmd)
+int	is_all_whitespace(char *cmd)
 {
 	int		i;
 	size_t	x;
@@ -102,7 +102,7 @@ int is_all_whitespace(char *cmd)
 	x = 0;
 	while (cmd[i] != '\0' && cmd[i] != '\n')
 	{
-		if(cmd[i] > 0 && cmd[i] < 33)
+		if (cmd[i] > 0 && cmd[i] < 33)
 			x++;
 		i++;
 	}

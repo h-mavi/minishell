@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:21:35 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/29 12:33:13 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:42:54 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_append(char *s, int i, char thing)
 {
 	int	x;
-	int f;
+	int	f;
 
 	x = i - 1;
 	if (thing == 'a')
@@ -59,4 +59,11 @@ int	werami(char *s, int i, int a, int v)
 		(v == 1 && a == 0 && check_append(s, i, 'v') != 0))
 		return (1);
 	return (-1);
+}
+
+int	rm_dollar_if(char *s, int i)
+{
+	if (s[i] == '$' && werami(s, i + 1, 0, 0) == 0 && werami(s, i, 0, 0) == -1)
+		return (1);
+	return (0);
 }

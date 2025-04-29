@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/29 14:08:49 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:43:44 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,10 @@ int			is_all_whitespace(char *cmd);
 void		routine(int sig);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_more.c (ft 2/5)
+//in parsing/pars_more.c (ft 3/5)
 
 int			werami(char *s, int i, int a, int v);
+int			rm_dollar_if(char *s, int i);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_refine.c (ft 5/5)

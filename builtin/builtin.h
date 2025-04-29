@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/29 14:59:44 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:45:58 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 //in builtin/builtin_env_controls.c (ft 5/5)
 
 int		control_variable(char *var);
-int	    existing_variable(char *var, char **env);
+int		existing_variable(char *var, char **env);
 int		new_variable(char *var, char **env);
 char	*string_control(char *str);
 size_t	until(char *str);
