@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 10:37:41 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/29 14:58:29 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	num_argument(t_token *tree)
 	return (0);
 }
 
-void	change_dir(char **env, char *temp)
+static void	change_dir(char **env, char *temp)
 {
 	int		i;
 	char	*temp2;
@@ -62,7 +62,7 @@ void	change_dir(char **env, char *temp)
 	}
 }
 
-void	return_home(char **env)
+static void	return_home(char **env)
 {
 	int	i;
 

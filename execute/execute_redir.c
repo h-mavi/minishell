@@ -6,13 +6,13 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/29 12:26:36 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:03:27 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-char	*simple_refine(char *s, char **env)
+static char	*simple_refine(char *s, char **env)
 {
 	int	i;
 
@@ -31,14 +31,19 @@ char	*simple_refine(char *s, char **env)
 		}
 		if (werami(s, i, 0, 0) == 0 && werami(s, i + 1, 0, 0) == 1)
 		{
-			while (werami(s, ++i, 0, 0) != 0)
+			i++;
+			while (werami(s, i, 0, 0) != 0)
 			{
 				i = do_skip(s, i);
 				if (s[i] == '$' && s[0] == '<' && s[1] == '<')
 					i++;
 				if ((s[i] == '$' && werami(s, i, 0, 0) == 1 && \
 					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
+				{
 					s = esp_special_case(s, env, i);
+					i -= 1;
+				}
+				i++;
 			}
 		}
 		i = do_skip(s, i);

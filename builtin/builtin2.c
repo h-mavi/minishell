@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:43:25 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/28 11:13:32 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/29 14:59:31 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	is_all_digit(char *str)
+static int	is_all_digit(char *str)
 {
 	int	i;
 
@@ -54,7 +54,7 @@ void	ft_exit(t_token *tree, char **env, int *std)
 	return (free_lst(tree), freemtr(env), reset_fd(std), exit(0));
 }
 
-int	is_n(char *str, char c)
+static int	is_n(char *str, char c)
 {
 	int		i;
 	char	*cmp;
@@ -71,7 +71,7 @@ int	is_n(char *str, char c)
 	return (free(cmp), 1);
 }
 
-void	print_option(t_token *tree)
+static void	print_option(t_token *tree)
 {
 	int	i;
 

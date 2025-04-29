@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:32:42 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/28 10:00:21 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/29 14:59:44 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@
 # define HEREDOC_2 8
 
 //----------------------------------------------------------------------------
-//in builtin/builtin_env_controls.c
+//in builtin/builtin_env_controls.c (ft 5/5)
 
-int	    existing_variable(char *var, char **env);
 int		control_variable(char *var);
+int	    existing_variable(char *var, char **env);
 int		new_variable(char *var, char **env);
 char	*string_control(char *str);
 size_t	until(char *str);
 
 //----------------------------------------------------------------------------
-//in builtin/builtin_env_utils.c
+//in builtin/builtin_env_utils.c (ft 4/5)
 
 char	**unset_param(t_token *tree, char **env);
 void	print_export(char **env);
@@ -70,21 +70,21 @@ char	**change_param(t_token *tree, char **env);
 char	**export_param(t_token *tree, char **env);
 
 //----------------------------------------------------------------------------
-//in builtin/builtin_env.c
+//in builtin/builtin_env.c (ft 3/5)
 
 int		ft_env(t_token *tree, char **env);
 int		ft_export(char ***env, t_token *tree);
 int		ft_unset(t_token *tree, char ***env);
 
 //----------------------------------------------------------------------------
-//in builtin/builtin.c
+//in builtin/builtin.c (ft 5/5)
 
 int		ft_pwd(void);
 int		num_argument(t_token *tree);
 int		ft_cd(t_token *tree, char **env);
 
 //----------------------------------------------------------------------------
-//in builtin/builtin2.c
+//in builtin/builtin2.c (ft 5/5)
 
 void	ft_exit(t_token *tree, char **env, int *std);
 int		ft_echo(t_token *tree);

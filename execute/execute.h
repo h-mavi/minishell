@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/28 09:57:40 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/29 15:04:14 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,18 @@
 # define HEREDOC_2 8
 
 //----------------------------------------------------------------------------
-//in execute/execute_pipe.c
+//in execute/execute_pipe.c (ft 5/5)
 
 void	for_fork(t_token *tree, char ***env, int *std);
 
 //----------------------------------------------------------------------------
-//in execute/execute_redir.c
+//in execute/execute_redir.c (ft 3/5)
 
 void	heredoc(t_token *tree, int *std, char **env);
 int		redir_check(t_token *tree, int n, int *std, char **env);
 
 //----------------------------------------------------------------------------
-//in execute/execute_utils.c
+//in execute/execute_utils.c (ft 5/5)
 
 void	exit_code(int n);
 t_token	*find_comand(t_token *tree);
@@ -74,7 +74,7 @@ int		pipe_check(t_token *tree);
 int		file_control(int file, int std);
 
 //----------------------------------------------------------------------------
-//in execute/execute_utils2.c
+//in execute/execute_utils2.c (ft 5/5)
 
 int		ctrl_str(char *str, char *limiter);
 void	freemtr(char **mtr);
@@ -83,7 +83,7 @@ int		ft_compare(char *s1, char *s2);
 int		ft_compare2(char *s1, char *s2);
 
 //----------------------------------------------------------------------------
-//in execute/execute.c
+//in execute/execute.c (ft 5/5)
 
 int		is_builtin(t_token *tree, char ***env, int *std);
 void	exec_cmd(t_token *tree, char **env);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/28 12:08:29 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/29 15:02:54 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-int	pipe_number(t_token *tree)
+static int	pipe_number(t_token *tree)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	pipe_number(t_token *tree)
 	return (i);
 }
 
-void	other_command(t_token *tree, int *fd, char ***env, int *std)
+static void	other_command(t_token *tree, int *fd, char ***env, int *std)
 {
 	int	pid;
 
@@ -52,7 +52,7 @@ void	other_command(t_token *tree, int *fd, char ***env, int *std)
 	}
 }
 
-int	last_command(int *std, t_token *tree, char ***env, int *fd)
+static int	last_command(int *std, t_token *tree, char ***env, int *fd)
 {
 	int	pid;
 
@@ -75,7 +75,7 @@ int	last_command(int *std, t_token *tree, char ***env, int *fd)
 	return (53550);
 }
 
-void	exit_child(int ex, int w)
+static void	exit_child(int ex, int w)
 {
 	if (ex == 0)
 		return ;

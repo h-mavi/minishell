@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/29 12:24:40 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:53:59 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,19 @@ char	*refine(char *s, char **env)
 				;
 		if (s[i] == '"' && werami(s, i + 1, 0, 0) == 1)
 		{
-			while (s[++i] != '"')
+			i++;
+			while (s[i] != '"')
 			{
 				i = do_skip(s, i);
 				if (s[i] == '$' && s[0] == '<' && s[1] == '<')
 					i++;
 				if ((s[i] == '$' && werami(s, i, 0, 0) == 1 && \
 					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
+				{
 					s = esp_special_case(s, env, i);
+					i -= 1;
+				}
+				i++;
 			}
 		}
 		i = do_skip(s, i);

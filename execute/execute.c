@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/28 11:24:23 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/29 15:04:45 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
 //funzione che trova il path corretto del cmd, se non lo trova retituisce NULL
-char	*parse_cmd(char *argv, char **env)
+static char	*parse_cmd(char *argv, char **env)
 {
 	int		i;
 	char	*command;
@@ -41,7 +41,7 @@ char	*parse_cmd(char *argv, char **env)
 }
 
 //crea una matrice con cmd e flag
-char	**full_cmd(t_token *tree)
+static char	**full_cmd(t_token *tree)
 {
 	t_token	*head;
 	char	**mtr;

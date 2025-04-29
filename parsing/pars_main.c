@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/28 11:29:50 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:17:29 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ static t_token	*token_inator(char *cmd, char **env, t_token *head)
 	if (!str)
 		return (NULL);
 	compile_inator(str, env, &head);
+	if (!head)
+		return (free_arr(str), head);
 	set_data(NULL, NULL, 0);
 	if (check_error_lst(head) == 0)
 		return (free_arr(str), NULL);
