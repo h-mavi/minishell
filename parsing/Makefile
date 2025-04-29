@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
+#    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/04/28 14:34:58 by mbiagi           ###   ########.fr        #
+#    Updated: 2025/04/29 12:27:10 by mfanelli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@
 NAME = minishell_pars
 
 SOURCES = pars_main.c parsing.c pars_split.c pars_utils.c pars_set_data.c \
-pars_refine.c pars_rm.c pars_heredoc.c pars_extra.c ../execute/execute.c ../execute/execute_utils.c \
+pars_refine.c pars_rm.c pars_heredoc.c pars_extra.c pars_more.c \
+../execute/execute.c ../execute/execute_utils.c \
 ../execute/execute_utils2.c ../execute/execute_pipe.c \
 ../execute/execute_redir.c ../builtin/builtin_env_controls.c ../builtin/builtin.c \
 ../builtin/builtin_env.c ../builtin/builtin_env_utils.c ../builtin/builtin2.c

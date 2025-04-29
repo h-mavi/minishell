@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:53:52 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 17:40:04 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:25:41 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static int	realigning_i(char *s, int i, int y)
 {
 	if (s[i] == 34 || s[i] == 39)
 	{
-		while (s[y] != '\0' && ((werami(s, i) != -1) || \
-		(werami(s, i) == -1 && s[i] != ' ')))
+		while (s[y] != '\0' && ((werami(s, i, 0, 0) != -1) || \
+		(werami(s, i, 0, 0) == -1 && s[i] != ' ')))
 			i++;
 	}
 	else
 	{
 		while (s[y] != '\0' && s[i++] != ' ')
 			if (s[i] == 34 || s[i] == 39)
-				while (werami(s, i) != -1 && werami(s, y) != -2)
+				while (werami(s, i, 0, 0) != -1 && werami(s, y, 0, 0) != -2)
 					i++;
 	}
 	return (i);

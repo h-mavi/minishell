@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/28 10:03:01 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:33:27 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int			count_len_wrd(char *s, int *y, int conta);
 char		*ft_mycpy(char *str);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_heredoc.c (ft 4/5)
+//in parsing/pars_heredoc.c (ft 5/5)
 
 void		here_doc(char *input);
 void		ft_openhd_ls(t_token *head, int where);
@@ -72,6 +72,11 @@ int			is_all_whitespace(char *cmd);
 //in parsing/pars_main.c (ft 5/5)
 
 void		routine(int sig);
+
+//----------------------------------------------------------------------------
+//in parsing/pars_more.c (ft 2/5)
+
+int			werami(char *s, int i, int a, int v);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_refine.c (ft 5/5)
@@ -104,10 +109,9 @@ char		**ft_env_cpy(char **env);
 char		**custom_split(char *s);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_utils.c (ft 5/5)
+//in parsing/pars_utils.c (ft 4/5)
 
 void		free_arr(char **arr);
-int			werami(char *s, int index);
 int			find_char(char *s, int i);
 int			find_dollar(char *s, int i);
 int			check_error(char *s);

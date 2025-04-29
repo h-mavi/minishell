@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/28 11:22:40 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:24:40 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ char	*here_glued(char *s)
 	x = -1;
 	while (s[++x])
 		if ((((x != 0 && s[x] != ' ' && find_char(s, x) == 0 && \
-		werami(s, x) == -1) || \
+		werami(s, x, 0, 0) == -1) || \
 		(s[x] == 39 || s[x] == 34)) && find_char(s, x + 1) != 0 && \
 		find_char(s, x + 1) != 3) || \
-		(x != 0 && find_char(s, x) == 3 && werami(s, x) == -1 && \
+		(x != 0 && find_char(s, x) == 3 && werami(s, x, 0, 0) == -1 && \
 		((s[x - 1] != ' ') || \
 		(s[x + 1] != ' ' && s[x + 1] != '\0')) && x != 0))
 			s = divide(s, x);
@@ -117,28 +117,28 @@ char	*refine(char *s, char **env)
 			s = ft_mycpy(s);
 		if (i > 1 && s[i] == '$' && s[i - 1] == '<' && s[i - 2] == '<')
 			i++;
-		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
+		if (s[i] == '$' && werami(s, i, 0, 0) == -1 && werami(s, i + 1, 0, 0) == -1 && \
 			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
 		{
 			s = esp_special_case(s, env, i);
 			continue ;
 		}
-		else if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
+		else if (s[i] == '$' && werami(s, i + 1, 0, 0) == 0 && werami(s, i, 0, 0) == -1)
 		{
 			s = rm_dollar(s);
 			continue ;
 		}
-		if (s[i] == '\'' && werami(s, i + 1) != -1)
+		if (s[i] == '\'' && werami(s, i + 1, 0, 0) != -1)
 			while (s[++i] != '\'')
 				;
-		if (s[i] == '"' && werami(s, i + 1) == 1)
+		if (s[i] == '"' && werami(s, i + 1, 0, 0) == 1)
 		{
 			while (s[++i] != '"')
 			{
 				i = do_skip(s, i);
 				if (s[i] == '$' && s[0] == '<' && s[1] == '<')
 					i++;
-				if ((s[i] == '$' && werami(s, i) == 1 && \
+				if ((s[i] == '$' && werami(s, i, 0, 0) == 1 && \
 					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
 					s = esp_special_case(s, env, i);
 			}

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:40:15 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/23 10:51:01 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:24:05 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	count_len_wrd(char *s, int *y, int conta)
 {
 	if (s[*y] == 34 || s[*y] == 39)
 	{
-		while (s[*y] != '\0' && ((werami(s, *y) != -1) || \
-		(werami(s, *y) == -1 && s[*y] != ' ')))
+		while (s[*y] != '\0' && ((werami(s, *y, 0, 0) != -1) || \
+		(werami(s, *y, 0, 0) == -1 && s[*y] != ' ')))
 		{
 			(*y)++;
 			conta++;
@@ -81,7 +81,7 @@ int	count_len_wrd(char *s, int *y, int conta)
 			conta++;
 			if (s[*y] == 34 || s[*y] == 39)
 			{
-				while (werami(s, *y) != -1 && werami(s, *y) != -2)
+				while (werami(s, *y, 0, 0) != -1 && werami(s, *y, 0, 0) != -2)
 				{
 					(*y)++;
 					conta++;

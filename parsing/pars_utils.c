@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/28 15:56:50 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:33:08 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,40 +21,6 @@ void	free_arr(char **arr)
 	while (arr[++i])
 		free(arr[i]);
 	free(arr);
-}
-
-/* Indica se il carattere nella posizione 'index' nella stringa s e'
-dentro o fuori gi apici/ virgolette. Se returna 0 s[index] e'
-uguale ad un'apice/virgoletta, se returna 1 s[index] e'
-negli apici, se returna -1 e' fuori.
-Se 's' o 's[index]' sono uguali a NULL returnano -2.*/
-int	werami(char *s, int i)
-{
-	int	x;
-	int	a;
-	int	v;
-
-	x = -1;
-	a = 0;
-	v = 0;
-	if (s == NULL || s[i] == '\0')
-		return (-2);
-	while (s[++x] != '\0')
-	{
-		if (s[x] == '"' && a == 0 && v == 0)
-			v = 1;
-		else if (s[x] == '"' && a == 0 && v == 1)
-			v = 0;
-		if (s[x] == '\'' && a == 0 && v == 0)
-			a = 1;
-		else if (s[x] == '\'' && a == 1 && v == 0)
-			a = 0;
-		if (((s[x] == '\'' && v == 0) || (s[x] == '"' && a == 0)) && x == i)
-			return (0);
-		if ((x == i && a == 1) || (x == i && v == 1))
-			return (1);
-	}
-	return (-1);
 }
 
 /* Riconosce se il carattere s[i] e' un carattere speciale:
@@ -74,10 +40,10 @@ int	find_char(char *s, int i)
 	if (s[i] == '>' && s[i + 1] == '>')
 		return (6);
 	if (s[i] == '<' && s[i + 1] == '<' && \
-		werami(s, i + 2) != 0)
+		s[i + 2] != '<' && werami(s, i + 2, 0, 0) != 0)
 		return (7);
 	if (s[i] == '<' && s[i + 1] == '<' && \
-		werami(s, i + 2) == 0)
+		s[i + 2] != '<' && werami(s, i + 2, 0, 0) == 0)
 		return (8);
 	return (0);
 }
@@ -113,10 +79,10 @@ int	check_error(char *s)
 	i = -1;
 	while (s[++i])
 	{
-		if (s[i] == '|' && s[i + 1] == '|' && werami(s, i) == -1)
+		if (s[i] == '|' && s[i + 1] == '|' && werami(s, i, 0, 0) == -1)
 			return (error_exit(NULL, i, \
 			"Syntax Error, unexpected token '|'\n", s), 0);
-		if (s[i] == '<' && werami(s, i) == -1 && ((s[i + 1] == '|') || \
+		if (s[i] == '<' && werami(s, i, 0, 0) == -1 && ((s[i + 1] == '|') || \
 			(s[i + 1] == ';') || (s[i + 1] == '#') || (s[i + 1] == '<' && \
 			((s[i + 2] == '<') || (s[i + 2] == '>'))) || (s[i + 1] == '>') || \
 			(s[i + 1] == '>' && s[i + 2] == '>') || \
@@ -124,7 +90,7 @@ int	check_error(char *s)
 			find_char(s, i + 2) != 0)))
 			return (error_exit(NULL, i, \
 			"Syntax Error, unexpected token\n", s), 0);
-		if (s[i] == '>' && werami(s, i) == -1 && \
+		if (s[i] == '>' && werami(s, i, 0, 0) == -1 && \
 			((s[i + 1] == '|') || (s[i + 1] == ';') || (s[i + 1] == '#') || \
 			(s[i + 1] == '<') || (s[i + 1] == '>' && s[i + 2] == '>') || \
 			(ft_isdigit(s[i + 1]) != 0 && find_char(s, i + 2) != 3 && \

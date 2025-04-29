@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 11:13:03 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/29 12:26:09 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*error_exit(t_token *head, int syn, char *str, char *input)
 se ci sono doppi dollari da saltare. */
 int	do_skip(char *s, int i)
 {
-	if (s[i] == '$' && s[i + 1] == '$' && werami(s, i + 2) != 0 && \
+	if (s[i] == '$' && s[i + 1] == '$' && werami(s, i + 2, 0, 0) != 0 && \
 		s[i + 2] != '\0')
 		return (i + 2);
 	return (i);

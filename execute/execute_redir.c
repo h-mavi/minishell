@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 16:05:51 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/29 12:26:36 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@ char	*simple_refine(char *s, char **env)
 	while (s[++i])
 	{
 		i = do_skip(s, i);
-		if (s[i] == '$' && werami(s, i) == -1 && werami(s, i + 1) == -1 && \
+		if (s[i] == '$' && werami(s, i, 0, 0) == -1 && werami(s, i + 1, 0, 0) == -1 && \
 			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
 			s = esp_special_case(s, env, i);
-		else if (s[i] == '$' && werami(s, i + 1) == 0 && werami(s, i) == -1)
+		else if (s[i] == '$' && werami(s, i + 1, 0, 0) == 0 && werami(s, i, 0, 0) == -1)
 		{
 			s = rm_dollar(s);
 			if (i > 0)
 				i -= 1;
 		}
-		if (werami(s, i) == 0 && werami(s, i + 1) == 1)
+		if (werami(s, i, 0, 0) == 0 && werami(s, i + 1, 0, 0) == 1)
 		{
-			while (werami(s, ++i) != 0)
+			while (werami(s, ++i, 0, 0) != 0)
 			{
 				i = do_skip(s, i);
 				if (s[i] == '$' && s[0] == '<' && s[1] == '<')
 					i++;
-				if ((s[i] == '$' && werami(s, i) == 1 && \
+				if ((s[i] == '$' && werami(s, i, 0, 0) == 1 && \
 					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
 					s = esp_special_case(s, env, i);
 			}
