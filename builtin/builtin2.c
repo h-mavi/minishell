@@ -20,7 +20,10 @@ static int	is_all_digit(char *str)
 	while (str[i])
 	{
 		if (ft_isdigit(str[i]) == 0)
-			return (0);
+		{
+			if (i != 0 && str[i] == '-')
+				return (0);
+		}
 		i++;
 	}
 	return (1);
