@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pars_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/30 09:48:13 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/04/30 11:37:36 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-/* gestisce i segnali con SIGINT (^c) */
+/* gestisce i segnali con SIGINT (^c), enter vuoto
+e enter con solo spazi/tab */
 void	routine(int sig)
 {
 	if (sig == SIGINT)
