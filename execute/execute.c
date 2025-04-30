@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/29 15:04:45 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/30 09:00:43 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	is_builtin(t_token *tree, char ***env, int *std)
 	if (ft_compare(tree->str, "export") == 0)
 		return (ft_export(env, tree->next));
 	if (ft_compare(tree->str, "exit") == 0)
-		return (ft_exit(tree, *env, std), 1);
+		return (ft_printf("exit\n"), ft_exit(tree, *env, std), 1);
 	if (ft_compare(tree->str, "echo") == 0)
 		return (ft_echo(tree));
 	if (ft_compare(tree->str, "cd") == 0)

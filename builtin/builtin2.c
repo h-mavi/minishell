@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:43:25 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/29 14:59:31 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/30 09:08:02 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	ft_exit(t_token *tree, char **env, int *std)
 {
 	int	ex;
 
-	ft_printf("exit\n");
 	if (tree->next)
 	{
 		if (tree->next->type == FLAG)
@@ -50,7 +49,7 @@ void	ft_exit(t_token *tree, char **env, int *std)
 				ex = ft_atoi(tree->next->str);
 				if (ex > 256)
 					return (freemtr(env), free_lst(tree), exit(ex % 256));
-				return (freemtr(env), free_lst(tree), exit(ex));
+				return (freemtr(env), free_lst(tree), reset_fd(std), exit(ex));
 			}
 		}
 	}
