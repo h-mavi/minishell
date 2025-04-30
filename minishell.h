@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:18:52 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 14:49:23 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/30 09:42:20 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-// # include "./get_next_line/get_next_line.h"
+# include "./execute/execute.h"
+# include "./builtin/builtin.h"
+# include "./parsing/parsing.h"
+# include "./parsing/token.h"
 # include "./libft/libft.h"
 
 # include <stdio.h>
@@ -48,16 +51,5 @@
 # define HEREDOC 7
 // << "$USER"
 # define HEREDOC_2 8
-
-typedef struct s_token
-{
-	int				type;
-	char			*str;
-	int				id;
-	struct s_token	*prev;
-	struct s_token	*next;
-}	t_token;
-
-void	free_lst(t_token *head);
 
 #endif

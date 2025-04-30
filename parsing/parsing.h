@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/29 15:43:44 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/30 09:48:09 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int			is_all_whitespace(char *cmd);
 //in parsing/pars_main.c (ft 5/5)
 
 void		routine(int sig);
+int		parsing(char *pwd, char ***env_cpy);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_more.c (ft 3/5)

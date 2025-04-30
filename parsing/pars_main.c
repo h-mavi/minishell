@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/29 14:17:29 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/04/30 09:48:13 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static t_token	*token_inator(char *cmd, char **env, t_token *head)
 }
 
 /* Registra l'history, gestisce ^D e chiama token_inator*/
-static int	parsing(char *pwd, char ***env_cpy)
+int	parsing(char *pwd, char ***env_cpy)
 {
 	char	*cmd;
 	t_token	*head;
@@ -113,27 +113,4 @@ static int	parsing(char *pwd, char ***env_cpy)
 	if (head != NULL)
 		free_lst(head);
 	return (1);
-}
-
-int	main(int argc, char *argv[], char **env)
-{
-	char	*temp;
-	char	*pwd;
-	char	**env_cpy;
-
-	(void)argc;
-	(void)argv;
-	signal(SIGINT, routine);
-	signal(SIGQUIT, SIG_IGN);
-	env_cpy = ft_env_cpy(env);
-	while (1)
-	{
-		temp = getcwd(NULL, 0);
-		pwd = ft_strjoin(temp, "$ ");
-		free(temp);
-		if (parsing(pwd, &env_cpy) == 0)
-			break ;
-	}
-	free_arr(env_cpy);
-	return (0);
 }
