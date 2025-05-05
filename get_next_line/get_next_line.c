@@ -3,138 +3,150 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/17 09:15:14 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/02/24 18:03:14 by mbiagi           ###   ########.fr       */
+/*   Created: 2024/12/09 11:48:36 by mfanelli          #+#    #+#             */
+/*   Updated: 2025/05/05 14:09:44 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strdel(char *str, char *src)
+char	*ft_copy(char *bois)
 {
-	char	*new_str;
-	int		len;
-	int		len_str;
+	char	*str;
+	int		y;
 	int		x;
 
-	x = 0;
-	len_str = ft_strlen(str);
-	while ((str[x] == src[x]) && str[x] && src[x])
-		x++;
-	if (x == (int)ft_strlen(str))
-	{
-		free(str);
-		return ((char *) ft_calloc(1, 1));
-	}
-	len = ft_strlen(str) - x;
-	new_str = ft_calloc(len + 1, 1);
-	new_str[len] = str[len_str];
-	while (--len >= 0)
-		new_str[len] = str[--len_str];
-	free(str);
-	return (new_str);
-}
-
-char	*ft_read(char *buffer, int fd)
-{
-	char	*comp;
-	int		x;
-
-	comp = ft_calloc(1, 1);
-	*comp = '\0';
-	x = read(fd, buffer, BUFFER_SIZE);
-	if (x == -1)
-	{
-		if (comp)
-			free(comp);
+	y = -1;
+	x = ft_strlen_gnl(bois) + 1;
+	str = ft_calloc_gnl((x), sizeof(char));
+	if (str == NULL)
 		return (NULL);
-	}
-	while ((x > 0) && (ft_strchr2(buffer, '\n') == 0))
-	{
-		buffer[x] = '\0';
-		comp = ft_strjoin3(comp, buffer);
-		x = read(fd, buffer, BUFFER_SIZE);
-	}
-	if (x != 0)
-	{
-		buffer[x] = '\0';
-		comp = ft_strjoin3(comp, buffer);
-	}
-	free(buffer);
-	return (comp);
-}
-
-char	*ft_cpy(char *str, char **plus, char *buffer)
-{
-	int	i;
-
-	i = 0;
-	i = ft_strchr2(buffer, '\n');
-	if (i == 0)
-		i = ft_strlen(buffer);
-	if (ft_strchr2(str, '\n') == 0)
-	{
-		str = ft_strjoin2(str, buffer);
-		*plus = ft_strjoin3(*plus, &buffer[i]);
-	}
-	else
-		*plus = ft_strjoin3(*plus, buffer);
-	if (str[0] == '\0')
-	{
-		free(str);
-		free(*plus);
-		*plus = NULL;
-		free(buffer);
-		return (NULL);
-	}
-	free(buffer);
+	while (bois[++y] != '\0')
+		str[y] = bois[y];
+	str[y] = '\0';
 	return (str);
+}
+
+char	*ft_backup(char *next, char *buff)
+{
+	char	*str;
+	int		x;
+	int		y;
+
+	if (next == NULL)
+		return (ft_copy(buff));
+	str = ft_calloc_gnl((ft_strlen_gnl(next) + ft_strlen_gnl(buff) + 1), \
+	sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	x = -1;
+	y = 0;
+	while (next[++x] != '\0')
+		str[x] = next[x];
+	while (buff[y] != '\0')
+		str[x++] = buff[y++];
+	str[x] = '\0';
+	free (next);
+	return (str);
+}
+
+char	*ft_prep(char *next)
+{
+	char	*str;
+	int		x;
+	int		y;
+
+	if (next == NULL)
+		return (NULL);
+	x = 0;
+	y = ft_strlen_gnl(next);
+	while (next[x] != '\n' && (next[x]))
+		x++;
+	if (next[x] == '\0')
+	{
+		free (next);
+		return (NULL);
+	}
+	str = ft_calloc_gnl((y - x + 2), sizeof(char));
+	if (!str)
+		return (NULL);
+	y = 0;
+	while (next[x + 1] != '\0')
+		str[y++] = next[(x++) + 1];
+	str[y + 1] = '\0';
+	free (next);
+	return (str);
+}
+
+char	*ft_read(char *next, char *buff, int fd)
+{
+	int	check;
+
+	check = 1;
+	while (check > 0)
+	{
+		check = read(fd, buff, BUFFER_SIZE);
+		if (check == -1)
+		{
+			if (next != NULL)
+				free (next);
+			return (NULL);
+		}
+		if (check == 0)
+			break ;
+		buff[check] = '\0';
+		next = ft_backup(next, buff);
+		if (ft_strchr_gnl(buff, '\n'))
+			break ;
+	}
+	return (next);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*plus;
-	char		*str;
-	char		*buffer;
+	char		*buff;
+	char		*end;
+	static char	*next = NULL;
 
-	str = ft_calloc(1, 1);
+	buff = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	if (plus != NULL)
 	{
-		str = ft_strjoin2(str, plus);
-		plus = ft_strdel(plus, str);
-	}
-	else
-		plus = ft_calloc(1, 1);
-	buffer = ft_calloc(BUFFER_SIZE + 1, 1);
-	buffer = ft_read(buffer, fd);
-	if (buffer == NULL)
+		if (next != NULL)
+			free (next);
 		return (NULL);
-	str = ft_cpy(str, &plus, buffer);
-	return (str);
+	}
+	end = NULL;
+	buff = ft_calloc_gnl((BUFFER_SIZE + 1), sizeof(char));
+	next = ft_read(next, buff, fd);
+	free (buff);
+	buff = NULL;
+	end = ft_substr_gnl(next, 0, '\n');
+	next = ft_prep(next);
+	return (end);
 }
-/* 
-int	main()
-{
-	int		fd;
-	char	*f;
-	int		x;
 
-	x = 1;
-	fd = open("map.ber", O_RDONLY, 777);
-	f = get_next_line(fd);
-	while (f != NULL)
+/* int main(void)
+{
+	int fd;
+	int i;
+
+	i = 0;
+	fd = open("never_gona_give_u_up", O_RDONLY);
+	if (fd < 0)
 	{
-		x++;
-		printf("%s", f);
-		free(f);
-		f = get_next_line(fd);
+		close(fd);
+		return (0);
 	}
-	printf("%s", f);
-	free(f);
+		char *s = get_next_line(fd);
+	while (s != NULL)
+	{
+		printf("%s", s);
+		i++;
+		free(s);
+		s = get_next_line(fd);
+	}
 	close(fd);
-	return (0);
+	return 0;
 } */

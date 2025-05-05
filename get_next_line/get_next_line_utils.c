@@ -3,102 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 14:15:40 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/03/28 12:18:00 by mbiagi           ###   ########.fr       */
+/*   Created: 2024/12/03 14:34:24 by mfanelli          #+#    #+#             */
+/*   Updated: 2025/05/05 14:08:30 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// void	*ft_calloc(size_t nmemb, size_t size)
-// {
-// 	size_t	i;
-// 	size_t	max;
-// 	void	*ptr;
-// 	char	*str;
-
-// 	i = 0;
-// 	max = nmemb * size;
-// 	if ((nmemb == 0) || (size == 0) || (max / nmemb != size))
-// 		return (malloc(0));
-// 	ptr = malloc(max);
-// 	if (ptr == NULL)
-// 		return (NULL);
-// 	str = (char *)ptr;
-// 	while (i < max)
-// 	{
-// 		str[i] = 0;
-// 		i++;
-// 	}
-// 	return (ptr);
-// }
-
-char	*ft_strjoin3(char *s1, char const *s2)
+size_t	ft_strlen_gnl(const char *str)
 {
-	int		len_s1;
-	int		len_s2;
-	char	*str;
-
-	len_s2 = 0;
-	if (!s1 || !s2)
-	{
-		if (s1)
-			free(s1);
-		return (NULL);
-	}
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	str = ft_calloc(len_s1 + len_s2 + 1, sizeof(char));
-	if (len_s2 != 0)
-		str[len_s1 + len_s2] = s2[len_s2];
-	while (--len_s2 >= 0)
-		str[len_s1 + len_s2] = s2[len_s2];
-	while (--len_s1 >= 0)
-		str[len_s1] = s1[len_s1];
-	free(s1);
-	return (str);
-}
-
-int	ft_strchr2(const char *s, int c)
-{
-	int				x;
-	unsigned char	a;
-
-	x = 0;
-	a = (unsigned char) c;
-	while ((s[x] != '\0') && (s[x] != a))
-		x++;
-	if ((s[x] == '\0') && (a != '\0'))
-		return (0);
-	return (x + 1);
-}
-
-char	*ft_strjoin2(char *s1, char *s2)
-{
-	int		len_s1;
-	int		len_s2;
-	char	*str;
-	int		i;
-	int		j;
+	size_t	i;
 
 	i = 0;
-	j = 0;
-	len_s2 = 0;
-	len_s1 = ft_strlen(s1);
-	while (s2[len_s2] && s2[len_s2] != '\n')
-		len_s2++;
-	if (s2[len_s2] == '\n')
-		len_s2++;
-	str = ft_calloc(len_s1 + len_s2 + 1, sizeof(char));
-	while (i < len_s1)
-	{
-		str[i] = s1[i];
+	while (str[i])
 		i++;
-	}
-	while (j < len_s2)
-		str[i++] = s2[j++];
-	free(s1);
+	return (i);
+}
+
+char	*ft_strchr_gnl(const char *str, int c)
+{
+	int		i;
+
+	i = -1;
+	while (str[++i])
+		if (str[i] == (char)c)
+			return ((char *)str + i);
+	if (str[i] == (char)c)
+		return ((char *)str + i);
+	return (NULL);
+}
+
+char	*ft_substr_gnl(char const *s, unsigned int start, char stop_char)
+{
+	char	*str;
+	size_t	i;
+	size_t	len;
+
+	if (s == NULL || s[0] == '\0')
+		return (NULL);
+	len = 0;
+	while (s[len] != stop_char && s[len] != '\0')
+		len++;
+	str = (char *)ft_calloc_gnl(((len - start) + 2), sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s && s[start] != stop_char && s[start] != '\0')
+		str[i++] = s[start++];
+	if (s && s[start] == stop_char)
+		str[i++] = '\n';
+	str[i] = '\0';
 	return (str);
+}
+
+void	*ft_calloc_gnl(size_t nmemb, size_t size)
+{
+	void	*str;
+
+	str = malloc(nmemb * size);
+	if (!str)
+		return (NULL);
+	ft_bzero_gnl(str, size * nmemb);
+	return (str);
+}
+
+void	*ft_bzero_gnl(void *buffer, size_t count)
+{
+	char	*str;
+	size_t	i;
+
+	if (buffer == NULL)
+		return (NULL);
+	str = (char *)buffer;
+	i = 0;
+	while (i < count)
+		str[i++] = 0;
+	return (buffer);
 }

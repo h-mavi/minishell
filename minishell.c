@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:14:58 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/30 09:42:26 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/05 11:55:19 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int sigal = 0;
 
 int	main(int argc, char *argv[], char **env)
 {
@@ -18,6 +20,7 @@ int	main(int argc, char *argv[], char **env)
 	char	*pwd;
 	char	**env_cpy;
 
+	
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, routine);
@@ -30,6 +33,7 @@ int	main(int argc, char *argv[], char **env)
 		free(temp);
 		if (parsing(pwd, &env_cpy) == 0)
 			break ;
+		signal(SIGINT, routine);
 	}
 	free_arr(env_cpy);
 	return (0);

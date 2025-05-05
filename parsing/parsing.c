@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:21 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/29 12:26:09 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:12:42 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,26 +81,6 @@ void	free_lst(t_token *head)
 	}
 	free((char *)(*head).str);
 	free(head);
-}
-
-/* Funzione da chiamare in caso di errore! Libera la lista head e
-la stringa input e controlla se ci sono heredoc tramite syn.
-Se syn != -1 allora gli heredoc sono da aprire (in caso
-di errore di sintassi). */
-char	*error_exit(t_token *head, int syn, char *str, char *input)
-{
-	printf("%s", str);
-	if (syn != -1)
-		exit_code(2);
-	if (syn != -1 && head != NULL && input == NULL)
-		ft_openhd_ls(head, syn);
-	else if (syn != -1 && head == NULL && input != NULL)
-		ft_openhd_str(input, syn);
-	if (input != NULL)
-		free(input);
-	if (head != NULL)
-		free_lst(head);
-	return (NULL);
 }
 
 /* Funzione che serve per limitare le linee, chiamata da refine, controlla

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:01:48 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 09:48:34 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 13:47:47 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	ctrl_str(char *str, char *limiter)
 {
 	if (str == NULL)
-		return (1);
+		return (write(0, "\n", 2), 1);
 	if ((ft_strncmp(str, limiter, ft_strlen(limiter)) == 0) && \
 	str[ft_strlen(limiter)] == '\n')
 		return (1);

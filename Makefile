@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
+#    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/04/30 09:52:55 by mbiagi           ###   ########.fr        #
+#    Updated: 2025/05/05 11:15:47 by mfanelli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ execute/execute_utils.c execute/execute_utils2.c execute/execute.c \
 parsing/pars_extra.c parsing/pars_heredoc.c parsing/pars_main.c \
 parsing/pars_more.c parsing/pars_refine.c parsing/pars_rm.c \
 parsing/pars_set_data.c parsing/pars_split.c parsing/pars_utils.c \
-parsing/parsing.c
+parsing/parsing.c parsing/heredoc_sig.c
 OBJ = $(SOURCES:.c=.o)
 
 CC = cc

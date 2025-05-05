@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/30 09:48:09 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/05 11:30:38 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@
 # define HEREDOC 7
 // << "$USER"
 # define HEREDOC_2 8
+
+extern int sigal;
+
+void        test(int sig);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_extra.c (ft 5/5)

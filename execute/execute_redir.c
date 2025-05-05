@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/29 15:03:27 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 13:45:07 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ void	heredoc(t_token *tree, int *std, char **env)
 	if (file == -1)
 		return (perror("failed to open the file"), exit_code(1));
 	write(0, "> ", 2);
+	signal(SIGQUIT, test);
+	signal(SIGINT, test);
 	str = get_next_line(0);
+	if (sigal == 1)
+		dup2(std[0], 0);
 	while (ctrl_str(str, tree->str) == 0)
 	{
 		if (tree->type == HEREDOC)
@@ -94,7 +98,7 @@ int	redir_check(t_token *tree, int n, int *std, char **env)
 			file = open(tree->str, O_RDONLY);
 			n = file_control(file, 0);
 		}
-		else if (tree->type == HEREDOC || tree->type == HEREDOC_2)
+		else if ((tree->type == HEREDOC || tree->type == HEREDOC_2) && sigal == 0)
 			heredoc(tree, std, env);
 		else if (tree->type == REDIR_2 || tree->type == REDIR_3)
 		{
