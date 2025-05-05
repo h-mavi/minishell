@@ -6,24 +6,26 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 08:59:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/23 16:02:23 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/05 14:54:27 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
 //funzione che serve a gestire gli exit code
-void	exit_code(int n)
+int	exit_code(int n)
 {
 	static int	code = 0;
+	int			temp;
 
-	if (n == 1000)
+	temp = code;
+	if (n == 12345)
 	{
-		ft_printf("%d", code);
-		exit_code(0);
+		code = 0;
+		return (temp);
 	}
-	else
-		code = n;
+	code = n;
+	return (code);
 }
 
 //funzione di ausilio per trovarmi subito il comando

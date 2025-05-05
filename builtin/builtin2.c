@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:43:25 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/30 09:08:02 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/05 14:49:58 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,7 @@ static void	print_option(t_token *tree)
 		{
 			if (i != 0)
 				ft_printf(" ");
-			if (tree->str[0] == '$' && tree->str[1] == '?' && \
-			tree->str[2] == '\0')
-				exit_code(1000);
-			else
-				ft_printf("%s", tree->str);
+			ft_printf("%s", tree->str);
 			i++;
 		}
 		tree = tree->next;
