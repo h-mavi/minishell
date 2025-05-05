@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 15:01:57 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:04:38 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,7 @@ void	exec_cmd(t_token *tree, char **env)
 		path = ft_strdup(arg[0]);
 	free_lst(tree);
 	execve(path, arg, env);
-	if (arg[0][0] == '$' && arg[0][1] == '?' && \
-	arg[0][2] == '\0')
-		exit_code(1000);
-	else if (arg[0][0] == '\0')
+	if (arg[0][0] == '\0')
 		write (2, "\"\"", 3);
 	else
 		write(2, arg[0], ft_strlen(arg[0]));
