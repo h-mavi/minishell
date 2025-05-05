@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:21:35 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/29 15:42:54 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:03:10 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,32 @@ int	rm_dollar_if(char *s, int i)
 	if (s[i] == '$' && werami(s, i + 1, 0, 0) == 0 && werami(s, i, 0, 0) == -1)
 		return (1);
 	return (0);
+}
+
+char *set_exit_status(char *s)
+{
+	int		i;
+	int		x;
+	int		y;
+	char	*end;
+	char	*status;
+
+	i = -1;
+	x = -1;
+	y = 0;
+	status = ft_itoa(exit_code(12345));
+	end = (char *)ft_calloc(ft_strlen(s) - 1 + ft_strlen(status), sizeof(char));
+	while (s[++i])
+	{
+		if (s[i] == '$' && s[i + 1] == '?')
+		{
+			i += 2;
+			while (status[++x])
+				end[y++] = status[x];
+		}
+		end[y++] = s[i];
+	}
+	free(s);
+	free(status);
+	return (end);
 }

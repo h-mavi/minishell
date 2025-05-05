@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 11:30:38 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:04:42 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,13 @@
 
 extern int sigal;
 
+//----------------------------------------------------------------------------
+//in parsing/heredoc_sig.c (ft 4/5)
+
 void        test(int sig);
+void		ft_openhd_ls(t_token *head, int where);
+void		ft_openhd_str(char *str, int where);
+char		*error_exit(t_token *head, int syn, char *str, char *input);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_extra.c (ft 5/5)
@@ -65,24 +71,23 @@ int			count_len_wrd(char *s, int *y, int conta);
 char		*ft_mycpy(char *str);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_heredoc.c (ft 5/5)
+//in parsing/pars_heredoc.c (ft 3/5)
 
 void		here_doc(char *input);
-void		ft_openhd_ls(t_token *head, int where);
-void		ft_openhd_str(char *str, int where);
 int			is_all_whitespace(char *cmd);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_main.c (ft 5/5)
 
 void		routine(int sig);
-int		parsing(char *pwd, char ***env_cpy);
+int			parsing(char *pwd, char ***env_cpy);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_more.c (ft 3/5)
+//in parsing/pars_more.c (ft 4/5)
 
 int			werami(char *s, int i, int a, int v);
 int			rm_dollar_if(char *s, int i);
+char		*set_exit_status(char *s);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_refine.c (ft 5/5)
@@ -128,7 +133,6 @@ int			check_error(char *s);
 char		*reassemble(char *first, char *espan, char *after, int len_cmd);
 int			check_error_lst(t_token *head);
 void		free_lst(t_token *head);
-char		*error_exit(t_token *head, int syn, char *str, char *input);
 int			do_skip(char *s, int i);
 
 //----------------------------------------------------------------------------

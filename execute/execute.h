@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 15:09:13 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:55:44 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@
 # define HEREDOC_2 8
 
 //----------------------------------------------------------------------------
-//in execute/execute_pipe.c (ft 5/5)
+//in execute/execute_pipe.c (ft 4/5)
 
 void	for_fork(t_token *tree, char ***env, int *std);
 
 //----------------------------------------------------------------------------
-//in execute/execute_redir.c (ft 3/5)
+//in execute/execute_redir.c (ft 4/5)
 
 void	heredoc(t_token *tree, int *std, char **env);
 int		redir_check(t_token *tree, int n, int *std, char **env);
@@ -68,8 +68,8 @@ void	ctrl_c_sig(int sig);
 //----------------------------------------------------------------------------
 //in execute/execute_utils.c (ft 5/5)
 
-int	exit_code(int n);
-t_token	*find_comand(t_token *tree);
+int     exit_code(int n);
+t_token *find_comand(t_token *tree);
 void	dup_file(int file, int std);
 int		pipe_check(t_token *tree);
 int		file_control(int file, int std);
