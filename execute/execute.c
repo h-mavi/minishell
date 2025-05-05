@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/30 09:54:56 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/05 15:01:57 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	exec_cmd(t_token *tree, char **env)
 	char	*path;
 	char	**arg;
 
+	signal(SIGQUIT,SIG_DFL);
 	path = parse_cmd((char *)tree->str, env);
 	arg = full_cmd(tree);
 	if (!path)
@@ -120,6 +121,7 @@ void	execute(t_token *tree, char ***env)
 
 	std[0] = dup(0);
 	std[1] = dup(1);
+	signal(SIGINT, ctrl_c_sig);
 	if (pipe_check(tree) == 1)
 		return (for_fork(tree, env, std));
 	if (redir_check(tree, 0, std, *env) == 1)
@@ -134,5 +136,7 @@ void	execute(t_token *tree, char ***env)
 		exec_cmd(tree, *env);
 	wait(&n);
 	exit_code(n / 256);
+	if (sigal == 1)
+		exit_code(130);
 	reset_fd(std);
 }

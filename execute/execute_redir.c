@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 13:45:07 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 14:46:27 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,15 @@ int	redir_check(t_token *tree, int n, int *std, char **env)
 		tree = tree->next;
 	}
 	return (0);
+}
+
+void	ctrl_c_sig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		sigal = 1;
+	}
 }

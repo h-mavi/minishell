@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 11:08:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 11:35:25 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 14:46:09 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,5 @@ char	*error_exit(t_token *head, int syn, char *str, char *input)
 		free(input);
 	if (head != NULL)
 		free_lst(head);
-	if (sigal == 1)
-		sigal = 0;
 	return (NULL);
 }

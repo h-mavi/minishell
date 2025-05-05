@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:14:58 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 11:55:19 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 14:45:51 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char *argv[], char **env)
 	env_cpy = ft_env_cpy(env);
 	while (1)
 	{
+		sigal = 0;
 		temp = getcwd(NULL, 0);
 		pwd = ft_strjoin(temp, "$ ");
 		free(temp);

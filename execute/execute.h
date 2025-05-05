@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/29 15:04:14 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 14:21:51 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	for_fork(t_token *tree, char ***env, int *std);
 
 void	heredoc(t_token *tree, int *std, char **env);
 int		redir_check(t_token *tree, int n, int *std, char **env);
+void	ctrl_c_sig(int sig);
 
 //----------------------------------------------------------------------------
 //in execute/execute_utils.c (ft 5/5)
