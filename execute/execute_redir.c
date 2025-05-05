@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 15:54:17 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:19:26 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ static char	*simple_refine(char *s, char **env)
 	while (s[++i])
 	{
 		i = do_skip(s, i);
-		if (s[i] == '$' && werami(s, i, 0, 0) == -1 && werami(s, i + 1, 0, 0) == -1 && \
-			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
+		if (s[i] == '$' && werami(s, i, 0, 0) == -1 && \
+		werami(s, i + 1, 0, 0) == -1 && ((ft_isalpha(s[i + 1]) != 0) || \
+		(s[i + 1] == '_')))
 			s = esp_special_case(s, env, i);
-		else if (s[i] == '$' && werami(s, i + 1, 0, 0) == 0 && werami(s, i, 0, 0) == -1)
+		else if (s[i] == '$' && werami(s, i + 1, 0, 0) == 0 && \
+		werami(s, i, 0, 0) == -1)
 		{
 			s = rm_dollar(s);
 			if (i > 0)
@@ -67,7 +69,7 @@ void	heredoc(t_token *tree, int *std, char **env)
 	signal(SIGQUIT, test);
 	signal(SIGINT, test);
 	str = get_next_line(0);
-	if (sigal == 1)
+	if (g_sigal == 1)
 		dup2(std[0], 0);
 	while (ctrl_str(str, tree->str) == 0)
 	{
@@ -98,7 +100,8 @@ int	redir_check(t_token *tree, int n, int *std, char **env)
 			file = open(tree->str, O_RDONLY);
 			n = file_control(file, 0);
 		}
-		else if ((tree->type == HEREDOC || tree->type == HEREDOC_2) && sigal == 0)
+		else if ((tree->type == HEREDOC || tree->type == HEREDOC_2) && \
+		g_sigal == 0)
 			heredoc(tree, std, env);
 		else if (tree->type == REDIR_2 || tree->type == REDIR_3)
 		{
@@ -122,6 +125,6 @@ void	ctrl_c_sig(int sig)
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		sigal = 1;
+		g_sigal = 1;
 	}
 }

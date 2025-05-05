@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 16:04:42 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:23:52 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,12 @@
 // << "$USER"
 # define HEREDOC_2 8
 
-extern int sigal;
+extern int	g_sigal;
 
 //----------------------------------------------------------------------------
 //in parsing/heredoc_sig.c (ft 4/5)
 
-void        test(int sig);
-void		ft_openhd_ls(t_token *head, int where);
-void		ft_openhd_str(char *str, int where);
+void		test(int sig);
 char		*error_exit(t_token *head, int syn, char *str, char *input);
 
 //----------------------------------------------------------------------------
@@ -107,10 +105,9 @@ char		*rm_dollar(char *s);
 char		*divide(char *s, int y);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_set_data.c (ft 5/5)
+//in parsing/pars_set_data.c (ft 4/5)
 
 void		set_data(t_token **head, char **str, int flag);
-void		print_lists(t_token *head);
 void		set_prev(t_token **head);
 char		**ft_env_cpy(char **env);
 

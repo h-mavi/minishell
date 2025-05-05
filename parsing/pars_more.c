@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:21:35 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 16:03:10 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:25:59 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	rm_dollar_if(char *s, int i)
 	return (0);
 }
 
-char *set_exit_status(char *s)
+char	*set_exit_status(char *s)
 {
 	int		i;
 	int		x;

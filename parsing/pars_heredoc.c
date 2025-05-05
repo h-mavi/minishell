@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 11:46:06 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:25:04 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,9 @@ void	here_doc(char *input)
 	if (file == -1)
 		return ;
 	write(1, "> ", 2);
-	signal(SIGQUIT, test);
 	signal(SIGINT, test);
 	str = get_next_line(0);
-	if (sigal == 1)
+	if (g_sigal == 1)
 		dup2(std, 0);
 	close(std);
 	while (control_str(str, input) == 0)

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/24 10:50:47 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:23:31 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,38 +58,6 @@ void	set_data(t_token **head, char **str, int flag)
 	(*node).id = id + 1;
 	id++;
 	lstadd_back(head, node);
-}
-
-/* Printa la lista compilata. Utile solo per il debugging */
-void	print_lists(t_token *head)
-{
-	while (head != NULL)
-	{
-		if (head->next == NULL && head->prev == NULL)
-		{
-			printf("\nID -> %d\nPrev -> NULL\nType -> %d\nInput -> %s\nNext -> NULL\n\n", \
-			head->id, head->type, head->str);
-			break ;
-		}
-		else if (head->prev == NULL)
-		{
-			printf("\nID -> %d\nPrev -> NULL\nType -> %d\nInput -> %s\nNext -> %s\n\n", \
-			head->id, head->type, head->str, (head->next)->str);
-			head = head->next;
-		}
-		else if (head->next == NULL)
-		{
-			printf("ID -> %d\nPrev -> %s\nType -> %d\nInput -> %s\nNext -> NULL\n\n", \
-			head->id, (head->prev)->str, head->type, head->str);
-			break ;
-		}
-		else
-		{
-			printf("ID -> %d\nPrev -> %s\nType -> %d\nInput -> %s\nNext -> %s\n\n", \
-			head->id, (head->prev)->str, head->type, head->str, (head->next)->str);
-			head = head->next;
-		}
-	}
 }
 
 /* Setta gli indirizzi dei nodi precedenti per ogni nodo della lista */

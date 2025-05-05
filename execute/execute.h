@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 15:55:44 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:13:03 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	ctrl_c_sig(int sig);
 //----------------------------------------------------------------------------
 //in execute/execute_utils.c (ft 5/5)
 
-int     exit_code(int n);
-t_token *find_comand(t_token *tree);
+int		exit_code(int n);
+t_token	*find_comand(t_token *tree);
 void	dup_file(int file, int std);
 int		pipe_check(t_token *tree);
 int		file_control(int file, int std);

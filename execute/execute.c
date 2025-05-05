@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 15:04:38 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:19:26 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	exec_cmd(t_token *tree, char **env)
 	char	*path;
 	char	**arg;
 
-	signal(SIGQUIT,SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	path = parse_cmd((char *)tree->str, env);
 	arg = full_cmd(tree);
 	if (!path)
@@ -133,7 +133,7 @@ void	execute(t_token *tree, char ***env)
 		exec_cmd(tree, *env);
 	wait(&n);
 	exit_code(n / 256);
-	if (sigal == 1)
+	if (g_sigal == 1)
 		exit_code(130);
 	reset_fd(std);
 }

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 11:08:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 14:46:09 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:25:30 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,21 @@ void	test(int sig)
 	}
 	if (sig == SIGINT)
 	{
-		sigal = 1;
+		g_sigal = 1;
 		exit_code(130);
 		close(0);
 	}
 }
 
-
 /* Filtra la lista head fino al nodo 'where' 
 per trovare gli heredoc da aprire */
-void	ft_openhd_ls(t_token *head, int where)
+static void	ft_openhd_ls(t_token *head, int where)
 {
+	signal(SIGQUIT, test);
 	while (head->id < where)
 	{
-		if ((head->type == HEREDOC || head->type == HEREDOC_2) && sigal == 0)
+		if ((head->type == HEREDOC || head->type == HEREDOC_2) && \
+		g_sigal == 0)
 			here_doc(head->str);
 		head = head->next;
 	}
@@ -41,20 +42,20 @@ void	ft_openhd_ls(t_token *head, int where)
 
 /* Filtra la stringa str fino all'indice 'where'
 per trovare gli heredoc da aprire */
-void	ft_openhd_str(char *str, int where)
+static void	ft_openhd_str(char *str, int where, int i)
 {
-	int		i;
 	int		x;
 	char	*tmp;
 
-	i = -1;
 	tmp = NULL;
+	signal(SIGQUIT, test);
 	if ((size_t)where == ft_strlen(str) - 1)
 		if (find_char(str, where - 1) != 0 && where > 0)
 			where -= 1;
 	while (str[++i] && i < where)
 	{
-		if ((find_char(str, i) == HEREDOC || find_char(str, i) == HEREDOC_2) && sigal == 0)
+		if ((find_char(str, i) == HEREDOC || find_char(str, i) == HEREDOC_2) \
+		&& g_sigal == 0)
 		{
 			x = i + 2;
 			while (str[x] != ' ' && find_char(str, x) == 0)
@@ -82,7 +83,7 @@ char	*error_exit(t_token *head, int syn, char *str, char *input)
 	if (syn != -1 && head != NULL && input == NULL)
 		ft_openhd_ls(head, syn);
 	else if (syn != -1 && head == NULL && input != NULL)
-		ft_openhd_str(input, syn);
+		ft_openhd_str(input, syn, -1);
 	if (input != NULL)
 		free(input);
 	if (head != NULL)
