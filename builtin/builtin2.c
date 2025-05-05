@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:43:25 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 14:49:58 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/05 15:09:37 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_exit(t_token *tree, char **env, int *std)
 				freemtr(env), exit(2));
 			if (tree->next->next)
 				if (tree->next->next->type == FLAG)
-					return (perror("too many arguments"), exit_code(1));
+					return (perror("too many arguments"), (void)exit_code(1));
 			if (is_all_digit(tree->next->str) != 0)
 			{
 				ex = ft_atoi(tree->next->str);

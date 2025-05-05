@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 14:46:27 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:09:49 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	heredoc(t_token *tree, int *std, char **env)
 	dup2(std[0], 0);
 	file = open("here_doc", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (file == -1)
-		return (perror("failed to open the file"), exit_code(1));
+		return (perror("failed to open the file"), (void)exit_code(1));
 	write(0, "> ", 2);
 	signal(SIGQUIT, test);
 	signal(SIGINT, test);
