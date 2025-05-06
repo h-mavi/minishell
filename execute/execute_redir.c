@@ -6,11 +6,28 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 16:19:26 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:18:34 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+static char	*simple_espand_core(char *s, int *i, char **env)
+{
+	*i = do_skip(s, *i);
+	if (s[*i] == '$' && ft_isdigit(s[*i + 1]) != 0 && \
+		werami(s, *i, 0, 0) == -1)
+		s = ft_mycpy(s, *i);
+	if (s[*i] == '$' && s[*i + 1] == '?' && werami(s, *i, 0, 0) == -1)
+		s = set_exit_status(s);
+	if (werami(s, *i, 0, 0) == -1 && werami(s, *i + 1, 0, 0) == -1 && \
+	smol(s, *i) != 0)
+	{
+		s = esp_special_case(s, env, *i);
+		*i = fuck_normi(s, *i, 1);
+	}
+	return (s);
+}
 
 static char	*simple_refine(char *s, char **env)
 {
@@ -19,33 +36,13 @@ static char	*simple_refine(char *s, char **env)
 	i = -1;
 	while (s[++i])
 	{
-		i = do_skip(s, i);
-		if (s[i] == '$' && werami(s, i, 0, 0) == -1 && \
-		werami(s, i + 1, 0, 0) == -1 && ((ft_isalpha(s[i + 1]) != 0) || \
-		(s[i + 1] == '_')))
-			s = esp_special_case(s, env, i);
-		else if (s[i] == '$' && werami(s, i + 1, 0, 0) == 0 && \
-		werami(s, i, 0, 0) == -1)
-		{
-			s = rm_dollar(s);
-			if (i > 0)
-				i -= 1;
-		}
+		s = simple_espand_core(s, &i, env);
 		if (werami(s, i, 0, 0) == 0 && werami(s, i + 1, 0, 0) == 1)
 		{
-			i++;
-			while (werami(s, i, 0, 0) != 0)
+			while (werami(s, ++i, 0, 0) != 0)
 			{
-				i = do_skip(s, i);
-				if (s[i] == '$' && s[0] == '<' && s[1] == '<')
-					i++;
-				if ((s[i] == '$' && werami(s, i, 0, 0) == 1 && \
-					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
-				{
-					s = esp_special_case(s, env, i);
-					i -= 1;
-				}
-				i++;
+				s = espand_core(s, &i, 0);
+				s = more_espand_core(s, env, &i, 0);
 			}
 		}
 		i = do_skip(s, i);
@@ -71,16 +68,7 @@ void	heredoc(t_token *tree, int *std, char **env)
 	str = get_next_line(0);
 	if (g_sigal == 1)
 		dup2(std[0], 0);
-	while (ctrl_str(str, tree->str) == 0)
-	{
-		if (tree->type == HEREDOC)
-			str = simple_refine(str, env);
-		ft_putstr_fd(str, file);
-		free(str);
-		write(0, "> ", 2);
-		str = get_next_line(0);
-	}
-	free(str);
+	heredoc_while(tree, str, env, file);
 	get_next_line(file);
 	close(file);
 	file = open("here_doc", O_RDWR, 0777);

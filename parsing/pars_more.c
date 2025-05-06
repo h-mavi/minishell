@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:21:35 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/06 11:07:38 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:51:36 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,10 @@ char	*espand_core(char *s, int *i, int which)
 	}
 	else if (which == 0)
 	{
-		if (s[*i] == '$' && ft_isdigit(s[*i + 1]) != 0)
-			s = ft_mycpy(s, *i);
 		if (s[*i] == '$' && s[*i + 1] == '?')
 			s = set_exit_status(s);
-		if (s[*i] == '$' && s[0] == '<' && s[1] == '<' && s[*i + 1] != '\0')
-			*i += 1;
+		if (s[*i] == '$' && ft_isdigit(s[*i + 1]) != 0)
+			s = ft_mycpy(s, *i);
 	}
 	return (s);
 }

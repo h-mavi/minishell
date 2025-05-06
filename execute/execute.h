@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 16:13:03 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:17:59 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,10 @@
 //in execute/execute_pipe.c (ft 4/5)
 
 void	for_fork(t_token *tree, char ***env, int *std);
+void	heredoc_while(t_token *tree, char *str, char **env, int file);
 
 //----------------------------------------------------------------------------
-//in execute/execute_redir.c (ft 4/5)
+//in execute/execute_redir.c (ft 5/5)
 
 void	heredoc(t_token *tree, int *std, char **env);
 int		redir_check(t_token *tree, int n, int *std, char **env);
