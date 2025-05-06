@@ -6,7 +6,11 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/05/06 14:05:31 by mbiagi           ###   ########.fr       */
+=======
+/*   Updated: 2025/05/06 12:17:59 by mfanelli         ###   ########.fr       */
+>>>>>>> 6ffd2ecb4d6ddfae33c76a8ab1df58d759ae6eb3
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +67,15 @@ typedef struct s_fds
 //----------------------------------------------------------------------------
 //in execute/execute_pipe.c (ft 4/5)
 
+<<<<<<< HEAD
 void	for_fork(t_token *tree, char ***env, t_fds fds);
+=======
+void	for_fork(t_token *tree, char ***env, int *std);
+void	heredoc_while(t_token *tree, char *str, char **env, int file);
+>>>>>>> 6ffd2ecb4d6ddfae33c76a8ab1df58d759ae6eb3
 
 //----------------------------------------------------------------------------
-//in execute/execute_redir.c (ft 4/5)
+//in execute/execute_redir.c (ft 5/5)
 
 void	heredoc(t_token *tree, int *std, char **env);
 int		redir_check(t_token *tree,t_fds fds, char **env);

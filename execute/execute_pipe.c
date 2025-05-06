@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/06 15:32:55 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/06 15:38:45 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,5 +242,17 @@ void	for_fork(t_token *tree, char ***env, t_fds fds)
 		exit_code(w / 256);
 	return (reset_fd(fds.std));
 }
-//set follow-fork-mode child
-//set detach-on-fork off
+
+void	heredoc_while(t_token *tree, char *str, char **env, int file)
+{
+	while (ctrl_str(str, tree->str) == 0)
+	{
+		if (tree->type == HEREDOC)
+			str = simple_refine(str, env);
+		ft_putstr_fd(str, file);
+		free(str);
+		write(0, "> ", 2);
+		str = get_next_line(0);
+	}
+	free(str);
+}

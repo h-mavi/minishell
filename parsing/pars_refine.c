@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/06 09:43:38 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:13:07 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,40 +109,22 @@ char	*refine(char *s, char **env)
 {
 	int	i;
 
-	i = 0;
-	while (s[i])
+	i = -1;
+	while (s[++i] != '\0')
 	{
 		s = espand_core(s, &i, 1);
-		if (s[i] == '$' && werami(s, i, 0, 0) == -1 && werami(s, i + 1, 0, 0) == -1 && \
-			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
-		{
-			s = esp_special_case(s, env, i);
-			continue ;
-		}
-		else if (s[i] == '$' && werami(s, i + 1, 0, 0) == 0 && werami(s, i, 0, 0) == -1)
-		{
-			s = rm_dollar(s);
-			continue ;
-		}
+		s = more_espand_core(s, env, &i, 1);
 		if (s[i] == '"' && werami(s, i + 1, 0, 0) == 1)
 		{
-			i++;
-			while (s[i] != '"')
+			while (s[++i] != '"' && s[i] != '\0')
 			{
 				s = espand_core(s, &i, 0);
-				if ((s[i] == '$' && werami(s, i, 0, 0) == 1 && \
-					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
-				{
-					s = esp_special_case(s, env, i);
-					i -= 1;
-				}
-				i++;
+				s = more_espand_core(s, env, &i, 0);
 			}
 		}
 		i = do_skip(s, i);
 		if (s[0] == '\0')
 			return (s);
-		i++;
 	}
 	return (s);
 }

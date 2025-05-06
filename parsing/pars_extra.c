@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:40:15 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/06 09:16:50 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:14:15 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*ft_mycpy(char *str, int y)
 
 	i = -1;
 	x = -1;
-	new = (char *)ft_calloc(ft_strlen(str)  - 1, sizeof(char));
+	new = (char *)ft_calloc(ft_strlen(str) - 1, sizeof(char));
 	while (str[++x])
 	{
 		if (x == y)

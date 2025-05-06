@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/06 09:44:17 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:22:51 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,11 @@ int			count_len_wrd(char *s, int *y, int conta);
 char		*ft_mycpy(char *str, int y);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_heredoc.c (ft 3/5)
+//in parsing/pars_heredoc.c (ft 4/5)
 
 void		here_doc(char *input);
 int			is_all_whitespace(char *cmd);
+int			smol(char *s, int i);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_main.c (ft 5/5)
@@ -81,7 +82,7 @@ void		routine(int sig);
 int			parsing(char *pwd, char ***env_cpy);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_more.c (ft 4/5)
+//in parsing/pars_more.c (ft 5/5)
 
 int			werami(char *s, int i, int a, int v);
 int			rm_dollar_if(char *s, int i);
@@ -106,11 +107,12 @@ char		*rm_dollar(char *s);
 char		*divide(char *s, int y);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_set_data.c (ft 4/5)
+//in parsing/pars_set_data.c (ft 5/5)
 
 void		set_data(t_token **head, char **str, int flag);
 void		set_prev(t_token **head);
 char		**ft_env_cpy(char **env);
+char		*more_espand_core(char *s, char **env, int *i, int which);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_split.c (ft 5/5)
@@ -118,12 +120,13 @@ char		**ft_env_cpy(char **env);
 char		**custom_split(char *s);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_utils.c (ft 4/5)
+//in parsing/pars_utils.c (ft 5/5)
 
 void		free_arr(char **arr);
 int			find_char(char *s, int i);
 int			find_dollar(char *s, int i);
 int			check_error(char *s);
+int			fuck_normi(char *s, int i, int what);
 
 //----------------------------------------------------------------------------
 //in parsing/parsing.c (ft 5/5)
