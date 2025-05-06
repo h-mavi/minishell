@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 16:19:26 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:16:59 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,28 +112,28 @@ void	exec_cmd(t_token *tree, char **env)
 //funzione principale che richiama le altre
 void	execute(t_token *tree, char ***env)
 {
-	int	pid;
-	int	std[2];
-	int	n;
+	int		pid;
+	t_fds	fds;
+	int		n;
 
-	std[0] = dup(0);
-	std[1] = dup(1);
+	fds.std[0] = dup(0);
+	fds.std[1] = dup(1);
 	signal(SIGINT, ctrl_c_sig);
 	if (pipe_check(tree) == 1)
-		return (for_fork(tree, env, std));
-	if (redir_check(tree, 0, std, *env) == 1)
-		return (reset_fd(std));
+		return (for_fork(tree, env, fds)); 
+	if (redir_check(tree,fds, *env) == 1)
+		return (reset_fd(fds.std));
 	tree = find_comand(tree);
 	if (tree == NULL)
-		return (reset_fd(std));
-	if (is_builtin(tree, env, std) == 1)
-		return (reset_fd(std));
+		return (reset_fd(fds.std));
+	if (is_builtin(tree, env, fds.std) == 1)
+		return (reset_fd(fds.std));
 	pid = fork();
 	if (pid == 0)
-		exec_cmd(tree, *env);
+		(close(fds.std[0]), close(fds.std[1]), exec_cmd(tree, *env));
 	wait(&n);
 	exit_code(n / 256);
 	if (g_sigal == 1)
 		exit_code(130);
-	reset_fd(std);
+	reset_fd(fds.std);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 16:13:03 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:05:31 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,23 @@
 // << "$USER"
 # define HEREDOC_2 8
 
+typedef struct s_fds
+{
+	int	pipe[2];
+	int	std[2];
+	int	heredoc[1024];
+}	t_fds;
+
 //----------------------------------------------------------------------------
 //in execute/execute_pipe.c (ft 4/5)
 
-void	for_fork(t_token *tree, char ***env, int *std);
+void	for_fork(t_token *tree, char ***env, t_fds fds);
 
 //----------------------------------------------------------------------------
 //in execute/execute_redir.c (ft 4/5)
 
 void	heredoc(t_token *tree, int *std, char **env);
-int		redir_check(t_token *tree, int n, int *std, char **env);
+int		redir_check(t_token *tree,t_fds fds, char **env);
 void	ctrl_c_sig(int sig);
 
 //----------------------------------------------------------------------------

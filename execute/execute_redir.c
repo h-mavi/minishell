@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 16:19:26 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:05:22 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	heredoc(t_token *tree, int *std, char **env)
 }
 
 //redirige i file
-int	redir_check(t_token *tree, int n, int *std, char **env)
+int	redir_check(t_token *tree,t_fds fds, char **env)
 {
 	int	file;
 
@@ -98,21 +98,21 @@ int	redir_check(t_token *tree, int n, int *std, char **env)
 		if (tree->type == REDIR_1)
 		{
 			file = open(tree->str, O_RDONLY);
-			n = file_control(file, 0);
+			if (file_control(file, 0) == 1)
+				return (1);
 		}
 		else if ((tree->type == HEREDOC || tree->type == HEREDOC_2) && \
 		g_sigal == 0)
-			heredoc(tree, std, env);
+			heredoc(tree, fds.std, env);
 		else if (tree->type == REDIR_2 || tree->type == REDIR_3)
 		{
 			if (tree->type == REDIR_2)
 				file = open(tree->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 			else if (tree->type == REDIR_3)
 				file = open(tree->str, O_WRONLY | O_CREAT | O_APPEND, 0777);
-			n = file_control(file, 1);
+			if (file_control(file, 1) == 1)
+				return (1);
 		}
-		if (n == 1 && tree->type != COMMAND && tree->type != FLAG)
-			return (1);
 		tree = tree->next;
 	}
 	return (0);
