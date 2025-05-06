@@ -6,13 +6,13 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:14:58 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 16:19:26 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:04:33 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_sigal = 0;
+int	g_sigal = 0;
 
 int	main(int argc, char *argv[], char **env)
 {
@@ -20,7 +20,6 @@ int	main(int argc, char *argv[], char **env)
 	char	*pwd;
 	char	**env_cpy;
 
-	
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, routine);

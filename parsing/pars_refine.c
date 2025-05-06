@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 16:02:49 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:43:38 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,7 @@ char	*refine(char *s, char **env)
 	i = 0;
 	while (s[i])
 	{
-		i = do_skip(s, i);
-		if (s[i] == '$' && ft_isdigit(s[i + 1]) != 0)
-			s = ft_mycpy(s);
-		if (s[i] == '$' && s[i + 1] == '?' && werami(s, i, 0, 0) == -1)
-			s = set_exit_status(s);
-		if (i > 1 && s[i] == '$' && s[i - 1] == '<' && s[i - 2] == '<')
-			i++;
+		s = espand_core(s, &i, 1);
 		if (s[i] == '$' && werami(s, i, 0, 0) == -1 && werami(s, i + 1, 0, 0) == -1 && \
 			((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
 		{
@@ -130,19 +124,12 @@ char	*refine(char *s, char **env)
 			s = rm_dollar(s);
 			continue ;
 		}
-		if (s[i] == '\'' && werami(s, i + 1, 0, 0) != -1)
-			while (s[++i] != '\'')
-				;
 		if (s[i] == '"' && werami(s, i + 1, 0, 0) == 1)
 		{
 			i++;
 			while (s[i] != '"')
 			{
-				i = do_skip(s, i);
-				if (s[i] == '$' && s[0] == '<' && s[1] == '<')
-					i++;
-				if (s[i] == '$' && s[i + 1] == '?')
-					s = set_exit_status(s);
+				s = espand_core(s, &i, 0);
 				if ((s[i] == '$' && werami(s, i, 0, 0) == 1 && \
 					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
 				{

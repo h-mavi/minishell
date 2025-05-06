@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:40:15 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/29 12:24:05 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:16:50 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,21 @@ int	count_len_wrd(char *s, int *y, int conta)
 
 /* Funzione stupidissima chiamata da refine per gestire unicamente casi come
 $1ciao che diventa ciao. */
-char	*ft_mycpy(char *str)
+char	*ft_mycpy(char *str, int y)
 {
 	char	*new;
 	int		i;
 	int		x;
 
-	i = 0;
-	x = 1;
-	new = (char *)ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	i = -1;
+	x = -1;
+	new = (char *)ft_calloc(ft_strlen(str)  - 1, sizeof(char));
 	while (str[++x])
-		new[i++] = str[x];
+	{
+		if (x == y)
+			x += 2;
+		new[++i] = str[x];
+	}
 	free(str);
 	return (new);
 }

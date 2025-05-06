@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 16:23:52 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:44:17 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char		*set_str(char *s);
 char		*set_path(char *tmp, char **env);
 int			len_arr_utils(char *s, int *i, int *x, int app);
 int			count_len_wrd(char *s, int *y, int conta);
-char		*ft_mycpy(char *str);
+char		*ft_mycpy(char *str, int y);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_heredoc.c (ft 3/5)
@@ -86,6 +86,7 @@ int			parsing(char *pwd, char ***env_cpy);
 int			werami(char *s, int i, int a, int v);
 int			rm_dollar_if(char *s, int i);
 char		*set_exit_status(char *s);
+char		*espand_core(char *s, int *i, int which);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_refine.c (ft 5/5)
