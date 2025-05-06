@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env_controls.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:34:02 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 09:49:35 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:04:23 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	control_variable(char *var)
 	if (ft_isdigit(var[0]) != 0 || var[0] == '=')
 		return (perror("not valid identifier"), exit_code(1), 0);
 	if (var[0] == '_' && var[1] == '=')
-		return (0);
+		return (exit_code(0), 0);
 	while (var[i] != '=' && var[i] != '+' && var[i])
 	{
 		if (ft_isalnum(var[i]) == 0 && var[i] != '_' && var[i] != '\0')
@@ -29,7 +29,7 @@ int	control_variable(char *var)
 	}
 	if (var[i] == '+' && var[i + 1] != '=')
 		return (perror("not valid identifier"), exit_code(1), 0);
-	return (1);
+	return (exit_code(0), 1);
 }
 
 int	existing_variable(char *var, char **env)

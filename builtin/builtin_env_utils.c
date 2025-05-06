@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:37:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/22 09:49:28 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:35:57 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,30 +38,54 @@ char	**unset_param(t_token *tree, char **env)
 	return (new_env);
 }
 
+void	print_env_var(char *var)
+{
+	int		i;
+	bool	n;
+
+	i = -1;
+	n = 0;
+	write(1, "declare -x ", 11);
+	while (var[++i])
+	{
+		write(1, &var[i], 1);
+		if (var[i] == '=' && n != 1)
+		{
+			write(1, "\"", 1);
+			n = 1;
+		}
+		if (var[i + 1] == '\0' && n == 1)
+			write(1, "\"", 1);
+	}
+	write (1, "\n", 1);
+}
+
 void	print_export(char **env)
 {
 	int		i;
 	int		j;
-	bool	n;
+	char	*temp;
+	char	*temp2;
 
-	i = -1;
-	while (env[++i])
+	i = 0;
+	j = 0;
+	temp = "@@";
+	while (i <= (int)ft_matrixlen(env) - 1)
 	{
 		j = -1;
-		n = 0;
-		write(1, "declaire -x ", 12);
-		while (env[i][++j])
+		temp2 = "\0";
+		while (env[++j])
 		{
-			write(1, &env[i][j], 1);
-			if (env[i][j] == '=')
-			{
-				write(1, "\"", 1);
-				n = 1;
-			}
-			if (env[i][j + 1] == '\0' && n == 1)
-				write(1, "\"", 1);
+			if (temp2[0] == '\0' && ft_strncmp(temp, env[j], 4294967295) < 0)
+				temp2 = env[j];
+			if (temp2[0] != '\0' && ft_strncmp(temp2, env[j], 4294967295) \
+			> 0 && ft_strncmp(temp, env[j], 4294967295) < 0)
+				temp2 = env[j];
 		}
-		write (1, "\n", 1);
+		if (temp2[0] != '_')
+			print_env_var(temp2);
+		temp = temp2;
+		i++;
 	}
 }
 

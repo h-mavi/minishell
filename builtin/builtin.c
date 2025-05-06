@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/04/29 14:58:29 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:08:39 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ static void	return_home(char **env)
 int	ft_cd(t_token *tree, char **env)
 {
 	char	*temp;
+	int		i;
 
+	i = -1;
 	temp = getcwd(NULL, 0);
 	if (tree == NULL || tree->type == PIPE)
 	{
@@ -94,7 +96,14 @@ int	ft_cd(t_token *tree, char **env)
 	}
 	if (num_argument(tree->next) != 0)
 		return (perror("too many argument"), free(temp), exit_code(1), 1);
-	if (chdir(tree->str) == -1)
+	else if (tree->str[0] == '-' && tree->str[1] == '\0')
+	{
+		while (env[++i])
+			if (ft_strncmp(env[i], "OLDPWD", 6) == 0)
+				if (chdir(env[i] + 7) == -1)
+					perror("no such directory");
+	}
+	else if (chdir(tree->str) == -1)
 		return (perror("no such directory"), free(temp), exit_code(1), 1);
 	change_dir(env, temp);
 	return (exit_code(0), 1);
