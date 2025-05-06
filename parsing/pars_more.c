@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:21:35 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/06 09:43:59 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:07:38 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,23 +99,25 @@ char	*set_exit_status(char *s)
 char	*espand_core(char *s, int *i, int which)
 {
 	*i = do_skip(s, *i);
-	if (s[*i] == '$' && ft_isdigit(s[*i + 1]) != 0)
-		s = ft_mycpy(s, *i);
 	if (which == 1)
 	{
+		if (s[*i] == '$' && ft_isdigit(s[*i + 1]) != 0 && \
+			werami(s, *i, 0, 0) == -1)
+			s = ft_mycpy(s, *i);
 		if (s[*i] == '$' && s[*i + 1] == '?' && werami(s, *i, 0, 0) == -1)
 			s = set_exit_status(s);
-		if (*i > 1 && s[*i] == '$' && s[*i - 1] == '<' && s[*i - 2] == '<')
+		if (*i > 1 && s[*i] == '$' && s[*i - 1] == '<' && s[*i - 2] == '<' && \
+			s[*i + 1] != '\0')
 			*i += 1;
-		if (s[*i] == '\'' && werami(s, *i + 1, 0, 0) != -1)
-			while (s[++(*i)] != '\'' && s[*i] != '\0')
-				;
+		*i = fuck_normi(s, *i, 2);
 	}
 	else if (which == 0)
 	{
+		if (s[*i] == '$' && ft_isdigit(s[*i + 1]) != 0)
+			s = ft_mycpy(s, *i);
 		if (s[*i] == '$' && s[*i + 1] == '?')
 			s = set_exit_status(s);
-		if (s[*i] == '$' && s[0] == '<' && s[1] == '<')
+		if (s[*i] == '$' && s[0] == '<' && s[1] == '<' && s[*i + 1] != '\0')
 			*i += 1;
 	}
 	return (s);

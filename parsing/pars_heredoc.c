@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 16:25:04 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:23:43 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,11 @@ int	is_all_whitespace(char *cmd)
 	if (x == ft_strlen(cmd))
 		return (0);
 	return (1);
+}
+
+int	smol(char *s, int i)
+{
+	if (s[i] == '$' && ((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
+		return (1);
+	return (0);
 }

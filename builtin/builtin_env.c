@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/06 10:06:01 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/06 11:15:00 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_export(char ***env, t_token *tree)
 		}
 		tree = tree->next;
 		if (n == 0)
-		return (print_export(*env), 1);
+			return (print_export(*env), 1);
 	}
 	return (1);
 }

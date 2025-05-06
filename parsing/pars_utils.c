@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/29 12:33:08 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:11:58 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,31 @@ int	check_error(char *s)
 			"Syntax Error, unexpected token\n", s), 0);
 	}
 	return (1);
+}
+
+int	fuck_normi(char *s, int i, int what)
+{
+	if (what == 0)
+	{
+		if (i > 0)
+			return (i - 1);
+		return (i);
+	}
+	else if (what == 1)
+	{
+		if (i > 0)
+			i -= 1;
+		if (s[i] == '\'' && werami(s, i + 1, 0, 0) != -1)
+			while (s[++(i)] != '\'')
+				;
+		return (i);
+	}
+	else if (what == 2)
+	{
+		if (s[i] == '\'' && werami(s, i + 1, 0, 0) != -1)
+			while (s[++(i)] != '\'')
+				;
+		return (i);
+	}
+	return (i);
 }
