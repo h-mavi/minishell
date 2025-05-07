@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 09:03:28 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:06:48 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,16 +150,7 @@ void	open_heredoc(t_token *tree, t_fds *fds, char **env)
 		signal(SIGQUIT, test);
 		signal(SIGINT, test);
 		str = get_next_line(0);
-		while (ctrl_str(str, tree->str) == 0)
-		{
-			if (tree->type == HEREDOC)
-				str = simple_refine(str, env);
-			ft_putstr_fd(str, file);
-			free(str);
-			write(0, "> ", 2);
-			str = get_next_line(0);
-		}
-		free(str);
+		heredoc_while(tree, str, env, file);
 		get_next_line(file);
 		close(file);
 		file = open("here_doc", O_RDWR, 0777);
