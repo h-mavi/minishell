@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 10:26:14 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/07 11:11:03 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,8 +222,8 @@ void	heredoc_while(t_token *tree, char *str, char **env, int file, int std)
 		free(str);
 		write(0, "> ", 2);
 		str = get_next_line(0);
-			if (g_sigal == 1)
-		dup2(std, 0);
+		if (g_sigal == 1)
+			dup2(std, 0);
 	}
 	free(str);
 }

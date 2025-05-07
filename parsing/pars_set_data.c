@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/06 11:22:10 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:42:17 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ char	**ft_env_cpy(char **env)
 	return (new_env);
 }
 
+/* Funzione creata per colpa di norminette, chiamata da simple_refine e da
+refine. */
 char	*more_espand_core(char *s, char **env, int *i, int which)
 {
 	if (which == 1)

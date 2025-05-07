@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/06 11:22:51 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:25:40 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,6 @@
 extern int	g_sigal;
 
 //----------------------------------------------------------------------------
-//in parsing/heredoc_sig.c (ft 4/5)
-
-void		test(int sig);
-char		*error_exit(t_token *head, int syn, char *str, char *input);
-
-//----------------------------------------------------------------------------
 //in parsing/pars_extra.c (ft 5/5)
 
 char		*set_str(char *s);
@@ -69,17 +63,16 @@ int			count_len_wrd(char *s, int *y, int conta);
 char		*ft_mycpy(char *str, int y);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_heredoc.c (ft 4/5)
+//in parsing/pars_heredoc.c (ft 5/5)
 
-void		here_doc(char *input);
-int			is_all_whitespace(char *cmd);
-int			smol(char *s, int i);
+char		*error_exit(t_token *head, int syn, char *str, char *input);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_main.c (ft 5/5)
 
-void		routine(int sig);
 int			parsing(char *pwd, char ***env_cpy);
+int			smol(char *s, int i);
+int			is_all_whitespace(char *cmd);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_more.c (ft 5/5)
@@ -135,6 +128,14 @@ char		*reassemble(char *first, char *espan, char *after, int len_cmd);
 int			check_error_lst(t_token *head);
 void		free_lst(t_token *head);
 int			do_skip(char *s, int i);
+
+//----------------------------------------------------------------------------
+//in parsing/signal_handler.c (ft 4/5)
+
+void		test(int sig);
+void		routine(int sig);
+void		sig_redir(int sig);
+void		ctrl_c_sig(int sig);
 
 //----------------------------------------------------------------------------
 

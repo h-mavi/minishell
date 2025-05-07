@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/07 10:22:49 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/07 12:25:28 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	control_str(char *str, char *argv)
 }
 
 /* Apre l'heredoc usando input come limiter */
-void	here_doc(char *input)
+static void	here_doc(char *input)
 {
 	char	*str;
 	int		file;
@@ -58,27 +58,67 @@ void	here_doc(char *input)
 	unlink("here_doc");
 }
 
-int	is_all_whitespace(char *cmd)
+/* Filtra la lista head fino al nodo 'where' 
+per trovare gli heredoc da aprire */
+static void	ft_openhd_ls(t_token *head, int where)
 {
-	int		i;
-	size_t	x;
-
-	i = 0;
-	x = 0;
-	while (cmd[i] != '\0' && cmd[i] != '\n')
+	signal(SIGQUIT, test);
+	while (head->id < where)
 	{
-		if (cmd[i] > 0 && cmd[i] < 33)
-			x++;
-		i++;
+		if ((head->type == HEREDOC || head->type == HEREDOC_2) && \
+		g_sigal == 0)
+			here_doc(head->str);
+		head = head->next;
 	}
-	if (x == ft_strlen(cmd))
-		return (0);
-	return (1);
 }
 
-int	smol(char *s, int i)
+/* Filtra la stringa str fino all'indice 'where'
+per trovare gli heredoc da aprire */
+static void	ft_openhd_str(char *str, int where, int i)
 {
-	if (s[i] == '$' && ((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
-		return (1);
-	return (0);
+	int		x;
+	char	*tmp;
+
+	tmp = NULL;
+	signal(SIGQUIT, test);
+	if ((size_t)where == ft_strlen(str) - 1)
+		if (find_char(str, where - 1) != 0 && where > 0)
+			where -= 1;
+	while (str[++i] && i < where)
+	{
+		if ((find_char(str, i) == HEREDOC || find_char(str, i) == HEREDOC_2) \
+		&& g_sigal == 0)
+		{
+			x = i + 2;
+			while (str[x] != ' ' && find_char(str, x) == 0)
+				x++;
+			if (x > where)
+				continue ;
+			tmp = ft_substr(str, i, x - i);
+			if (find_char(str, i) == HEREDOC_2)
+				tmp = rm_app(tmp);
+			here_doc(tmp);
+			free(tmp);
+		}
+	}
+}
+
+/* Funzione da chiamare in caso di errore! Libera la lista head e
+la stringa input e controlla se ci sono heredoc tramite syn.
+Se syn != -1 allora gli heredoc sono da aprire (in caso
+di errore di sintassi). */
+char	*error_exit(t_token *head, int syn, char *str, char *input)
+{
+	printf("%s", str);
+	if (syn != -1)
+		exit_code(2);
+	if (syn != -1 && head != NULL && input == NULL)
+		ft_openhd_ls(head, syn);
+	else if (syn != -1 && head == NULL && input != NULL)
+		ft_openhd_str(input, syn, -1);
+	if (input != NULL)
+		free(input);
+	if (head != NULL)
+		free_lst(head);
+	return (NULL);
 }

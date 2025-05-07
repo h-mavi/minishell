@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:21:35 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/06 11:51:36 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:41:04 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	werami(char *s, int i, int a, int v)
 	return (-1);
 }
 
+/* Funzione creata per colpa di norminette, contiene un if di rm_dollar */
 int	rm_dollar_if(char *s, int i)
 {
 	if (s[i] == '$' && werami(s, i + 1, 0, 0) == 0 && werami(s, i, 0, 0) == -1)
@@ -68,6 +69,7 @@ int	rm_dollar_if(char *s, int i)
 	return (0);
 }
 
+/* Funzione che serve per espandere l'exit status. */
 char	*set_exit_status(char *s)
 {
 	int		i;
@@ -96,6 +98,8 @@ char	*set_exit_status(char *s)
 	return (end);
 }
 
+/* Funzione creata per colpa di norminette, chiamata da simple_refine e da
+refine.*/
 char	*espand_core(char *s, int *i, int which)
 {
 	*i = do_skip(s, *i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 10:26:26 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/07 12:14:21 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	redir_check(t_token *tree, t_fds fds, char **env)
 {
 	int	file;
 
-	while (tree != NULL && tree->type != PIPE)
+	while (tree != NULL && tree->type != PIPE && g_sigal == 0)
 	{
 		if (tree->type == REDIR_1)
 		{
@@ -89,11 +89,11 @@ int	redir_check(t_token *tree, t_fds fds, char **env)
 			if (file_control(file, 0) == 1)
 				return (1);
 		}
-		else if ((tree->type == HEREDOC || tree->type == HEREDOC_2) && \
-		g_sigal == 0)
+		else if (tree->type == HEREDOC || tree->type == HEREDOC_2)
 			heredoc(tree, fds.std, env);
 		else if (tree->type == REDIR_2 || tree->type == REDIR_3)
 		{
+			signal(SIGINT, sig_redir);
 			if (tree->type == REDIR_2)
 				file = open(tree->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 			else if (tree->type == REDIR_3)
@@ -104,16 +104,4 @@ int	redir_check(t_token *tree, t_fds fds, char **env)
 		tree = tree->next;
 	}
 	return (0);
-}
-
-void	ctrl_c_sig(int sig)
-{
-	if (sig == SIGINT)
-	{
-		perror("KAKA");
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		g_sigal = 1;
-	}
 }

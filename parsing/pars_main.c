@@ -6,36 +6,11 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/05 16:24:02 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:22:49 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-/* gestisce i segnali con SIGINT (^c), enter vuoto
-e enter con solo spazi/tab */
-void	routine(int sig)
-{
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		exit_code(130);
-	}
-	if (sig == -1)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	if (sig == -2)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-	}
-}
 
 /* Compila la lista con i nodi-token */
 static void	compile_inator(char **str, char **env, t_token **head)
@@ -86,7 +61,7 @@ static t_token	*token_inator(char *cmd, char **env, t_token *head)
 	return (free_arr(str), head);
 }
 
-/* Registra l'history, gestisce ^D e chiama token_inator*/
+/* Registra l'history, gestisce ^D e chiama token_inator ed execute.*/
 int	parsing(char *pwd, char ***env_cpy)
 {
 	char	*cmd;
@@ -112,5 +87,33 @@ int	parsing(char *pwd, char ***env_cpy)
 	execute(head, env_cpy);
 	if (head != NULL)
 		free_lst(head);
+	return (1);
+}
+
+/* Funzione creata per colpa di norminette, usata da simple_espand_core e da
+more_espand_core.*/
+int	smol(char *s, int i)
+{
+	if (s[i] == '$' && ((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
+		return (1);
+	return (0);
+}
+
+/* Controlla che l'input mandato non sia solo composto di whitespaces.*/
+int	is_all_whitespace(char *cmd)
+{
+	int		i;
+	size_t	x;
+
+	i = 0;
+	x = 0;
+	while (cmd[i] != '\0' && cmd[i] != '\n')
+	{
+		if (cmd[i] > 0 && cmd[i] < 33)
+			x++;
+		i++;
+	}
+	if (x == ft_strlen(cmd))
+		return (0);
 	return (1);
 }
