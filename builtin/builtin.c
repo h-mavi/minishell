@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/05 16:08:39 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/07 18:27:23 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ int	ft_pwd(void)
 	char	*str;
 
 	str = getcwd(NULL, 0);
+	// if (ft_strlen(str) > 4096)
+	// {
+	// 	perror("impossible to print");
+	// 	free(str);
+	// 	return (exit_code(0), 1);
+	// }
 	ft_printf("%s\n", str);
 	free(str);
 	return (exit_code(0), 1);

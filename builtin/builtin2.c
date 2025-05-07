@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:43:25 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/06 17:06:42 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/07 17:38:38 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_all_digit(char *str)
 	{
 		if (ft_isdigit(str[i]) == 0)
 		{
-			if (i != 0 && str[i] == '-')
+			if (!(i == 0 && str[i] == '-'))
 				return (0);
 		}
 		i++;
@@ -40,7 +40,7 @@ void	ft_exit(t_token *tree, char **env, int *std)
 		{
 			if (is_all_digit(tree->next->str) == 0)
 				return (perror("not numeric argument"), free_lst(tree), \
-				freemtr(env), exit(2));
+				reset_fd(std), close(1), close(0), freemtr(env), exit(2));
 			if (tree->next->next)
 				if (tree->next->next->type == FLAG)
 					return (perror("too many arguments"), (void)exit_code(1));
@@ -48,12 +48,15 @@ void	ft_exit(t_token *tree, char **env, int *std)
 			{
 				ex = ft_atoi(tree->next->str);
 				if (ex > 256)
-					return (freemtr(env), free_lst(tree), exit(ex % 256));
-				return (freemtr(env), free_lst(tree), reset_fd(std), exit(ex));
+					return (freemtr(env), free_lst(tree), reset_fd(std), \
+					close(1), close(0), exit(ex % 256));
+				return (freemtr(env), free_lst(tree), reset_fd(std), \
+				close(1), close(0), exit(ex));
 			}
 		}
 	}
-	return (free_lst(tree), freemtr(env), reset_fd(std), exit(0));
+	return (free_lst(tree), freemtr(env), reset_fd(std), close(1), close(0), \
+	exit(0));
 }
 
 static int	is_n(char *str, char c)

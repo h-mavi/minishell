@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 12:08:37 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:29:34 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	exec_cmd(t_token *tree, char **env)
 	else
 		write(2, arg[0], ft_strlen(arg[0]));
 	perror(" :command not found");
-	return (free(path), freemtr(arg), freemtr(env), exit(127));
+	return (free(path), freemtr(arg), freemtr(env), close(1), \
+	close(0), exit(127));
 }
 
 //funzione principale che richiama le altre

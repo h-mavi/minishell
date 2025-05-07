@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 11:11:03 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:01:37 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ static int	pipe_number(t_token *tree)
 		tree = tree->next;
 	}
 	return (i);
+}
+
+int	check_redir_out(t_token *tree, int file)
+{
+	if (tree->type == REDIR_2)
+		file = open(tree->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	else if (tree->type == REDIR_3)
+		file = open(tree->str, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	if (file_control(file, 1) == 1)
+		return (1);
+	return (0);
 }
 
 int	redir_check_pipe(t_token *tree, int **n, t_fds fds)
@@ -46,14 +57,8 @@ int	redir_check_pipe(t_token *tree, int **n, t_fds fds)
 			(**n)++;
 		}
 		else if (tree->type == REDIR_2 || tree->type == REDIR_3)
-		{
-			if (tree->type == REDIR_2)
-				file = open(tree->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-			else if (tree->type == REDIR_3)
-				file = open(tree->str, O_WRONLY | O_CREAT | O_APPEND, 0777);
-			if (file_control(file, 1) == 1)
+			if (check_redir_out(tree, file) == 1)
 				return (1);
-		}
 		tree = tree->next;
 	}
 	return (0);
@@ -73,7 +78,6 @@ void	closeall(t_fds fds)
 		close(fds.heredoc[i]);
 		i++;
 	}
-	// close(0);
 }
 
 static int	has_input_redir(t_token *tree)
@@ -83,13 +87,21 @@ static int	has_input_redir(t_token *tree)
 	tree = tree->next;
 	while (tree != NULL && tree->type != PIPE)
 	{
-		if (tree->type == REDIR_1 || tree->type == REDIR_2 || \
-			tree->type == REDIR_3 || tree->type == HEREDOC || \
+		if (tree->type == REDIR_1 || tree->type == HEREDOC || \
 			tree->type == HEREDOC_2)
 			return (0);
 		tree = tree->next;
 	}
 	return (1);
+}
+
+void	trick(void)
+{
+	int	null;
+
+	null = open("/dev/null", O_WRONLY);
+	dup2(null, 1);
+	close(null);
 }
 
 static void	other_command(t_token *tree, char ***env, t_fds fds, int *n)
@@ -98,6 +110,8 @@ static void	other_command(t_token *tree, char ***env, t_fds fds, int *n)
 
 	if (has_input_redir(tree) == 1)
 		dup2(fds.pipe[1], 1);
+	else
+		trick();
 	if (redir_check_pipe(tree, &n, fds) == 1)
 		return ;
 	tree = find_comand(tree);
@@ -109,14 +123,13 @@ static void	other_command(t_token *tree, char ***env, t_fds fds, int *n)
 		closeall(fds);
 		if (is_builtin(tree, env, fds.std) != 1)
 			exec_cmd(tree, *env);
-		return (freemtr(*env), free_lst(tree), exit(0));
+		return (freemtr(*env), free_lst(tree), close(1), close(0), exit(0));
 	}
 	else
 	{
 		if (has_input_redir(tree) == 1)
 			dup2(fds.pipe[0], 0);
-		close(fds.pipe[0]);
-		close(fds.pipe[1]);
+		return((void)close(fds.pipe[0]), (void)close(fds.pipe[1]));
 	}
 }
 
@@ -134,11 +147,12 @@ static void	last_command(t_fds fds, t_token *tree, char ***env, int *n)
 	if (pid == 0)
 	{
 		if (ft_compare(tree->str, "exit") == 0)
-			return (ft_exit(tree, *env, fds.std), freemtr(*env), \
-			free_lst(tree), closeall(fds), exit(0));
+			return (ft_exit(tree, *env, fds.std), freemtr(*env), close(1), \
+			close(0), free_lst(tree), closeall(fds), exit(0));
 		if (is_builtin(tree, env, fds.std) != 1)
 			return (closeall(fds), exec_cmd(tree, *env));
-		return (freemtr(*env), free_lst(tree), closeall(fds), exit(0));
+		return (freemtr(*env), free_lst(tree), closeall(fds), close(1), \
+		close(0), exit(0));
 	}
 	else
 	{
@@ -155,7 +169,7 @@ void	open_heredoc(t_token *tree, t_fds *fds, char **env)
 
 	i = 0;
 	fds->heredoc[0] = 0;
-	while (tree != NULL)
+	while (tree != NULL && g_sigal == 0)
 	{
 		if (tree->type != HEREDOC && tree->type != HEREDOC_2)
 		{
@@ -209,7 +223,7 @@ void	for_fork(t_token *tree, char ***env, t_fds fds)
 	}
 	while (wait(&w) > 0)
 		exit_code(w / 256);
-	return (reset_fd(fds.std));
+	return (reset_fd(fds.std), closeall(fds));
 }
 
 void	heredoc_while(t_token *tree, char *str, char **env, int file, int std)
