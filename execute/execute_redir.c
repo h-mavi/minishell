@@ -6,11 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/05/06 14:05:22 by mbiagi           ###   ########.fr       */
-=======
-/*   Updated: 2025/05/06 12:18:34 by mfanelli         ###   ########.fr       */
->>>>>>> 6ffd2ecb4d6ddfae33c76a8ab1df58d759ae6eb3
+/*   Updated: 2025/05/06 15:43:02 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +29,7 @@ static char	*simple_espand_core(char *s, int *i, char **env)
 	return (s);
 }
 
-static char	*simple_refine(char *s, char **env)
+char	*simple_refine(char *s, char **env)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/06 15:38:45 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/06 17:01:17 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,49 +24,6 @@ static int	pipe_number(t_token *tree)
 		tree = tree->next;
 	}
 	return (i);
-}
-
-static char	*simple_refine(char *s, char **env)
-{
-	int	i;
-
-	i = -1;
-	while (s[++i])
-	{
-		i = do_skip(s, i);
-		if (s[i] == '$' && werami(s, i, 0, 0) == -1 && \
-		werami(s, i + 1, 0, 0) == -1 && ((ft_isalpha(s[i + 1]) != 0) || \
-		(s[i + 1] == '_')))
-			s = esp_special_case(s, env, i);
-		else if (s[i] == '$' && werami(s, i + 1, 0, 0) == 0 && \
-		werami(s, i, 0, 0) == -1)
-		{
-			s = rm_dollar(s);
-			if (i > 0)
-				i -= 1;
-		}
-		if (werami(s, i, 0, 0) == 0 && werami(s, i + 1, 0, 0) == 1)
-		{
-			i++;
-			while (werami(s, i, 0, 0) != 0)
-			{
-				i = do_skip(s, i);
-				if (s[i] == '$' && s[0] == '<' && s[1] == '<')
-					i++;
-				if ((s[i] == '$' && werami(s, i, 0, 0) == 1 && \
-					((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_'))))
-				{
-					s = esp_special_case(s, env, i);
-					i -= 1;
-				}
-				i++;
-			}
-		}
-		i = do_skip(s, i);
-		if (s[0] == '\0')
-			return (s);
-	}
-	return (s);
 }
 
 int	redir_check_pipe(t_token *tree, int **n, t_fds fds)
@@ -134,8 +91,7 @@ static void	other_command(t_token *tree, char ***env, t_fds fds, int *n)
 		closeall(fds);
 		if (is_builtin(tree, env, fds.std) != 1)
 			exec_cmd(tree, *env);
-		return (freemtr(*env), free_lst(tree), close(fds.pipe[1]), close(fds.pipe[0]), \
-		exit(0));
+		return (freemtr(*env), free_lst(tree), exit(0));
 	}
 	else
 	{
@@ -160,11 +116,10 @@ static void	last_command(t_fds fds, t_token *tree, char ***env, int *n)
 	{
 		if (ft_compare(tree->str, "exit") == 0)
 			return (ft_exit(tree, *env, fds.std), freemtr(*env), \
-			free_lst(tree), close(fds.pipe[1]), close(fds.pipe[0]), exit(0));
+			free_lst(tree), closeall(fds), exit(0));
 		if (is_builtin(tree, env, fds.std) != 1)
 			return (closeall(fds), exec_cmd(tree, *env));
-		return (freemtr(*env), free_lst(tree), close(fds.pipe[1]), \
-		close(fds.pipe[0]), exit(0));
+		return (freemtr(*env), free_lst(tree), closeall(fds), exit(0));
 	}
 	else
 	{
@@ -206,6 +161,8 @@ void	open_heredoc(t_token *tree, t_fds *fds, char **env)
 		}
 		free(str);
 		get_next_line(file);
+		close(file);
+		file = open("here_doc", O_RDWR, 0777);
 		unlink("here_doc");
 		fds->heredoc[i] = file;
 		tree = tree->next;
