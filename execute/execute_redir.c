@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/06 15:43:02 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/07 09:04:21 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	heredoc(t_token *tree, int *std, char **env)
 }
 
 //redirige i file
-int	redir_check(t_token *tree,t_fds fds, char **env)
+int	redir_check(t_token *tree, t_fds fds, char **env)
 {
 	int	file;
 
