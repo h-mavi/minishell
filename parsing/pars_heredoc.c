@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/06 11:23:43 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:22:49 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,16 @@ void	here_doc(char *input)
 	str = get_next_line(0);
 	if (g_sigal == 1)
 		dup2(std, 0);
-	close(std);
 	while (control_str(str, input) == 0)
 	{
 		ft_putstr_fd(str, file);
 		free(str);
 		write(1, "> ", 2);
 		str = get_next_line(0);
+		if (g_sigal == 1)
+			dup2(std, 0);
 	}
+	close(std);
 	free(str);
 	get_next_line(file);
 	close(file);

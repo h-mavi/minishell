@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 09:04:21 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:26:26 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	heredoc(t_token *tree, int *std, char **env)
 	str = get_next_line(0);
 	if (g_sigal == 1)
 		dup2(std[0], 0);
-	heredoc_while(tree, str, env, file);
+	heredoc_while(tree, str, env, file, std[0]);
 	get_next_line(file);
 	close(file);
 	file = open("here_doc", O_RDWR, 0777);
@@ -110,9 +110,10 @@ void	ctrl_c_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
+		perror("KAKA");
 		printf("\n");
-		rl_on_new_line();
 		rl_replace_line("", 0);
+		rl_on_new_line();
 		g_sigal = 1;
 	}
 }

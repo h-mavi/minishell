@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 09:03:42 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:26:36 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_fds
 //in execute/execute_pipe.c (ft 4/5)
 
 void	for_fork(t_token *tree, char ***env, t_fds fds);
-void	heredoc_while(t_token *tree, char *str, char **env, int file);
+void	heredoc_while(t_token *tree, char *str, char **env, int file, int std);
 
 //----------------------------------------------------------------------------
 //in execute/execute_redir.c (ft 5/5)

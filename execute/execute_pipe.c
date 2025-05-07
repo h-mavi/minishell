@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 09:06:48 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/07 10:26:14 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,31 @@ void	closeall(t_fds fds)
 		close(fds.heredoc[i]);
 		i++;
 	}
+	// close(0);
+}
+
+static int	has_input_redir(t_token *tree)
+{
+	while (tree->type != PIPE)
+		tree = tree->next;
+	tree = tree->next;
+	while (tree != NULL && tree->type != PIPE)
+	{
+		if (tree->type == REDIR_1 || tree->type == REDIR_2 || \
+			tree->type == REDIR_3 || tree->type == HEREDOC || \
+			tree->type == HEREDOC_2)
+			return (0);
+		tree = tree->next;
+	}
+	return (1);
 }
 
 static void	other_command(t_token *tree, char ***env, t_fds fds, int *n)
 {
 	int	pid;
 
-	dup2(fds.pipe[1], 1);
+	if (has_input_redir(tree) == 1)
+		dup2(fds.pipe[1], 1);
 	if (redir_check_pipe(tree, &n, fds) == 1)
 		return ;
 	tree = find_comand(tree);
@@ -95,9 +113,10 @@ static void	other_command(t_token *tree, char ***env, t_fds fds, int *n)
 	}
 	else
 	{
-		dup_file(fds.pipe[0], 0);
+		if (has_input_redir(tree) == 1)
+			dup2(fds.pipe[0], 0);
+		close(fds.pipe[0]);
 		close(fds.pipe[1]);
-		dup2(fds.std[1], 1);
 	}
 }
 
@@ -150,7 +169,9 @@ void	open_heredoc(t_token *tree, t_fds *fds, char **env)
 		signal(SIGQUIT, test);
 		signal(SIGINT, test);
 		str = get_next_line(0);
-		heredoc_while(tree, str, env, file);
+		if (g_sigal == 1)
+			dup2(fds->std[0], 0);
+		heredoc_while(tree, str, env, file, fds->std[0]);
 		get_next_line(file);
 		close(file);
 		file = open("here_doc", O_RDWR, 0777);
@@ -191,7 +212,7 @@ void	for_fork(t_token *tree, char ***env, t_fds fds)
 	return (reset_fd(fds.std));
 }
 
-void	heredoc_while(t_token *tree, char *str, char **env, int file)
+void	heredoc_while(t_token *tree, char *str, char **env, int file, int std)
 {
 	while (ctrl_str(str, tree->str) == 0)
 	{
@@ -201,6 +222,8 @@ void	heredoc_while(t_token *tree, char *str, char **env, int file)
 		free(str);
 		write(0, "> ", 2);
 		str = get_next_line(0);
+			if (g_sigal == 1)
+		dup2(std, 0);
 	}
 	free(str);
 }

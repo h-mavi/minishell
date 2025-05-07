@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 09:04:08 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:29:25 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	execute(t_token *tree, char ***env)
 	if (redir_check(tree, fds, *env) == 1)
 		return (reset_fd(fds.std));
 	tree = find_comand(tree);
-	if (tree == NULL)
+	if (tree == NULL || g_sigal == 1)
 		return (reset_fd(fds.std));
 	if (is_builtin(tree, env, fds.std) == 1)
 		return (reset_fd(fds.std));
