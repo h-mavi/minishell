@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/09 15:09:53 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/12 11:23:49 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,33 @@ typedef struct s_fds
 	int	pipe[2];
 	int	std[2];
 	int	heredoc[1024];
+	int	file;
 }	t_fds;
+
+//----------------------------------------------------------------------------
+//in execute/execute_redir_pipe.c (ft 4/5)
+
+void	open_heredoc(t_token *tree, t_fds *fds, char **env);
+int		redir_check_pipe(t_token *tree, int **n, t_fds fds);
+
+//----------------------------------------------------------------------------
+//in execute/execute_utils3.c (ft 5/5)
+
+void	heredoc_while(t_token *tree, char *str, char **env, t_fds *fds);
+void	closeall(t_fds fds);
+int		has_input_redir(t_token *tree);
+void	trick(void);
+int		is_real(t_token *tree, char **env);
 
 //----------------------------------------------------------------------------
 //in execute/execute_pipe.c (ft 4/5)
 
 void	for_fork(t_token *tree, char ***env, t_fds fds);
-void	heredoc_while(t_token *tree, char *str, char **env, int file, int std);
 
 //----------------------------------------------------------------------------
 //in execute/execute_redir.c (ft 5/5)
 
-void	heredoc(t_token *tree, int *std, char **env);
+void	heredoc(t_token *tree, t_fds fds, char **env);
 int		redir_check(t_token *tree, t_fds fds, char **env);
 char	*simple_refine(char *s, char **env);
 

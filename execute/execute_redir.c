@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 18:02:09 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/12 10:50:08 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,25 @@ char	*simple_refine(char *s, char **env)
 }
 
 //funzione che crea l' heredoc e lo duplica nello stdin
-void	heredoc(t_token *tree, int *std, char **env)
+void	heredoc(t_token *tree, t_fds fds, char **env)
 {
-	int		file;
 	char	*str;
 
-	dup2(std[0], 0);
-	file = open("here_doc", O_RDWR | O_CREAT | O_TRUNC, 0777);
-	if (file == -1)
+	dup2(fds.std[0], 0);
+	fds.file = open("here_doc", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	if (fds.file == -1)
 		return (perror("failed to open the file"), (void)exit_code(1));
 	write(0, "> ", 2);
 	signal(SIGQUIT, test);
 	signal(SIGINT, test);
 	str = get_next_line(0);
 	if (g_sigal == 1)
-		dup2(std[0], 0);
-	heredoc_while(tree, str, env, file, std[0]);
-	get_next_line(file);
-	close(file);
-	file = open("here_doc", O_RDWR, 0777);
-	file_control(file, 0);
+		dup2(fds.std[0], 0);
+	heredoc_while(tree, str, env, &fds);
+	get_next_line(fds.file);
+	close(fds.file);
+	fds.file = open("here_doc", O_RDWR, 0777);
+	file_control(fds.file, 0);
 	unlink("here_doc");
 }
 
@@ -90,7 +89,7 @@ int	redir_check(t_token *tree, t_fds fds, char **env)
 				return (1);
 		}
 		else if (tree->type == HEREDOC || tree->type == HEREDOC_2)
-			heredoc(tree, fds.std, env);
+			heredoc(tree, fds, env);
 		else if (tree->type == REDIR_2 || tree->type == REDIR_3)
 		{
 			signal(SIGINT, sig_redir);

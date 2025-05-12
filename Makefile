@@ -6,7 +6,7 @@
 #    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/05/09 11:36:09 by mbiagi           ###   ########.fr        #
+#    Updated: 2025/05/12 11:26:58 by mbiagi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ execute/execute_utils.c execute/execute_utils2.c execute/execute.c \
 parsing/pars_extra.c parsing/pars_heredoc.c parsing/pars_main.c \
 parsing/pars_more.c parsing/pars_refine.c parsing/pars_rm.c \
 parsing/pars_set_data.c parsing/pars_split.c parsing/pars_utils.c \
-parsing/parsing.c parsing/signal_handler.c
+parsing/parsing.c parsing/signal_handler.c execute/execute_redir_pipe.c \
+execute/execute_utils3.c
 OBJ = $(SOURCES:.c=.o)
 
 CC = cc
