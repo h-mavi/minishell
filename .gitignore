@@ -1,4 +1,5 @@
 *.o
 minishell
 libft.a
+libftprintf.a
 libget_next_line.a

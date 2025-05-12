@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:36:43 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 18:27:23 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/09 12:01:57 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,16 @@ static void	change_dir(char **env, char *temp)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin("PWD=", temp2);
-			free(temp2);
 		}
 		else if (ft_compare(env[i], "OLDPWD") == 0)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin("OLDPWD=", temp);
-			free(temp);
 		}
 		i++;
 	}
+	free(temp2);
+	free(temp);
 }
 
 static void	return_home(char **env)

@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 18:01:37 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/09 15:44:45 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,37 @@ void	trick(void)
 	close(null);
 }
 
+int	is_real(t_token *tree, char **env)
+{
+	char	*str;
+
+	while (tree->type != PIPE)
+		tree = tree->next;
+	tree = tree->next;
+	tree = find_comand(tree);
+	str = parse_cmd(tree->str, env);
+	if (!str)
+		return (0);
+	return (free(str), 1);
+}
+
+void	other_parent(t_token *tree, t_fds fds, char ***env)
+{
+	if (has_input_redir(tree) == 1 && is_real(tree, *env) == 1)
+		dup2(fds.pipe[0], 0);
+	return((void)close(fds.pipe[0]), (void)close(fds.pipe[1]));
+}
+
 static void	other_command(t_token *tree, char ***env, t_fds fds, int *n)
 {
 	int	pid;
 
-	if (has_input_redir(tree) == 1)
+	if (has_input_redir(tree) == 1 && is_real(tree, *env) == 1)
 		dup2(fds.pipe[1], 1);
 	else
 		trick();
 	if (redir_check_pipe(tree, &n, fds) == 1)
-		return ;
+		return (other_parent(tree, fds, env));
 	tree = find_comand(tree);
 	if (tree == NULL)
 		return ;
@@ -126,11 +147,7 @@ static void	other_command(t_token *tree, char ***env, t_fds fds, int *n)
 		return (freemtr(*env), free_lst(tree), close(1), close(0), exit(0));
 	}
 	else
-	{
-		if (has_input_redir(tree) == 1)
-			dup2(fds.pipe[0], 0);
-		return((void)close(fds.pipe[0]), (void)close(fds.pipe[1]));
-	}
+		other_parent(tree, fds, env);
 }
 
 static void	last_command(t_fds fds, t_token *tree, char ***env, int *n)
@@ -139,7 +156,7 @@ static void	last_command(t_fds fds, t_token *tree, char ***env, int *n)
 
 	dup2(fds.std[1], 1);
 	if (redir_check_pipe(tree, &n, fds) == 1)
-		return ;
+		return ((void)close(fds.pipe[0]), (void)close(fds.pipe[1]));
 	tree = find_comand(tree);
 	if (tree == NULL)
 		return ;
@@ -147,8 +164,8 @@ static void	last_command(t_fds fds, t_token *tree, char ***env, int *n)
 	if (pid == 0)
 	{
 		if (ft_compare(tree->str, "exit") == 0)
-			return (ft_exit(tree, *env, fds.std), freemtr(*env), close(1), \
-			close(0), free_lst(tree), closeall(fds), exit(0));
+			return (closeall(fds), ft_exit(tree, *env, fds.std), \
+			freemtr(*env), close(1), close(0), free_lst(tree), exit(0));
 		if (is_builtin(tree, env, fds.std) != 1)
 			return (closeall(fds), exec_cmd(tree, *env));
 		return (freemtr(*env), free_lst(tree), closeall(fds), close(1), \

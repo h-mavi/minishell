@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 11:50:25 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:09:53 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int		ft_compare2(char *s1, char *s2);
 int		is_builtin(t_token *tree, char ***env, int *std);
 void	exec_cmd(t_token *tree, char **env);
 void	execute(t_token *tree, char ***env);
+char	*parse_cmd(char *argv, char **env);
 
 //----------------------------------------------------------------------------
 

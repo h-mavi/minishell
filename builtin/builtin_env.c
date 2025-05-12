@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/06 11:15:00 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:08:02 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	ft_env(t_token *tree, char **env)
 
 int	ft_export(char ***env, t_token *tree)
 {
-	int	n;
+	// int	n;
 
-	n = 0;
+	// n = 0;
 	if (tree == NULL)
 		return (print_export(*env), 1);
 	if (tree->type == PIPE)
@@ -52,7 +52,7 @@ int	ft_export(char ***env, t_token *tree)
 		{
 			if (control_variable(tree->str) == 1)
 			{
-				n = 1;
+				// n = 1;
 				if (new_variable(tree->str, *env) == 1)
 					*env = export_param(tree, *env);
 				else
@@ -60,8 +60,8 @@ int	ft_export(char ***env, t_token *tree)
 			}
 		}
 		tree = tree->next;
-		if (n == 0)
-			return (print_export(*env), 1);
+		// if (n == 0)
+			// return (print_export(*env), 1);
 	}
 	return (1);
 }
@@ -73,10 +73,16 @@ int	ft_unset(t_token *tree, char ***env)
 	{
 		if (tree->type == FLAG)
 		{
-			if (control_variable(tree->str) == 1)
+			if (control_variable(tree->str) == 1 && \
+			(!ft_strchr(tree->str, '=')) == 1)
 			{
 				if (existing_variable(tree->str, *env) == 0)
 					*env = unset_param(tree, *env);
+			}
+			else
+			{
+				perror("not valid identifier");
+				exit_code(1);
 			}
 		}
 		tree = tree->next;

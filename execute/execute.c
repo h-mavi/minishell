@@ -6,14 +6,14 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/07 16:29:34 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/09 15:10:50 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
 //funzione che trova il path corretto del cmd, se non lo trova retituisce NULL
-static char	*parse_cmd(char *argv, char **env)
+char	*parse_cmd(char *argv, char **env)
 {
 	int		i;
 	char	*command;
@@ -95,7 +95,7 @@ void	exec_cmd(t_token *tree, char **env)
 	char	**arg;
 
 	signal(SIGQUIT, SIG_DFL);
-	path = parse_cmd((char *)tree->str, env);
+	path = parse_cmd(tree->str, env);
 	arg = full_cmd(tree);
 	if (!path)
 		path = ft_strdup(arg[0]);

@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:37:35 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/06 10:35:57 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/09 10:33:24 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,22 @@
 char	**unset_param(t_token *tree, char **env)
 {
 	char	**new_env;
-	char	*temp;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
 	new_env = ft_calloc(ft_matrixlen(env), sizeof(char *));
-	temp = ft_strjoin(tree->str, "=");
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], temp, \
-		ft_strlen(tree->str) + 1) != 0)
+		if (ft_strncmp(env[i], tree->str, \
+		ft_strlen(tree->str)) != 0)
 		{
 			new_env[j] = ft_strdup(env[i]);
 			j++;
 		}
 		i++;
 	}
-	free(temp);
 	freemtr(env);
 	return (new_env);
 }
