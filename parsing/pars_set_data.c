@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/07 11:42:17 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 10:54:28 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*more_espand_core(char *s, char **env, int *i, int which)
 			smol(s, *i) != 0)
 		{
 			s = esp_special_case(s, env, *i);
-			*i = fuck_normi(s, *i, 1);
+			*i = fuck_normi(s, *i, 2);
 		}
 		else if (s[*i] == '$' && werami(s, *i + 1, 0, 0) == 0 && \
 			werami(s, *i, 0, 0) == -1)

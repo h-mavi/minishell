@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/12 10:50:08 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/13 10:58:22 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*simple_espand_core(char *s, int *i, char **env)
 	smol(s, *i) != 0)
 	{
 		s = esp_special_case(s, env, *i);
-		*i = fuck_normi(s, *i, 1);
+		*i = fuck_normi(s, *i, 2);
 	}
 	return (s);
 }
@@ -36,18 +36,22 @@ char	*simple_refine(char *s, char **env)
 	i = -1;
 	while (s[++i])
 	{
+		if (i > 0 && s[i - 1] == '$' && ((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
+			i--;
 		s = simple_espand_core(s, &i, env);
+		if (s[i] == '\0' || s[0] == '\0')
+			return (s);
 		if (werami(s, i, 0, 0) == 0 && werami(s, i + 1, 0, 0) == 1)
 		{
-			while (werami(s, ++i, 0, 0) != 0)
+			while (werami(s, ++i, 0, 0) != 0 && s[i] != '\0')
 			{
 				s = espand_core(s, &i, 0);
 				s = more_espand_core(s, env, &i, 0);
 			}
 		}
-		i = do_skip(s, i);
-		if (s[0] == '\0')
+		if (s[i] == '\0' || s[0] == '\0')
 			return (s);
+		i = do_skip(s, i);
 	}
 	return (s);
 }
