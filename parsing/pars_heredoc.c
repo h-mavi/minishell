@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 17:02:43 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:07:48 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Fa la comparazione tra l'input dato dallo user e il limiter
 dell'heredoc */
-static int	control_str(char *str, char *argv)
+int	control_str(char *str, char *argv)
 {
 	if (str == NULL)
 		return (write(0, "\n", 2), 1);

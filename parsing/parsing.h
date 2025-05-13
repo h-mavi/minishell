@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 17:03:15 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:08:24 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char		*ft_mycpy(char *str, int y);
 //----------------------------------------------------------------------------
 //in parsing/pars_heredoc.c (ft 5/5)
 
+int			control_str(char *str, char *argv);
 char		*error_exit(t_token *head, int syn, char *str, char *input);
 
 //----------------------------------------------------------------------------
