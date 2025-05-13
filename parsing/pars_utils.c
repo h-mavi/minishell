@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/07 11:46:16 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:14:52 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ se returna 3 s[i] == |;
 se returna 4 s[i] == <;
 se returna 5 s[i] == >;
 se returna 6 s[i] && s[i + 1] == >>;
-se returna 7 s[i] && s[i + 1] == <<;*/
+se returna 7 s[i] && s[i + 1] == << (HEREDOC);
+se returna 8 s[i] && s[i + 1] == <<"" (HEREDOC_2);*/
 int	find_char(char *s, int i)
 {
 	if (s[i] == '|')

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/04/29 15:44:05 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:26:17 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,11 @@ char	*rm_dollar(char *s)
 /* Funzione per contenere un if enorme utilizzato da divide. */
 static int	if_divide(char *s, int i, int y)
 {
-	if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i, 0, 0) == -1 && \
-		ft_isdigit(s[i]) == 0) || ((s[i] == 39 || s[i] == 34) && \
-		werami(s, i + 1, 0, 0) != 1)) && find_char(s, i + 1) != 0) || \
-		(find_char(s, i) == 3 && werami(s, i, 0, 0) == -1 && s[i + 1] != ' ') \
-		|| (find_char(s, i) == 0 && find_char(s, i + 1) == 3 && s[i] != ' ')) \
-		&& i <= y)
+	if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i, 0, 0) == -1) \
+	|| ((s[i] == 39 || s[i] == 34) && werami(s, i + 1, 0, 0) != 1)) && \
+	find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
+	werami(s, i, 0, 0) == -1 && s[i + 1] != ' ') || (find_char(s, i) == 0 && \
+	find_char(s, i + 1) == 3 && s[i] != ' ')) && i <= y)
 		return (1);
 	return (0);
 }
