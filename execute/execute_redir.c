@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/13 10:58:22 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:02:57 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ char	*simple_refine(char *s, char **env)
 	i = -1;
 	while (s[++i])
 	{
-		if (i > 0 && s[i - 1] == '$' && ((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
+		if (i > 0 && s[i - 1] == '$' && \
+		((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
 			i--;
 		s = simple_espand_core(s, &i, env);
 		if (s[i] == '\0' || s[0] == '\0')

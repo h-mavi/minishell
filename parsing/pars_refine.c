@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:02:23 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 10:49:29 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:03:25 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ char	*refine(char *s, char **env)
 	i = -1;
 	while (s[++i] != '\0')
 	{
-		if (i > 0 && s[i - 1] == '$' && ((ft_isalpha(s[i + 1]) != 0) || (s[i + 1] == '_')))
+		if (i > 0 && s[i - 1] == '$' && ((ft_isalpha(s[i + 1]) != 0) || \
+		(s[i + 1] == '_')))
 			i--;
 		s = espand_core(s, &i, 1);
 		s = more_espand_core(s, env, &i, 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:53:27 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/09 15:10:50 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/13 14:58:42 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	execute(t_token *tree, char ***env)
 
 	fds.std[0] = dup(0);
 	fds.std[1] = dup(1);
+	signal(SIGINT, ctrl_c_sig);
 	if (pipe_check(tree) == 1)
 		return (for_fork(tree, env, fds));
 	if (redir_check(tree, fds, *env) == 1)
@@ -129,7 +130,6 @@ void	execute(t_token *tree, char ***env)
 	if (is_builtin(tree, env, fds.std) == 1)
 		return (reset_fd(fds.std));
 	pid = fork();
-	signal(SIGINT, ctrl_c_sig);
 	if (pid == 0)
 		(close(fds.std[0]), close(fds.std[1]), exec_cmd(tree, *env));
 	wait(&n);

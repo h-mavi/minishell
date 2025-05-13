@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:47:15 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/07 12:20:06 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:06:21 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	sig_redir(int sig)
 {
 	if (sig == SIGINT)
 	{
-		rl_replace_line("", 0);
-		ft_putstr_fd("\n", 0);
+		write(2, "\n", 1);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		g_sigal = 1;
 	}
 }
@@ -70,8 +70,8 @@ void	ctrl_c_sig(int sig)
 	{
 		if (isatty(1) == 1)
 			printf("\n");
-		rl_replace_line("", 0);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		g_sigal = 1;
 	}
 }
