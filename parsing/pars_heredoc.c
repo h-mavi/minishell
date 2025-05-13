@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:18 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/07 12:25:28 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:02:43 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,8 @@ static void	here_doc(char *input)
 	str = get_next_line(0);
 	if (g_sigal == 1)
 		dup2(std, 0);
-	while (control_str(str, input) == 0)
-	{
-		ft_putstr_fd(str, file);
-		free(str);
-		write(1, "> ", 2);
-		str = get_next_line(0);
-		if (g_sigal == 1)
-			dup2(std, 0);
-	}
+	other_heredoc_while(str, input, file, std);
 	close(std);
-	free(str);
 	get_next_line(file);
 	close(file);
 	unlink("here_doc");

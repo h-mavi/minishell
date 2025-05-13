@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:40:15 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/06 11:14:15 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:25:59 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*set_path(char *tmp, char **env)
 		if (ft_strncmp(env[i], tmp, ft_strlen(tmp)) == 0)
 		{
 			path = ft_strdup(env[i] + ft_strlen(tmp));
+			path = put_in_square(path);
 			break ;
 		}
 	}

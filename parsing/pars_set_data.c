@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 10:54:28 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:55:39 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	set_data(t_token **head, char **str, int flag)
 	node = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!node)
 		return ;
-	*str = rm_app(*str);
+	if (*str[0] == '[')
+		*str = rm_square(*str);
+	else
+		*str = rm_app(*str);
 	(*node).type = flag;
 	if (flag == REDIR_1 || flag == REDIR_2)
 		(*node).str = ft_strdup(*str + 1);
@@ -55,8 +58,7 @@ void	set_data(t_token **head, char **str, int flag)
 		(*node).str = ft_strdup(*str + 2);
 	else
 		(*node).str = ft_strdup(*str);
-	(*node).id = id + 1;
-	id++;
+	(*node).id = id++;
 	lstadd_back(head, node);
 }
 
@@ -104,13 +106,13 @@ char	*more_espand_core(char *s, char **env, int *i, int which)
 			smol(s, *i) != 0)
 		{
 			s = esp_special_case(s, env, *i);
-			*i = fuck_normi(s, *i, 2);
+			*i = for_normi(s, *i, 2);
 		}
 		else if (s[*i] == '$' && werami(s, *i + 1, 0, 0) == 0 && \
 			werami(s, *i, 0, 0) == -1)
 		{
 			s = rm_dollar(s);
-			*i = fuck_normi(s, *i, 1);
+			*i = for_normi(s, *i, 1);
 		}
 	}
 	else if (which == 0)
@@ -118,7 +120,7 @@ char	*more_espand_core(char *s, char **env, int *i, int which)
 		if (werami(s, *i, 0, 0) == 1 && smol(s, *i) != 0)
 		{
 			s = esp_special_case(s, env, *i);
-			*i = fuck_normi(NULL, *i, 0);
+			*i = for_normi(NULL, *i, 0);
 		}
 	}
 	return (s);

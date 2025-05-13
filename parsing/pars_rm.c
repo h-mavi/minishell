@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 14:26:17 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:50:45 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,45 +97,23 @@ char	*rm_dollar(char *s)
 	return (free(s), tmp);
 }
 
-/* Funzione per contenere un if enorme utilizzato da divide. */
-static int	if_divide(char *s, int i, int y)
+char	*rm_square(char *str)
 {
-	if (((((s[i] != ' ' && find_char(s, i) == 0 && werami(s, i, 0, 0) == -1) \
-	|| ((s[i] == 39 || s[i] == 34) && werami(s, i + 1, 0, 0) != 1)) && \
-	find_char(s, i + 1) != 0) || (find_char(s, i) == 3 && \
-	werami(s, i, 0, 0) == -1 && s[i + 1] != ' ') || (find_char(s, i) == 0 && \
-	find_char(s, i + 1) == 3 && s[i] != ' ')) && i <= y)
-		return (1);
-	return (0);
-}
-
-/* La funzione chiamata da here_glued che divide redirection,
-heredoc e pipe attaccati */
-char	*divide(char *s, int y)
-{
+	char	*end;
 	int		i;
 	int		x;
-	char	*end;
 
 	i = -1;
 	x = 0;
-	while (s[++i])
+	end = (char *)ft_calloc(ft_strlen(str) - 1, sizeof(char));
+	while (str[++i] != '\0')
 	{
-		if (if_divide(s, i, y) == 1)
-			x++;
+		if (i == 0 && str[i] == '[')
+			i++;
+		else if (str[i] == ']' && str[i + 1] == '\0')
+			break ;
+		end[x] = str[i];
 		x++;
 	}
-	end = (char *)ft_calloc((x + 1), sizeof(char));
-	if (!end)
-		return (NULL);
-	i = -1;
-	x = 0;
-	while (s[++i])
-	{
-		end[x++] = s[i];
-		if (if_divide(s, i, y) == 1)
-			end[x++] = ' ';
-	}
-	end[x] = '\0';
-	return (free(s), end);
+	return (free(str), end);
 }

@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:14:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 14:14:52 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:55:39 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ se what e' uguale a 0 returna i se e' minore o uguale a 0, senno' returna i-1,
 se what e' uguale a 2 salta tutto cio' che e' tra apici,
 se what e' uguale a 1 fa le stesse cose di 0 e 2.
 Viene chiamata da simple_espand_core, espand_core e more_espand_core.*/
-int	fuck_normi(char *s, int i, int what)
+int	for_normi(char *s, int i, int what)
 {
 	if (what == 0)
 	{

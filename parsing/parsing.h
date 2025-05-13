@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/07 12:25:40 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:03:15 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ char		*set_exit_status(char *s);
 char		*espand_core(char *s, int *i, int which);
 
 //----------------------------------------------------------------------------
+//in parsing/pars_other.c (ft 4/5)
+
+char		*put_in_square(char *path);
+char		*divide(char *s, int y);
+void		other_heredoc_while(char *str, char *input, int file, int std);
+
+//----------------------------------------------------------------------------
 //in parsing/pars_refine.c (ft 5/5)
 
 char		*rewrite(char *orig, int i, int x);
@@ -92,12 +99,12 @@ char		*esp_special_case(char *s, char **env, int i);
 char		*refine(char *s, char **env);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_rm.c (ft 5/5)
+//in parsing/pars_rm.c (ft 4/5)
 
 char		*rm_spaces(char *s);
 char		*rm_app(char *s);
 char		*rm_dollar(char *s);
-char		*divide(char *s, int y);
+char		*rm_square(char *str);
 
 //----------------------------------------------------------------------------
 //in parsing/pars_set_data.c (ft 5/5)
@@ -119,7 +126,7 @@ void		free_arr(char **arr);
 int			find_char(char *s, int i);
 int			find_dollar(char *s, int i);
 int			check_error(char *s);
-int			fuck_normi(char *s, int i, int what);
+int			for_normi(char *s, int i, int what);
 
 //----------------------------------------------------------------------------
 //in parsing/parsing.c (ft 5/5)

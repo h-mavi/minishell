@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:15:05 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/13 15:02:57 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:55:39 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*simple_espand_core(char *s, int *i, char **env)
 	smol(s, *i) != 0)
 	{
 		s = esp_special_case(s, env, *i);
-		*i = fuck_normi(s, *i, 2);
+		*i = for_normi(s, *i, 2);
 	}
 	return (s);
 }

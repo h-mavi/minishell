@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:21:35 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/07 11:41:04 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:55:39 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char	*espand_core(char *s, int *i, int which)
 		if (*i > 1 && s[*i] == '$' && s[*i - 1] == '<' && s[*i - 2] == '<' && \
 			s[*i + 1] != '\0')
 			*i += 1;
-		*i = fuck_normi(s, *i, 2);
+		*i = for_normi(s, *i, 2);
 	}
 	else if (which == 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir_pipe.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:21:40 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/12 11:23:57 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:55:39 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	redir_check_pipe(t_token *tree, int **n, t_fds fds)
 	return (0);
 }
 
-void	heredoc_fuck_normi(t_token *tree, char *str, char **env, t_fds *fds)
+void	heredoc_for_normi(t_token *tree, char *str, char **env, t_fds *fds)
 {
 	if (g_sigal == 1)
 		dup2(fds->std[0], 0);
@@ -82,7 +82,7 @@ void	open_heredoc(t_token *tree, t_fds *fds, char **env)
 		signal(SIGQUIT, test);
 		signal(SIGINT, test);
 		str = get_next_line(0);
-		heredoc_fuck_normi(tree, str, env, fds);
+		heredoc_for_normi(tree, str, env, fds);
 		fds->heredoc[++i] = fds->file;
 		tree = tree->next;
 	}
