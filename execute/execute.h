@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/14 08:55:12 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/14 10:46:48 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_fds
 	int	std[2];
 	int	heredoc[1024];
 	int	file;
+	int	*pid;
 }	t_fds;
 
 //----------------------------------------------------------------------------
@@ -66,7 +67,7 @@ typedef struct s_fds
 
 void	open_heredoc(t_token *tree, t_fds *fds, char **env);
 int		redir_check_pipe(t_token *tree, int **n, t_fds fds);
-void	pipe_exit_code(int w);
+void	pipe_exit_code(int npipe, int p, t_fds fds);
 
 //----------------------------------------------------------------------------
 //in execute/execute_utils3.c (ft 5/5)

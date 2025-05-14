@@ -6,18 +6,26 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:21:40 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/14 08:54:57 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/14 10:46:37 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void	pipe_exit_code(int w)
+void	pipe_exit_code(int npipe, int p, t_fds fds)
 {
-	if ((w & 0x7F) == 0)
-		exit_code((w >> 8) & 0xFF);
-	else
-		exit_code(128 + (w & 0x7F));
+	int	w;
+
+	w = 0;
+	while (npipe <= p)
+	{
+		waitpid(fds.pid[npipe], &w, 0);
+		if ((w & 0x7F) == 0)
+			exit_code((w >> 8) & 0xFF);
+		else
+			exit_code(128 + (w & 0x7F));
+		npipe++;
+	}
 }
 
 static int	check_redir_out(t_token *tree, int file)

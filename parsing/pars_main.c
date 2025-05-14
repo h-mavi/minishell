@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:05 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/07 12:22:49 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/14 10:13:32 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	parsing(char *pwd, char ***env_cpy)
 	{
 		printf("exit\n");
 		free(cmd);
-		return (0);
+		return (close(0), close(1), 0);
 	}
 	else if (cmd[0] == '\0')
 		return (free(cmd), routine(-1), 1);
