@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/05/13 17:01:44 by mfanelli         ###   ########.fr        #
+#    Updated: 2025/05/14 14:04:57 by mbiagi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,9 @@ exe:
 		make
 		make clean
 		valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes \
-		--track-origins=yes --suppressions=supp.supp --track-fds=yes ./$(NAME)
+		--track-origins=yes \
+		--suppressions=/nfs/homes/mbiagi/Common_core/Minishell/supp.supp \
+		--track-fds=yes ./$(NAME)
 
 .PHONY: all clean fclean re libft
 .SILENT:
