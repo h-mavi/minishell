@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/12 11:23:49 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/14 08:55:12 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_fds
 
 void	open_heredoc(t_token *tree, t_fds *fds, char **env);
 int		redir_check_pipe(t_token *tree, int **n, t_fds fds);
+void	pipe_exit_code(int w);
 
 //----------------------------------------------------------------------------
 //in execute/execute_utils3.c (ft 5/5)

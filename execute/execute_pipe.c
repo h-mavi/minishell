@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/12 11:22:44 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/14 09:27:20 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ void	for_fork(t_token *tree, char ***env, t_fds fds)
 			tree = tree->next;
 	}
 	while (wait(&w) > 0)
-		exit_code(w / 256);
+		pipe_exit_code(w);
 	return (reset_fd(fds.std), closeall(fds));
 }

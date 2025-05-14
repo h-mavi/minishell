@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir_pipe.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:21:40 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/13 16:55:39 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/14 08:54:57 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+void	pipe_exit_code(int w)
+{
+	if ((w & 0x7F) == 0)
+		exit_code((w >> 8) & 0xFF);
+	else
+		exit_code(128 + (w & 0x7F));
+}
 
 static int	check_redir_out(t_token *tree, int file)
 {
