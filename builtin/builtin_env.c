@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:56:13 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/12 10:27:02 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/15 16:01:53 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,7 @@ int	ft_unset(t_token *tree, char ***env)
 					*env = unset_param(tree, *env);
 			}
 			else
-			{
-				perror("not valid identifier");
 				exit_code(1);
-			}
 		}
 		tree = tree->next;
 	}

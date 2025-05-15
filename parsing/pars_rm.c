@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:51:08 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 16:50:45 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:59:15 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,34 @@ char	*rm_spaces(char *s)
 			while (s[i + x] == ' ')
 				x++;
 			if (find_char(s, (i + x)) != 0 || s[i + x] == '\0')
-				return (error_exit(NULL, i, \
+				return (error_exit(NULL, i - 2, \
 				"Syntax Error, unexpected token\n", s));
 			s = rewrite(s, i, x - 1);
 		}
 		if (find_char(s, i) > 3 && s[i + 1] == '\0' && \
 		i > 0 && ((find_char(s, i - 1) == 0) || (find_char(s, i - 1) > 3)))
-			return (error_exit(NULL, i, \
+			return (error_exit(NULL, i - 2, \
 			"Syntax Error, unexpected token\n", s));
 	}
 	return (s);
+}
+
+static int	rm_app_count(char *s, int i)
+{
+	int	len;
+
+	len = 0;
+	while (s[++i])
+	{
+		if (s[i] == 6)
+			while (s[++i] != 6)
+				len++;
+		if ((werami(s, i, 0, 0) != 0 && s[i] != 92 && s[i] != 6) || \
+		(((werami(s, i, 0, 0) == 0) || (s[i] == 92)) && i != 0 && \
+		werami(s, i - 1, 0, 0) == 1 && werami(s, i + 1, 0, 0) == 1))
+			len++;
+	}
+	return (len);
 }
 
 /* Serve a togliere gli apici, le virgolette e i back-slash inutili */
@@ -49,20 +67,19 @@ char	*rm_app(char *s)
 	char	*new;
 
 	i = -1;
-	len = 0;
-	while (s[++i])
-		if ((werami(s, i, 0, 0) != 0 && s[i] != 92) || \
-		(((werami(s, i, 0, 0) == 0) || (s[i] == 92)) && i != 0 && \
-		werami(s, i - 1, 0, 0) == 1 && werami(s, i + 1, 0, 0) == 1))
-			len++;
-	i = -1;
 	x = 0;
+	len = rm_app_count(s, i);
 	new = (char *)ft_calloc(sizeof(char), len + 1);
 	while (s[++i])
-		if ((werami(s, i, 0, 0) != 0 && s[i] != 92) || \
+	{
+		if (s[i] == 6)
+			while (s[++i] != 6)
+				new[x++] = s[i];
+		if ((werami(s, i, 0, 0) != 0 && s[i] != 92 && s[i] != 6) || \
 		(((werami(s, i, 0, 0) == 0) || (s[i] == 92)) && i != 0 && \
 		werami(s, i - 1, 0, 0) == 1 && werami(s, i + 1, 0, 0) == 1))
 			new[x++] = s[i];
+	}
 	new[x] = '\0';
 	return (free(s), new);
 }
@@ -105,12 +122,17 @@ char	*rm_square(char *str)
 
 	i = -1;
 	x = 0;
-	end = (char *)ft_calloc(ft_strlen(str) - 1, sizeof(char));
+	while (str[++i])
+		if (str[i] == 6)
+			x++;
+	end = (char *)ft_calloc(ft_strlen(str) - x + 1, sizeof(char));
+	i = -1;
+	x = 0;
 	while (str[++i] != '\0')
 	{
-		if (i == 0 && str[i] == '[')
+		if (str[i] == 6)
 			i++;
-		else if (str[i] == ']' && str[i + 1] == '\0')
+		if (str[i] == 6)
 			break ;
 		end[x] = str[i];
 		x++;

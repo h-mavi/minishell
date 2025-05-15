@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:49:48 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 17:02:51 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:00:53 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ char	*put_in_square(char *path)
 
 	i = 0;
 	end = (char *)ft_calloc(ft_strlen(path) + 3, sizeof(char));
-	end[i++] = '[';
+	end[i++] = 6;
 	while (path[i - 1] != '\0')
 	{
 		end[i] = path[i - 1];
 		i++;
 	}
-	end[i++] = ']';
+	end[i++] = 6;
 	end[i] = '\0';
 	return (free(path), end);
 }

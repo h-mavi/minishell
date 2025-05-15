@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:47:15 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 16:50:04 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/15 12:40:37 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	routine(int sig)
 	{
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay();
 	}
 	if (sig == -2)
 	{

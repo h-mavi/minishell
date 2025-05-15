@@ -6,7 +6,7 @@
 #    By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 11:21:22 by mfanelli          #+#    #+#              #
-#    Updated: 2025/05/14 14:04:57 by mbiagi           ###   ########.fr        #
+#    Updated: 2025/05/15 12:30:27 by mbiagi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ exe:
 		make clean
 		valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes \
 		--track-origins=yes \
-		--suppressions=/nfs/homes/mbiagi/Common_core/Minishell/supp.supp \
+		--suppressions=supp.supp \
 		--track-fds=yes ./$(NAME)
 
 .PHONY: all clean fclean re libft

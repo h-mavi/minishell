@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:02:37 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 17:08:24 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:01:12 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char		*esp_special_case(char *s, char **env, int i);
 char		*refine(char *s, char **env);
 
 //----------------------------------------------------------------------------
-//in parsing/pars_rm.c (ft 4/5)
+//in parsing/pars_rm.c (ft 5/5)
 
 char		*rm_spaces(char *s);
 char		*rm_app(char *s);

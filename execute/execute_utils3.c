@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:02:08 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/12 11:19:52 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/15 11:42:43 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	is_real(t_token *tree, char **env)
 		tree = tree->next;
 	tree = tree->next;
 	tree = find_comand(tree);
+	if (tree == NULL)
+		return (0);
 	str = parse_cmd(tree->str, env);
 	if (!str)
 		return (0);

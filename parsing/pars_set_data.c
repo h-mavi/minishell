@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 08:42:14 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 16:55:39 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:24:00 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ void	set_data(t_token **head, char **str, int flag)
 	node = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!node)
 		return ;
-	if (*str[0] == '[')
-		*str = rm_square(*str);
-	else
-		*str = rm_app(*str);
+	*str = rm_app(*str);
+	*str = rm_square(*str);
 	(*node).type = flag;
 	if (flag == REDIR_1 || flag == REDIR_2)
 		(*node).str = ft_strdup(*str + 1);

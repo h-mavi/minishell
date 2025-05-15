@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 09:03:23 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/14 10:46:48 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/15 11:02:50 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_fds
 }	t_fds;
 
 //----------------------------------------------------------------------------
-//in execute/execute_redir_pipe.c (ft 4/5)
+//in execute/execute_redir_pipe.c (ft 5/5)
 
 void	open_heredoc(t_token *tree, t_fds *fds, char **env);
 int		redir_check_pipe(t_token *tree, int **n, t_fds fds);
@@ -79,7 +79,7 @@ void	trick(void);
 int		is_real(t_token *tree, char **env);
 
 //----------------------------------------------------------------------------
-//in execute/execute_pipe.c (ft 4/5)
+//in execute/execute_pipe.c (ft 5/5)
 
 void	for_fork(t_token *tree, char ***env, t_fds fds);
 

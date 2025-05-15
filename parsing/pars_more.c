@@ -6,7 +6,7 @@
 /*   By: mfanelli <mfanelli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:21:35 by mfanelli          #+#    #+#             */
-/*   Updated: 2025/05/13 16:55:39 by mfanelli         ###   ########.fr       */
+/*   Updated: 2025/05/15 09:48:15 by mfanelli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ char	*set_exit_status(char *s)
 				end[y++] = status[x];
 		}
 		end[y++] = s[i];
+		if (s[i] == '\0')
+			break ;
 	}
-	free(s);
-	free(status);
-	return (end);
+	return (free(s), free(status), end);
 }
 
 /* Funzione creata per colpa di norminette, chiamata da simple_refine e da

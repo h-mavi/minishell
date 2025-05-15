@@ -6,7 +6,7 @@
 /*   By: mbiagi <mbiagi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 11:11:12 by mbiagi            #+#    #+#             */
-/*   Updated: 2025/05/14 10:46:59 by mbiagi           ###   ########.fr       */
+/*   Updated: 2025/05/15 15:20:07 by mbiagi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ int	other_command(t_token *tree, char ***env, t_fds fds, int *n)
 		return (freemtr(*env), free_lst(tree), close(1), close(0), \
 		exit(exit_code(12345)), 0);
 	}
-	else
-		other_parent(tree, fds, env);
-	return (pid);
+	return (other_parent(tree, fds, env), pid);
 }
 
 int	last_command(t_fds fds, t_token *tree, char ***env, int *n)
